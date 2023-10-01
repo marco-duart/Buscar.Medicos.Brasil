@@ -1,0 +1,668 @@
+{
+  "dashboard": {
+    "doctor": {
+      "total": 10,
+      "available": 8,
+      "unavailable": 2
+    },
+    "contractor": {
+      "total": 5,
+      "available": 4,
+      "unavailable": 1
+    }
+  },
+  "count_users": {
+    "total": 15
+  },
+  "users": [
+    {
+      "id": 1,
+      "email": "sample2@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Carlos",
+      "last_name": "Oliveira",
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Médico",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [
+        {
+          "id": 7,
+          "name": "Oftalmologia"
+        }
+      ],
+      "address": {
+        "id": 2,
+        "zipcode": "12345-678",
+        "street": "Avenida Principal",
+        "number": "456",
+        "neighborhood": "Bairro Novo",
+        "city": "Rio de Janeiro",
+        "state": "RJ",
+        "complement": "Bloco C"
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "carloso"
+    },
+    {
+      "id": 2,
+      "email": "sample3@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Ana",
+      "last_name": "Silva",
+      "profiles": [
+        {
+          "id": 1,
+          "name": "Contratante",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [],
+      "address": {
+        "id": 3,
+        "zipcode": "89012-345",
+        "street": "Rua da Praia",
+        "number": "789",
+        "neighborhood": "Praia Azul",
+        "city": "Florianópolis",
+        "state": "SC",
+        "complement": "Casa 10"
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "anasilva"
+    },
+    {
+      "id": 3,
+      "email": "sample4@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Pedro",
+      "last_name": "Ribeiro",
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Médico",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [
+        {
+          "id": 8,
+          "name": "Urologia"
+        }
+      ],
+      "address": {
+        "id": 4,
+        "zipcode": "23456-789",
+        "street": "Avenida Central",
+        "number": "1010",
+        "neighborhood": "Centro",
+        "city": "Cidade Central",
+        "state": "CC",
+        "complement": ""
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "pedrorib"
+    },
+    {
+      "id": 4,
+      "email": "sample5@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Laura",
+      "last_name": "Mendes",
+      "profiles": [
+        {
+          "id": 1,
+          "name": "Médico",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [
+        {
+          "id": 4,
+          "name": "Ginecologia"
+        }
+      ],
+      "address": {
+        "id": 5,
+        "zipcode": "34567-890",
+        "street": "Rua da Saúde",
+        "number": "567",
+        "neighborhood": "Saúde",
+        "city": "Cidade da Saúde",
+        "state": "SS",
+        "complement": "Sala 202"
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "lauram"
+    },
+    {
+      "id": 5,
+      "email": "sample6@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Marcos",
+      "last_name": "Oliveira",
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Médico",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [
+        {
+          "id": 2,
+          "name": "Dermatologia"
+        }
+      ],
+      "address": {
+        "id": 6,
+        "zipcode": "98765-432",
+        "street": "Avenida da Praia",
+        "number": "1234",
+        "neighborhood": "Beira-Mar",
+        "city": "Cidade Beira-Mar",
+        "state": "BB",
+        "complement": "Apto 505"
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "marcoso"
+    },
+    {
+      "id": 6,
+      "email": "sample7@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Isabel",
+      "last_name": "Rocha",
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Médico",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [
+        {
+          "id": 5,
+          "name": "Ortopedia"
+        }
+      ],
+      "address": {
+        "id": 7,
+        "zipcode": "87654-321",
+        "street": "Rua das Árvores",
+        "number": "7890",
+        "neighborhood": "Bosque",
+        "city": "Cidade Verde",
+        "state": "VV",
+        "complement": "Sala 303"
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "isabelr"
+    },
+    {
+      "id": 7,
+      "email": "sample8@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Rafael",
+      "last_name": "Pereira",
+      "profiles": [
+        {
+          "id": 1,
+          "name": "Contratante",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [],
+      "address": {
+        "id": 8,
+        "zipcode": "11223-456",
+        "street": "Rua do Trabalho",
+        "number": "4567",
+        "neighborhood": "Trabalhador",
+        "city": "Cidade do Trabalho",
+        "state": "TT",
+        "complement": ""
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "rafaelp"
+    },
+    {
+      "id": 8,
+      "email": "sample9@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Julia",
+      "last_name": "Machado",
+      "profiles": [
+        {
+          "id": 1,
+          "name": "Médico",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [
+        {
+          "id": 9,
+          "name": "Oncologia"
+        }
+      ],
+      "address": {
+        "id": 9,
+        "zipcode": "99887-765",
+        "street": "Avenida Oncológica",
+        "number": "987",
+        "neighborhood": "Cancerland",
+        "city": "Cidade da Cura",
+        "state": "CC",
+        "complement": "Sala 101"
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "juliam"
+    },
+    {
+      "id": 9,
+      "email": "sample10@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Daniel",
+      "last_name": "Pinto",
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Contratante",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [],
+      "address": {
+        "id": 10,
+        "zipcode": "66555-444",
+        "street": "Avenida das Construções",
+        "number": "12345",
+        "neighborhood": "Construtora",
+        "city": "Cidade dos Edifícios",
+        "state": "CE",
+        "complement": "Bloco D"
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "danielp"
+    },
+    {
+      "id": 10,
+      "email": "sample11@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Lúcia",
+      "last_name": "Santos",
+      "profiles": [
+        {
+          "id": 1,
+          "name": "Médico",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [
+        {
+          "id": 10,
+          "name": "Otorrinolaringologia"
+        }
+      ],
+      "address": {
+        "id": 11,
+        "zipcode": "54321-123",
+        "street": "Rua do Ouvido",
+        "number": "1234",
+        "neighborhood": "Audição",
+        "city": "Cidade da Audição",
+        "state": "AA",
+        "complement": ""
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "lucias"
+    },
+    {
+      "id": 11,
+      "email": "sample12@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Gustavo",
+      "last_name": "Lima",
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Médico",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [
+        {
+          "id": 11,
+          "name": "Oftalmologia"
+        }
+      ],
+      "address": {
+        "id": 12,
+        "zipcode": "23456-789",
+        "street": "Avenida dos Olhos",
+        "number": "5678",
+        "neighborhood": "Visão",
+        "city": "Cidade da Visão",
+        "state": "VV",
+        "complement": "Sala 303"
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "gustavol"
+    },
+    {
+      "id": 12,
+      "email": "sample13@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Cristina",
+      "last_name": "Pereira",
+      "profiles": [
+        {
+          "id": 1,
+          "name": "Contratante",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [],
+      "address": {
+        "id": 13,
+        "zipcode": "88888-777",
+        "street": "Avenida das Reformas",
+        "number": "9876",
+        "neighborhood": "Construção",
+        "city": "Cidade das Obras",
+        "state": "CO",
+        "complement": "Bloco A"
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "cristinap"
+    },
+    {
+      "id": 13,
+      "email": "sample14@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Lucas",
+      "last_name": "Mendes",
+      "profiles": [
+        {
+          "id": 0,
+          "name": "Médico",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [
+        {
+          "id": 12,
+          "name": "Pneumologia"
+        }
+      ],
+      "address": {
+        "id": 14,
+        "zipcode": "11111-222",
+        "street": "Avenida do Ar",
+        "number": "4321",
+        "neighborhood": "Ar Puro",
+        "city": "Cidade do Ar",
+        "state": "AA",
+        "complement": ""
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "lucasm"
+    },
+    {
+      "id": 14,
+      "email": "sample15@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Mariana",
+      "last_name": "Santos",
+      "profiles": [
+        {
+          "id": 1,
+          "name": "Contratante",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [],
+      "address": {
+        "id": 15,
+        "zipcode": "77777-888",
+        "street": "Avenida das Instalações",
+        "number": "555",
+        "neighborhood": "Instalação",
+        "city": "Cidade das Instalações",
+        "state": "II",
+        "complement": "Bloco B"
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "marianas"
+    },
+    {
+      "id": 15,
+      "email": "sample1@example.com",
+      "whatsapp": "00 0 0000-0000",
+      "first_name": "Maria",
+      "last_name": "Ferreira",
+      "profiles": [
+        {
+          "id": 1,
+          "name": "Médico",
+          "authority": "preencher"
+        }
+      ],
+      "specialties": [
+        {
+          "id": 3,
+          "name": "Pediatria"
+        }
+      ],
+      "address": {
+        "id": 1,
+        "zipcode": "01234-567",
+        "street": "Rua das Flores",
+        "number": "123",
+        "neighborhood": "Centro",
+        "city": "São Paulo",
+        "state": "SP",
+        "complement": "Apto 101"
+      },
+      "enabled": true,
+      "authorities": [
+        {
+          "authority": "preencher"
+        }
+      ],
+      "username": "mariafer"
+    }
+  ],
+  "planos": [
+    {
+      "id": 1,
+      "planTitle": "Plano Mensal",
+      "enabled": true,
+      "period": "Mensal",
+      "value": 99.9
+    },
+    {
+      "id": 2,
+      "planTitle": "Plano Trimestral",
+      "enabled": true,
+      "period": "Mensal",
+      "value": 220.0
+    },
+    {
+      "id": 3,
+      "planTitle": "Plano Semestral",
+      "enabled": true,
+      "period": "Mensal",
+      "value": 350.75
+    },
+    {
+      "id": 4,
+      "planTitle": "Plano Anual",
+      "enabled": true,
+      "period": "Anual",
+      "value": 500.0
+    }
+  ],
+  "especialidades": [
+    {
+      "id": 1,
+      "name": "Cardiologia"
+    },
+    {
+      "id": 2,
+      "name": "Dermatologia"
+    },
+    {
+      "id": 3,
+      "name": "Pediatria"
+    },
+    {
+      "id": 4,
+      "name": "Ginecologia"
+    },
+    {
+      "id": 5,
+      "name": "Ortopedia"
+    },
+    {
+      "id": 6,
+      "name": "Neurologia"
+    },
+    {
+      "id": 7,
+      "name": "Oftalmologia"
+    },
+    {
+      "id": 8,
+      "name": "Urologia"
+    },
+    {
+      "id": 9,
+      "name": "Oncologia"
+    },
+    {
+      "id": 10,
+      "name": "Otorrinolaringologia"
+    }
+  ],
+  "notificacoes": [
+    {
+      "id": 1,
+      "title": "Nova Notificação",
+      "date": "2023-09-08T20:01:27.116Z",
+      "message": "Esta é uma mensagem de notificação."
+    },
+    {
+      "id": 2,
+      "title": "Atualização Disponível",
+      "date": "2023-09-10T14:30:00.000Z",
+      "message": "Uma nova versão da aplicação está disponível. Por favor, atualize para aproveitar as últimas melhorias e correções de bugs."
+    },
+    {
+      "id": 3,
+      "title": "Manutenção Programada",
+      "date": "2023-09-12T08:00:00.000Z",
+      "message": "Aviso: Teremos uma manutenção programada em nosso site na próxima segunda-feira, das 8h às 10h. O site estará temporariamente indisponível durante esse período."
+    }
+  ],
+  "faq": [
+    {
+      "id": 1,
+      "title": "O que é pressão arterial?",
+      "answer": "A pressão arterial é a força do sangue contra as paredes das artérias à medida que o coração bombeia o sangue. É expressa em duas medidas: a pressão sistólica, que é a pressão durante a contração do coração, e a pressão diastólica, que é a pressão quando o coração está relaxado."
+    },
+    {
+      "id": 2,
+      "title": "Como prevenir doenças cardíacas?",
+      "answer": "Para prevenir doenças cardíacas, é importante adotar um estilo de vida saudável, incluindo uma dieta equilibrada, exercícios regulares, evitar o tabagismo e o consumo excessivo de álcool, controlar o estresse e fazer check-ups médicos regulares."
+    },
+    {
+      "id": 3,
+      "title": "O que são calorias e como afetam meu peso?",
+      "answer": "As calorias são unidades de energia fornecidas pelos alimentos. Consumir mais calorias do que seu corpo queima pode levar ao ganho de peso. Para manter ou perder peso, é importante equilibrar a ingestão de calorias com a quantidade de calorias que você queima por meio da atividade física."
+    },
+    {
+      "id": 4,
+      "title": "Como identificar os sintomas da diabetes?",
+      "answer": "Os sintomas comuns da diabetes incluem sede excessiva, aumento da frequência urinária, fome constante, fadiga, visão embaçada e feridas que cicatrizam lentamente. Se você apresentar esses sintomas, é importante consultar um médico para avaliação e diagnóstico."
+    },
+    {
+      "id": 5,
+      "title": "Quais são os benefícios do exercício regular?",
+      "answer": "O exercício regular traz inúmeros benefícios para a saúde, incluindo o fortalecimento do sistema cardiovascular, aumento da resistência, controle de peso, melhoria da saúde mental, redução do risco de doenças crônicas e aumento da longevidade. Recomenda-se pelo menos 150 minutos de atividade física moderada por semana."
+    }
+  ]
+}

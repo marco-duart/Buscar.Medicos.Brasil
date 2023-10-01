@@ -1,13 +1,16 @@
-import Router from './config/router'
-import GlobalStyles from './assets/styles/global-styles'
+import Router from "./config/router";
+import GlobalStyles from "./assets/styles/global-styles";
+import { ApiContextProvider } from "./data/contexts/apiContext";
 
 function App() {
   return (
     <>
       <GlobalStyles />
-      <Router />
+      <ApiContextProvider>
+        <Router />
+      </ApiContextProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
