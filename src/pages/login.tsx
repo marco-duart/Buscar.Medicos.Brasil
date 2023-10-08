@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { LoginAPI } from "../data/services/user";
+import { useNavigate } from "react-router-dom";
+import { LoginAPI } from "../data/services/register";
 
 const Login = () => {
   localStorage.removeItem("token");
@@ -44,7 +44,8 @@ const Login = () => {
   return (
     <div>
       <div>
-        <div>Arnia Trello</div>
+        <div>Seja bem vindo!</div>
+        <div>Realize seu Login</div>
         <div>
           <label htmlFor="email">E-mail</label>
           <input
@@ -73,7 +74,7 @@ const Login = () => {
           <button onClick={() => handleSubmit()}>ENTRAR</button>
         </div>
         <div>
-          <Link to="/signup">Cadastre-se</Link>
+          <div>Cadastre-se</div>
         </div>
       </div>
     </div>

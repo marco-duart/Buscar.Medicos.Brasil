@@ -1,13 +1,13 @@
 import React, { createContext, useState, useContext, useEffect } from 'react'
-import { GetFAQ } from '../../data/services/faq'
+import { GetQuestions } from '../../data/services/questions'
 
 const FAQ = () => {
-    const [faqData, setFaqData] = useState<IDataFAQArray>([])
+    const [faqData, setFaqData] = useState<IDataQuestionsArray>([])
 
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const faqResponse = await GetFAQ();
+            const faqResponse = await GetQuestions();
             setFaqData(faqResponse);
           } catch (error) {
             console.error('Erro ao buscar dados da API:', error);

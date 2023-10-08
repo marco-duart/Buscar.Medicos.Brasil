@@ -1,25 +1,37 @@
+interface ILoginApi {
+  token: string;
+  message: string;
+}
+
+interface IMeAPI {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  profiles: {
+    id: number;
+    name: string;
+    authority: string;
+  }[];
+  enabled: boolean;
+}
+
 //TIPO PARA REQUISIÇÃO EM USERS
 interface IDataUser {
   id: number;
   email: string;
-  whatsapp: string;
-  first_name: string;
-  last_name: string;
-  profiles: [
-    {
-      id: number;
-      name: string;
-      authority: string;
-    }
-  ];
-  specialties: [
-    {
-      id: number;
-      name: string;
-    }
-  ];
-  address: {
+  firstName: string;
+  lastName: string;
+  profiles: {
     id: number;
+    name: string;
+  }[];
+  specialties: {
+    id: number;
+    name: string;
+  }[];
+  phone: string;
+  address: {
     zipcode: string;
     street: string;
     number: string;
@@ -27,20 +39,46 @@ interface IDataUser {
     city: string;
     state: string;
     complement: string;
-  };
+  } | null;
   enabled: boolean;
-  authorities: [
-    {
-      authority: string;
-    }
-  ];
-  username: string;
 }
 
-interface IDataUserArray extends Array<IDataUser> {}
+interface IDataUserArray {
+  content: IDataUser[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  last: boolean;
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  first: boolean;
+  numberOfElements: number;
+  empty: boolean;
+}
 
-//TIPO PARA REQUISIÇÃO EM USERS
-interface IDataDashboard {
+interface IDataUserCount {
+  total: number;
+  totalDoctors: number;
+  totalContractor: number;
+}
+
+interface IDataUserDashboard {
   doctor: {
     total: number;
     available: number;
@@ -53,11 +91,6 @@ interface IDataDashboard {
   };
 }
 
-//TIPO PARA REQUISIÇÃO EM USERS
-interface IDataCountUsers {
-  total: number;
-}
-
 //TIPO PARA REQUISIÇÃO EM PLANOS
 interface IDataPlans {
   id: number;
@@ -67,12 +100,45 @@ interface IDataPlans {
   value: number;
 }
 
-interface IDataPlansArray extends Array<IDataPlans> {}
+interface IDataPlansArray {
+  content: IDataPlans[] | [];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  last: boolean;
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  first: boolean;
+  numberOfElements: number;
+  empty: boolean;
+}
 
 //TIPO PARA REQUISIÇÃO EM ESPECIALIDADE
 interface IDataSpecialties {
   id: number;
   name: string;
+  enabled: boolean;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+  active: boolean;
 }
 
 interface IDataSpecialtiesArray extends Array<IDataSpecialties> {}
@@ -80,26 +146,34 @@ interface IDataSpecialtiesArray extends Array<IDataSpecialties> {}
 //TIPO PARA REQUISIÇÃO EM NOTIFICACOES
 interface IDataNotifications {
   id: number;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string | null;
+  updatedBy: string | null;
   title: string;
-  date: string;
+  sendingDate: string;
   message: string;
 }
 
 interface IDataNotificationsArray extends Array<IDataNotifications> {}
 
-//TIPO PARA REQUISIÇÃO EM FAQ
-interface IDataFAQ {
+//TIPO PARA REQUISIÇÃO EM QUESTIONS
+interface IDataQuestions {
   id: number;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
   title: string;
-  answer: string;
+  message: string;
 }
 
-interface IDataFAQArray extends Array<IDataFAQ> {}
+interface IDataQuestionsArray extends Array<IDataQuestions> {}
 
 //TIPO PARA O CONTEXT
 
 interface IDataContext {
-  userName: string
+  userName: string;
   setUserName: React.Dispatch<React.SetStateAction<string>>;
 }
 

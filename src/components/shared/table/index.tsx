@@ -1,41 +1,34 @@
-import React from 'react';
+import { ReactNode } from "react";
 
-type Props = {
-  data: IDataUserArray
-  columns: {
-    header: string
-    accessor: string
-    subaccessor?:string
-  }[]
-}
+type TableRow = Record<string, string | number | ReactNode>;
 
+type TableProps = { 
+  HeadColumns: string[]; 
+  BodyRow: TableRow[];
+};
 
-function Table({ data, columns } : Props) {
+export const Table = ({ HeadColumns, BodyRow }: TableProps) => {
+  console.log("BodyRow linha 10", BodyRow);
   return (
     <table>
       <thead>
         <tr>
-          {columns.map((column, index) => (
-            <th key={index}>{column.header}</th>
+          {HeadColumns.map((columnText, index) => (
+            <th key={`${index}-th`}>{columnText}</th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {data.map((item) => (
-          <tr key={item.id}>
-            {columns.map((column, colIndex) => (
-              <td key={colIndex}>
-              {column.subaccessor ? 
-                (item[column.accessor][0][column.subaccessor])
-                : 
-                item[column.accessor]}
-            </td>
+        {BodyRow?.map((information, rowIndex) => (
+          <tr key={`${rowIndex}-tr`}>
+            {Object.keys(information).map((key, cellIndex) => (
+              <td key={`${rowIndex}-${cellIndex}-td`}>{information[key]}</td>
             ))}
           </tr>
         ))}
       </tbody>
     </table>
   );
-}
+};
 
 export default Table;

@@ -25,7 +25,7 @@ export const PostNotification = async (title: string, content: string) => {
         content 
       },
       {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
     return cards.data;
@@ -41,7 +41,7 @@ export const DeleteNotification = async (id: string) => {
   try {
     const token = localStorage.getItem("token");
     const cards = await api.delete(`/api/card/${id}`, {
-      headers: { Authorization: token },
+      headers: { Authorization: `Bearer ${token}` },
     });
     return cards.data;
   } catch (error) {
@@ -62,7 +62,7 @@ export const PutNotification = async (id: string, title: string, content: string
         content,
       },
       {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
     return cards.data;

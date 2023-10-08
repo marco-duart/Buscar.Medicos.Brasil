@@ -13,16 +13,16 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<BaseLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/plans" element={<Plans />} />
-          <Route path="/payments" element={<Payments />} />
-          <Route path="/specialties" element={<Specialties />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/faq" element={<FAQ />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<BaseLayout />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/home/users" element={<Users />} />
+          <Route path="/home/plans" element={<Plans />} />
+          <Route path="/home/payments" element={<Payments />} />
+          <Route path="/home/specialties" element={<Specialties />} />
+          <Route path="/home/notifications" element={<Notifications />} />
+          <Route path="/home/faq" element={<FAQ />} />
         </Route>
-        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );

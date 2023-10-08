@@ -1,11 +1,11 @@
 import { isAxiosError } from "axios";
 import api from "./api";
 
-export const GetFAQ = async () => {
+export const GetQuestions = async () => {
   try {
     //LEMBRAR
     /* const token = localStorage.getItem("token"); */
-    const users = await api.get("/faq");
+    const users = await api.get("/questions");
     return users.data;
   } catch (error) {
     if (isAxiosError(error)) {
@@ -15,7 +15,7 @@ export const GetFAQ = async () => {
   }
 };
 
-export const PostFAQ = async (title: string, content: string) => {
+export const PostQuestions = async (title: string, content: string) => {
   try {
     const token = localStorage.getItem("token");
     const cards = await api.post(
@@ -25,7 +25,7 @@ export const PostFAQ = async (title: string, content: string) => {
         content 
       },
       {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
     return cards.data;
@@ -37,11 +37,11 @@ export const PostFAQ = async (title: string, content: string) => {
   }
 };
 
-export const DeleteFAQ = async (id: string) => {
+export const DeleteQuestions = async (id: string) => {
   try {
     const token = localStorage.getItem("token");
     const cards = await api.delete(`/api/card/${id}`, {
-      headers: { Authorization: token },
+      headers: { Authorization: `Bearer ${token}` },
     });
     return cards.data;
   } catch (error) {
@@ -52,7 +52,7 @@ export const DeleteFAQ = async (id: string) => {
   }
 };
 
-export const PutFAQ = async (id: string, title: string, content: string) => {
+export const PutQuestions = async (id: string, title: string, content: string) => {
   try {
     const token = localStorage.getItem("token");
     const cards = await api.put(
@@ -62,7 +62,7 @@ export const PutFAQ = async (id: string, title: string, content: string) => {
         content,
       },
       {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
     return cards.data;

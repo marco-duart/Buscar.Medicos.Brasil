@@ -10,7 +10,7 @@ type Props = {
   types: string[]
 };
 
-const Dashboard = ( {title, data, types} : Props) => {
+export const CountDashboard = ( {title, data, types} : Props) => {
 
   return (
     <div>
@@ -21,5 +21,3 @@ const Dashboard = ( {title, data, types} : Props) => {
     </div>
   );
 };
-
-export default Dashboard;

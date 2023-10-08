@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LoginStyle, ContainerLoginStyle, TitleLoginStyle, SubtitleLoginStyle, SectionLoginStyle, LabelLoginStyle, InputLoginStyle, ButtonLoginStyle, StyledLink, SmallLoginStyle } from "../../ui/styles/Login";
-import { SignUp } from "../../data/services/user";
+import { SignUp } from "../../data/services/register";
 import Modal from "react-modal";
 
 const SignUpPage = () => {

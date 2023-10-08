@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GetUsers } from "../data/services/users";
-import { GetDashboard } from "../data/services/dashboard";
-import Dashboard from "../components/dashboard";
-import Table from "../components/shared/table";
+import { CountDashboard } from "../components/dashboard/countDashboard";
+import { TableDashboard } from "../components/dashboard/tableDashboard";
 
 type userColumns = {
    header: string, 
@@ -18,10 +17,8 @@ const userColumns: userColumns = [
 ]
 
 const Home = () => {
-  const [usersData, setUsersData] = useState<IDataUserArray>([]);
-
   //VERIFICAR O PROBLEMA COM ESSA TIPAGEM
-  const [dashboardData, setDashboardData] = useState<IDataDashboard>({
+  const [dashboardData, setDashboardData] = useState<IDataUserDashboard>({
     doctor: {
       total: 0,
       available: 0,
@@ -37,30 +34,23 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersResponse: IDataUserArray = await GetUsers();
-        if(usersResponse) {
-          const lastUsers = usersResponse.slice(-4)
-          setUsersData(lastUsers);
+        const dashboardResponse = await GetUsers<IDataUserDashboard>("/users/dashboard");
+        if (dashboardResponse) {
+          setDashboardData(dashboardResponse)
         }
-        
-
-
-        const dashboardResponse = await GetDashboard();
-        setDashboardData(dashboardResponse);
       } catch (error) {
         console.error("Erro ao buscar dados da API:", error);
       }
     };
-
     fetchData();
   }, []);
 
   return (
     <>
       <h1>Olá, página HOME</h1>
-      <Dashboard title="Médicos" data={dashboardData.doctor} types={["Total", "Disponíveis", "Indisponíveis"]} />
-      <Dashboard title="Contratantes" data={dashboardData.contractor} types={["Total", "Ativos", "Inativos"]} />
-      <Table data={usersData} columns={userColumns} />
+      <CountDashboard title="Médicos" data={dashboardData.doctor} types={["Total", "Disponíveis", "Indisponíveis"]} />
+      <CountDashboard title="Contratantes" data={dashboardData.contractor} types={["Total", "Ativos", "Inativos"]} />
+      <TableDashboard />
     </>
   );
 };
