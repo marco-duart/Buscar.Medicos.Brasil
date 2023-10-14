@@ -101,7 +101,7 @@ interface IDataPlans {
 }
 
 interface IDataPlansArray {
-  content: IDataPlans[] | [];
+  content: IDataPlans[];
   pageable: {
     pageNumber: number;
     pageSize: number;
@@ -136,12 +136,39 @@ interface IDataSpecialties {
   enabled: boolean;
   createdAt: string;
   updatedAt: string;
-  createdBy: string;
-  updatedBy: string;
+  createdBy: string | null;
+  updatedBy: string | null;
   active: boolean;
 }
 
-interface IDataSpecialtiesArray extends Array<IDataSpecialties> {}
+interface IDataSpecialtiesArray {
+  content: IDataSpecialties[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  last: boolean;
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  first: boolean;
+  numberOfElements: number;
+  empty: boolean;
+}
 
 //TIPO PARA REQUISIÇÃO EM NOTIFICACOES
 interface IDataNotifications {
@@ -155,20 +182,74 @@ interface IDataNotifications {
   message: string;
 }
 
-interface IDataNotificationsArray extends Array<IDataNotifications> {}
+interface IDataNotificationsArray {
+  content: IDataNotifications[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  last: boolean;
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  first: boolean;
+  numberOfElements: number;
+  empty: boolean;
+}
 
 //TIPO PARA REQUISIÇÃO EM QUESTIONS
 interface IDataQuestions {
   id: number;
   createdAt: string;
   updatedAt: string;
-  createdBy: string;
-  updatedBy: string;
+  createdBy: string | null;
+  updatedBy: string | null;
   title: string;
   message: string;
 }
 
-interface IDataQuestionsArray extends Array<IDataQuestions> {}
+interface IDataQuestionsArray {
+  content: IDataQuestions[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  last: boolean;
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  first: boolean;
+  numberOfElements: number;
+  empty: boolean;
+}
 
 //TIPO PARA O CONTEXT
 

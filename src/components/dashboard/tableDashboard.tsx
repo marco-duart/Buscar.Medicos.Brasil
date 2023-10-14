@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { GetLastUsers, GetUsers } from "../../data/services/users"
+import { GetUsers } from "../../data/services/users"
 import Table from "../shared/table"
 
 type UserDataProcessedType = {
@@ -7,37 +7,35 @@ type UserDataProcessedType = {
   email: string
   whatsapp: string
   userType: string
-}[]
+}
 
 export const TableDashboard = () => {
-  const HeadColumns = ['Usuário', 'E-mail', 'WhatsApp', 'Tipo de Usuário']
-  const [userDataProcessed, setUserDataProcessed] = useState<UserDataProcessedType>([])
+  const tableColumns = ['Usuário', 'E-mail', 'WhatsApp', 'Tipo de Usuário']
+  const [userDataProcessed, setUserDataProcessed] = useState<UserDataProcessedType[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await GetUsers<IDataUserArray>('/users', undefined, 'DESC', 4)
-        if(response) {
-          let dataTemp: UserDataProcessedType = []
-          response.content.forEach((item) => {
-            dataTemp.push({
-              user: item.lastName,
-              email: item.email,
-              whatsapp: item.phone,
-              userType: item.profiles.length > 0 ? item.profiles[0].name : ""
-            })
-          })
-          setUserDataProcessed(dataTemp)
-        }
-      } catch (error) {
-        console.error('Error fetching data', error)
-      }
+
+        const response = await GetUsers<IDataUserArray>('/users', 6, undefined, 'DESC')
+          const tempData = response?.content.reduce((accumulator, currentValue) => {
+            const user = {
+              user: currentValue.lastName,
+              email: currentValue.email,
+              whatsapp: currentValue.phone,
+              userType: currentValue.profiles.length > 0 ? currentValue.profiles[0].name : ""
+            }
+            return [...accumulator, user]
+            },
+          [] as UserDataProcessedType[]
+          )
+          setUserDataProcessed(tempData ?? [])
+
     }
     fetchData()
   }, [])
   return (
     <div>
-        <Table HeadColumns={HeadColumns} BodyRow={userDataProcessed} />
+        <Table HeadColumns={tableColumns} BodyRow={userDataProcessed} />
     </div>
   )
 }

@@ -1,12 +1,20 @@
 import { isAxiosError } from "axios";
 import api from "./api";
 
-export const GetQuestions = async () => {
+export const GetQuestions = async (size?: number, search?: string, sort?: "ASC" | "DESC", page?: number, id?:number) => {
   try {
-    //LEMBRAR
-    /* const token = localStorage.getItem("token"); */
-    const users = await api.get("/questions");
-    return users.data;
+    const token = localStorage.getItem("token");
+    const response = await api.get("/questions", {
+      headers: { Authorization: `Bearer ${token}` },
+      params: {
+        page,
+        sort,
+        search,
+        size,
+        id
+      }
+    });
+    return response.data as IDataQuestionsArray; 
   } catch (error) {
     if (isAxiosError(error)) {
       return null;

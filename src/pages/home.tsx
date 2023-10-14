@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 import { GetUsers } from "../data/services/users";
 import { CountDashboard } from "../components/dashboard/countDashboard";
 import { TableDashboard } from "../components/dashboard/tableDashboard";
@@ -50,7 +51,10 @@ const Home = () => {
       <h1>Olá, página HOME</h1>
       <CountDashboard title="Médicos" data={dashboardData.doctor} types={["Total", "Disponíveis", "Indisponíveis"]} />
       <CountDashboard title="Contratantes" data={dashboardData.contractor} types={["Total", "Ativos", "Inativos"]} />
+      <div>
+        <div><Link to="/home/users">Ver tudo ➔</Link></div>
       <TableDashboard />
+      </div>
     </>
   );
 };

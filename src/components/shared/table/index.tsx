@@ -8,7 +8,6 @@ type TableProps = {
 };
 
 export const Table = ({ HeadColumns, BodyRow }: TableProps) => {
-  console.log("BodyRow linha 10", BodyRow);
   return (
     <table>
       <thead>
@@ -19,6 +18,7 @@ export const Table = ({ HeadColumns, BodyRow }: TableProps) => {
         </tr>
       </thead>
       <tbody>
+        {/* EM VEZ DE OLHAR O OBJETO PELOS VALORES, RESOLVI VER PELAS CHAVES */}
         {BodyRow?.map((information, rowIndex) => (
           <tr key={`${rowIndex}-tr`}>
             {Object.keys(information).map((key, cellIndex) => (
