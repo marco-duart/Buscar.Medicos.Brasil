@@ -17,12 +17,14 @@ type PlansDataProcessedType = {
 const Plans = () => {
   const tableColumns = ["Título", "Valor", "Situação", "Ações"]
     const [plansDataProcessed, setPlansDataProcessed] = useState<PlansDataProcessedType[]>([])
-
+    const [searchValue, setSearchValue] = useState<string>("");
+    const [page, setPage] = useState<number>(0);
     const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
-          const response = await GetPlans(7)
+          const response = await GetPlans(7,searchValue, undefined, page)
+          console.log(response)
           const tempData = response?.content.reduce(
             (accumulator, currentValue) => {
               const plan = {
@@ -63,10 +65,16 @@ const Plans = () => {
           setPlansDataProcessed(tempData ?? [])
         }
         fetchData()
-      }, []);
+      }, [searchValue, page, setPlansDataProcessed]);
 
     return (
         <>
+          <input
+            type="text"
+            placeholder="Pesquise uma palavra-chave"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
           <Table HeadColumns={tableColumns} BodyRow={plansDataProcessed} />
         </>
     )

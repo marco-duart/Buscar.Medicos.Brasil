@@ -22,16 +22,16 @@ export const Users = () => {
     "Estado",
     "Tipo de Usuário",
   ];
-  const [page, setPage] = useState<number>(1);
-  const [userDataProcessed, setUserDataProcessed] =
-    useState<UserDataProcessedType[]>([]);
+  const [userDataProcessed, setUserDataProcessed] = useState<UserDataProcessedType[]>([]);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [page, setPage] = useState<number>(0);
 
   useEffect(() => {
     const fetchData = async () => {
         const response = await GetUsers<IDataUserArray>(
           "/users",
           6,
-          undefined,
+          searchValue,
           undefined,
           page
         );
@@ -54,12 +54,18 @@ export const Users = () => {
     };
   }
     fetchData();
-  }, [page, setUserDataProcessed]);
+  }, [searchValue, page, setUserDataProcessed]);
   return (
     <div>
+      <input
+        type="text"
+        placeholder="Pesquise uma palavra-chave"
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
       <Table HeadColumns={tableColumns} BodyRow={userDataProcessed} />
       <div>
-        {page > 1 && <button onClick={() => setPage(page - 1)}>←</button>}
+        {page > 0 && <button onClick={() => setPage(page - 1)}>←</button>}
       </div>
       {Array.from({ length: 4 }, (_, index) => (
         <div key={index}>

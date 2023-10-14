@@ -14,7 +14,8 @@ type SpecialtiesDataProcessedType = {
 
 const Specialties = () => {
   const [specialtiesDataProcessed, setSpecialtiesDataProcessed] = useState<SpecialtiesDataProcessedType[]>([])
-  const [page, setPage] = useState<number>(1);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [page, setPage] = useState<number>(0);
   const [currentTab, setCurrentTab] = useState<
     "TODOS" | "MEDICO" | "CONTRATANTE"
   >("MEDICO")
@@ -33,7 +34,7 @@ const Specialties = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await GetSpecialties(7)
+      const response = await GetSpecialties(7,searchValue, undefined, page)
       const tempData = response?.content.reduce(
         (accumulator, currentValue) => {
           const specialty = {
@@ -74,10 +75,16 @@ const Specialties = () => {
     }
 
     fetchData()
-  }, [])
+  }, [searchValue, page, setSpecialtiesDataProcessed])
 
   return (
     <>
+      <input
+        type="text"
+        placeholder="Pesquise uma palavra-chave"
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
       <Table HeadColumns={tableColumns} BodyRow={specialtiesDataProcessed} />
     </>
   )

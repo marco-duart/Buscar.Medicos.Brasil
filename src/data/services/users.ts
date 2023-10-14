@@ -5,22 +5,7 @@ type ApiResponse<T> = T | null;
 
 //TIPAGEM DEFINIDA POR QUEM CHAMA O AXIOS. USAR 'UNDEFINED' PARA OS ARGUMENTOS OPCIONAIS QUE NÃO FOR USADO NA CHAMADA DO AXIOS
 export const GetUsers = async <T>( urlAPI: "/users" | "/users/count" | "/users/dashboard", size?: number, search?: string, sort?: "ASC" | "DESC", page?: number, id?: number ): Promise<ApiResponse<T>> => {
-  //CONCATENAR OS ARGUMENTOS CONFORME A EXISTÊNCIA DELES. COLOCAR CONDICIALMENTE O '?' E '&' CONFORME EXISTENCIA DE VALOR EM QUERYSTRING
   //ADAPTAR OUTRAS ROTAS COMO STATE, SPECIALTY, PROFILE, CITY QUE POSSUEM OUTROS ARGUMENTOS POSSÍVEIS
-  //SOFRENDO COM ISSO ATÉ A JESSIE ENSINAR O PARAMNS
-  /* if(size) {
-    queryString += `${queryString ? "&": "?"}size=${size}`
-  }
-  if(sort) {
-    queryString += `${queryString ? "&": "?"}sort=${sort}`
-  }
-  if(page) {
-    queryString += `${queryString ? "&": "?"}page=${page}`
-  }
-  if(search) {
-    queryString += `${queryString ? "&": "?"}search=${search}`
-  } */
-  //REMOVER ESSA PARTE ACIMA
   try {
     //TOKEN
     const token = localStorage.getItem("token");

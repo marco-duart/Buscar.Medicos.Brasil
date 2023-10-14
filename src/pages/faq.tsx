@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react'
+import React, { useState, useEffect, ReactNode } from 'react'
 import { GetQuestions } from '../data/services/questions'
 import { Table } from "../components/shared/table"
 import See from "../assets/icon/eye-off-line.svg"
@@ -15,12 +15,13 @@ type NotificationsDataProcessedType = {
 const FAQ = () => {
   const tableColumns = ["Título", "Ações"]
     const [notificationsDataProcessed, setPlansDataProcessed] = useState<NotificationsDataProcessedType[]>([])
-
+    const [searchValue, setSearchValue] = useState<string>("");
+    const [page, setPage] = useState<number>(0);
     const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
-          const response = await GetQuestions(7)
+          const response = await GetQuestions(7,searchValue, undefined, page)
           const tempData = response?.content.reduce(
             (accumulator, currentValue) => {
               const plan = {
@@ -54,10 +55,16 @@ const FAQ = () => {
           setPlansDataProcessed(tempData ?? [])
         }
         fetchData()
-      }, []);
+      }, [searchValue, page, setPlansDataProcessed]);
 
     return (
         <>
+          <input
+            type="text"
+            placeholder="Pesquise uma palavra-chave"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
           <Table HeadColumns={tableColumns} BodyRow={notificationsDataProcessed} />
         </>
     )

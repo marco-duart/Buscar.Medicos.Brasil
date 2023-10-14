@@ -16,12 +16,13 @@ type NotificationsDataProcessedType = {
 const Notifications = () => {
   const tableColumns = ["Título", "Data de envio", "Ações"]
     const [notificationsDataProcessed, setPlansDataProcessed] = useState<NotificationsDataProcessedType[]>([])
-
+    const [searchValue, setSearchValue] = useState<string>("");
+    const [page, setPage] = useState<number>(0);
     const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
-          const response = await GetNotifications(7)
+          const response = await GetNotifications(7,searchValue, undefined, page)
           const tempData = response?.content.reduce(
             (accumulator, currentValue) => {
               const plan = {
@@ -56,10 +57,16 @@ const Notifications = () => {
           setPlansDataProcessed(tempData ?? [])
         }
         fetchData()
-      }, []);
+      }, [searchValue, page, setPlansDataProcessed]);
 
     return (
         <>
+          <input
+            type="text"
+            placeholder="Pesquise uma palavra-chave"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
           <Table HeadColumns={tableColumns} BodyRow={notificationsDataProcessed} />
         </>
     )
