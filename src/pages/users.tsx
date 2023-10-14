@@ -25,6 +25,7 @@ export const Users = () => {
   const [userDataProcessed, setUserDataProcessed] = useState<UserDataProcessedType[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
   const [page, setPage] = useState<number>(0);
+  const [totalPage, setTotalPage] = useState<number>(0)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +36,7 @@ export const Users = () => {
           undefined,
           page
         );
-        if (response) {
+        setTotalPage(response?.totalPages ?? 0)
           const tempData = response?.content.reduce((accumulator, currentValue) => {
             const user = {
               user: currentValue.lastName,
@@ -51,7 +52,6 @@ export const Users = () => {
           [] as UserDataProcessedType[]
           )
           setUserDataProcessed(tempData ?? [])
-    };
   }
     fetchData();
   }, [searchValue, page, setUserDataProcessed]);
@@ -68,12 +68,13 @@ export const Users = () => {
         {page > 0 && <button onClick={() => setPage(page - 1)}>←</button>}
       </div>
       {Array.from({ length: 4 }, (_, index) => (
+        (page + index + 1 < totalPage) &&
         <div key={index}>
-          <button onClick={() => setPage(page + index + 1)}>{page + index + 1}</button>
+          <button onClick={() => setPage(page + index + 1)}>{page + index + 2}</button>
         </div>
       ))}
       <div>
-        <button onClick={() => setPage(page + 1)}>→</button>
+        {(page < (totalPage - 1)) && <button onClick={() => setPage(page + 1)}>→</button>}
       </div>
     </div>
   );
