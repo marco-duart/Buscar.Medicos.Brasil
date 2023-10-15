@@ -12,19 +12,33 @@ type NotificationsDataProcessedType = {
 };
 
 const FAQ = () => {
+  // T HEADS
   const tableColumns = ["Título", "Ações"];
+  //DADOS PROCESSADOS
   const [notificationsDataProcessed, setPlansDataProcessed] = useState<
     NotificationsDataProcessedType[]
   >([]);
+  //PESQUISA
   const [searchValue, setSearchValue] = useState<string>("");
+  //PAGINAÇÃO
   const [page, setPage] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
   const navigate = useNavigate();
+  //FILTRO TODOS/MEDICO/CONTRATANTE
+  const [currentTab, setCurrentTab] = useState<
+    "MEDICO" | "CONTRATANTE"
+  >("CONTRATANTE");
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await GetQuestions(7, searchValue, undefined, page);
+      //TIPO RECEBE O VALOR DE CURRENTTAB
+      const filterType = currentTab
+      console.log(filterType)
+      const response = await GetQuestions(7, searchValue, undefined, page, undefined, filterType);
+      console.log(response)
+      //SETANDO O TOTAL DE PAGINAS PARA DEFINIR A PAGINAÇÃO
       setTotalPage(response?.totalPages ?? 0);
+      //CRIANDO UM NOVO ARRAY DE OBJETOS ESPECÍFICO PARA O CASO
       const tempData = response?.content.reduce((accumulator, currentValue) => {
         const plan = {
           name: currentValue.title,
@@ -52,13 +66,18 @@ const FAQ = () => {
         };
         return [...accumulator, plan];
       }, [] as NotificationsDataProcessedType[]);
+      //ATUALIZA COM TEMPDATA OU COM ARRAY VAZIO PARA LIDAR COM NULL E UNDEFINED
       setPlansDataProcessed(tempData ?? []);
     };
     fetchData();
-  }, [searchValue, page, setPlansDataProcessed]);
+  }, [searchValue, page, currentTab, setPlansDataProcessed]);
 
   return (
     <>
+      <div>
+        <button onClick={() => setCurrentTab("CONTRATANTE")}>Contratantes</button>
+        <button onClick={() => setCurrentTab("MEDICO")}>Médicos</button>
+      </div>
       <input
         type="text"
         placeholder="Pesquise uma palavra-chave"

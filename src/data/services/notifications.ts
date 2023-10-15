@@ -1,7 +1,7 @@
 import { isAxiosError } from "axios";
 import api from "./api";
 
-export const GetNotifications = async (size?: number, search?: string, sort?: "ASC" | "DESC", page?: number, id?:number) => {
+export const GetNotifications = async (size?: number, search?: string, sort?: "ASC" | "DESC", page?: number, id?:number, type?: string ) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.get("/notifications", {
@@ -11,7 +11,8 @@ export const GetNotifications = async (size?: number, search?: string, sort?: "A
         sort,
         search,
         size,
-        id
+        id,
+        type
       }
     });
     return response.data as IDataNotificationsArray; 

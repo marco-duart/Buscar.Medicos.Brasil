@@ -4,7 +4,7 @@ import api from "./api";
 type ApiResponse<T> = T | null;
 
 //TIPAGEM DEFINIDA POR QUEM CHAMA O AXIOS. USAR 'UNDEFINED' PARA OS ARGUMENTOS OPCIONAIS QUE NÃO FOR USADO NA CHAMADA DO AXIOS
-export const GetUsers = async <T>( urlAPI: "/users" | "/users/count" | "/users/dashboard", size?: number, search?: string, sort?: "ASC" | "DESC", page?: number, id?: number ): Promise<ApiResponse<T>> => {
+export const GetUsers = async <T>( urlAPI: "/users" | "/users/count" | "/users/dashboard" | "/users/profile", size?: number, search?: string, sort?: "ASC" | "DESC", page?: number, id?: number, type?: string ): Promise<ApiResponse<T>> => {
   //ADAPTAR OUTRAS ROTAS COMO STATE, SPECIALTY, PROFILE, CITY QUE POSSUEM OUTROS ARGUMENTOS POSSÍVEIS
   try {
     //TOKEN
@@ -17,7 +17,8 @@ export const GetUsers = async <T>( urlAPI: "/users" | "/users/count" | "/users/d
           sort,
           search,
           size,
-          id
+          id,
+          type
         }
       });
   
