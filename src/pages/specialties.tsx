@@ -19,18 +19,15 @@ const Specialties = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [page, setPage] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
-  const [currentTab, setCurrentTab] = useState<
-    "TODOS" | "MEDICO" | "CONTRATANTE"
-  >("MEDICO");
-
   const tableColumns = ["Nome especialidade", "Situação", "Ações"];
 
   const navigate = useNavigate();
 
-  const exemploRedirectDeCreate = () => {
-    navigate(`/planos/criar/${currentTab}`);
 
-    // Você acessa esse valor na sua página de criação a partir do
+  //ANALISAR DEPOIS
+  const exemploRedirectDeCreate = () => {
+    navigate(`/planos/criar/${'currentTab'}`)
+
     const params = useParams();
     params.tipo;
   };
@@ -52,14 +49,14 @@ const Specialties = () => {
             <div>
               <button
                 onClick={() =>
-                  navigate(`especialidades/visualizar/${currentValue.id}`)
+                  navigate(`/home/specialties/${currentValue.id}`,{ state: { action: "VIEW" } })
                 }
               >
                 <img src={See} />
               </button>
               <button
                 onClick={() =>
-                  navigate(`especialidades/editar/${currentValue.id}`)
+                  navigate(`/home/specialties/${currentValue.id}`,{ state: { action: "EDIT" } })
                 }
               >
                 <img src={Edit} />

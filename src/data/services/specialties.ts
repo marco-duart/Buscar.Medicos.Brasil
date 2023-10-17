@@ -1,7 +1,13 @@
 import { isAxiosError } from "axios";
 import api from "./api";
 
-export const GetSpecialties = async ( size?: number, search?: string, sort?: "ASC" | "DESC", page?: number, id?:number ) => {
+export const GetSpecialties = async (
+  size?: number,
+  search?: string,
+  sort?: "ASC" | "DESC",
+  page?: number,
+  id?: number
+) => {
   try {
     const token = localStorage.getItem("token");
     const apiResponse = await api.get("/specialties", {
@@ -11,10 +17,25 @@ export const GetSpecialties = async ( size?: number, search?: string, sort?: "AS
         sort,
         search,
         size,
-        id
-      }
+        id,
+      },
     });
     return apiResponse.data as IDataSpecialtiesArray;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return null;
+    }
+    return null;
+  }
+};
+
+export const GetSpecialty = async (id: number) => {
+  try {
+    const token = localStorage.getItem("token");
+    const apiResponse = await api.get(`/specialties/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return apiResponse.data as IDataSpecialties;
   } catch (error) {
     if (isAxiosError(error)) {
       return null;
@@ -28,9 +49,9 @@ export const PostSpecialty = async (title: string, content: string) => {
     const token = localStorage.getItem("token");
     const cards = await api.post(
       "/api/card",
-      { 
-        title, 
-        content 
+      {
+        title,
+        content,
       },
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -45,7 +66,7 @@ export const PostSpecialty = async (title: string, content: string) => {
   }
 };
 
-export const DeleteSpecialty = async (id: string) => {
+export const DeleteSpecialty = async (id: number) => {
   try {
     const token = localStorage.getItem("token");
     const cards = await api.delete(`/api/card/${id}`, {
@@ -60,20 +81,24 @@ export const DeleteSpecialty = async (id: string) => {
   }
 };
 
-export const PutSpecialty = async (id: string, title: string, content: string) => {
+export const PutSpecialty = async (
+  id: number,
+  name: string,
+  enabled: boolean
+) => {
   try {
     const token = localStorage.getItem("token");
-    const cards = await api.put(
-      `/api/card/${id}`,
+    const response = await api.put(
+      `/specialties/${id}`,
       {
-        title,
-        content,
+        name,
+        enabled,
       },
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    return cards.data;
+    return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
       return null;

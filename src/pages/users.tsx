@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { GetUsers } from "../data/services/users";
 import Table from "../components/shared/table";
+import { useNavigate, Link } from "react-router-dom";
 
 type UserDataProcessedType = {
   user: string;
@@ -36,6 +37,12 @@ export const Users = () => {
   const [currentTab, setCurrentTab] = useState<
     "TODOS" | "MEDICO" | "CONTRATANTE"
   >("TODOS");
+
+  //TESTANDO
+  const navigate = useNavigate()
+  const toDetail = () => {
+    navigate('/home/user/detail',{ state: { data: userDataProcessed } })
+  }
 
 
   useEffect(() => {
@@ -113,6 +120,9 @@ export const Users = () => {
         {page < totalPage - 1 && (
           <button onClick={() => setPage(page + 1)}>→</button>
         )}
+      </div>
+      <div>
+        <button onClick={() => toDetail()}>UseNavigate</button>
       </div>
     </div>
   );

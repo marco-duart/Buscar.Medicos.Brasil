@@ -7,6 +7,8 @@ import Specialties from "../pages/specialties";
 import Notifications from "../pages/notifications";
 import FAQ from "../pages/faq";
 import Login from "../pages/login";
+import UserDetail from "../pages/userDetail";
+import SpecialtyDetail from "../pages/specialtyDetail";
 
 export default function Router() {
   return (
@@ -16,8 +18,10 @@ export default function Router() {
         <Route path="/home" element={<BaseLayout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/home/users" element={<Users />} />
+          <Route path="/home/user/detail" element={<UserDetail />} />
           <Route path="/home/plans" element={<Plans />} />
           <Route path="/home/specialties" element={<Specialties />} />
+          <Route path="/home/specialties/:id" element={<SpecialtyDetail />} />
           <Route path="/home/notifications" element={<Notifications />} />
           <Route path="/home/faq" element={<FAQ />} />
         </Route>
@@ -25,3 +29,7 @@ export default function Router() {
     </BrowserRouter>
   );
 }
+
+
+{/* <Route path="/home/details/:id" element={<UserDetail />} />
+<Route path="/home/users/:tipo" element={<UserDetail />} /> */}
