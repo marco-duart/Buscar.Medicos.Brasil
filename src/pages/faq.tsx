@@ -1,10 +1,11 @@
-import React, { useState, useEffect, ReactNode } from "react";
-import { GetQuestions } from "../data/services/questions";
+import { useState, useEffect, ReactNode } from "react";
+import Modal from 'react-modal';
+import { DeleteQuestion, GetQuestions } from "../data/services/questions";
 import { Table } from "../components/shared/table";
 import See from "../assets/icon/eye-off-line.svg";
 import Edit from "../assets/icon/eye-off-line.svg";
 import Delete from "../assets/icon/eye-off-line.svg";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type NotificationsDataProcessedType = {
   name: string;
@@ -23,19 +24,20 @@ const FAQ = () => {
   //PAGINAÇÃO
   const [page, setPage] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
-  const navigate = useNavigate();
   //FILTRO TODOS/MEDICO/CONTRATANTE
   const [currentTab, setCurrentTab] = useState<
     "MEDICO" | "CONTRATANTE"
   >("CONTRATANTE");
+  //DEFININDO O NAVIGATE
+  const navigate = useNavigate();
+  //MODAL
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
       //TIPO RECEBE O VALOR DE CURRENTTAB
       const filterType = currentTab
-      console.log(filterType)
       const response = await GetQuestions(7, searchValue, undefined, page, undefined, filterType);
-      console.log(response)
       //SETANDO O TOTAL DE PAGINAS PARA DEFINIR A PAGINAÇÃO
       setTotalPage(response?.totalPages ?? 0);
       //CRIANDO UM NOVO ARRAY DE OBJETOS ESPECÍFICO PARA O CASO
@@ -46,19 +48,23 @@ const FAQ = () => {
             <div>
               <button
                 onClick={() =>
-                  navigate(`especialidades/visualizar/${currentValue.id}`)
+                  navigate(`/home/faq/${currentValue.id}`, {
+                    state: { action: "VIEW" },
+                  })
                 }
               >
                 <img src={See} />
               </button>
               <button
                 onClick={() =>
-                  navigate(`especialidades/editar/${currentValue.id}`)
+                  navigate(`/home/faq/${currentValue.id}`, {
+                    state: { action: "EDIT" },
+                  })
                 }
               >
                 <img src={Edit} />
               </button>
-              <button onClick={() => {}}>
+              <button onClick={() => handleDelete(currentValue.id)}>
                 <img src={Delete} />
               </button>
             </div>
@@ -72,6 +78,19 @@ const FAQ = () => {
     fetchData();
   }, [searchValue, page, currentTab, setPlansDataProcessed]);
 
+  const handleDelete = async (id: number) => {
+    await DeleteQuestion(id);
+    navigate("/home/questions");
+  };
+
+  //FUNÇÕES OPEN/CLOSE MODAL
+  function openModal() {
+    setIsOpen(true);
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <>
       <div>
@@ -84,6 +103,13 @@ const FAQ = () => {
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
       />
+      <button
+            onClick={() =>
+              navigate(`/home/faq/new/${currentTab}`, { state: { action: "NEW" } })
+            }
+          >
+            Nova Pergunta
+          </button>
       <Table HeadColumns={tableColumns} BodyRow={notificationsDataProcessed} />
       <div>
         {page > 0 && <button onClick={() => setPage(page - 1)}>←</button>}
@@ -104,6 +130,15 @@ const FAQ = () => {
           <button onClick={() => setPage(page + 1)}>→</button>
         )}
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Modal"
+      >
+        <h2>Hello</h2>
+        <button onClick={closeModal}>close</button>
+        <div>I am a modal</div>
+      </Modal>
     </>
   );
 };

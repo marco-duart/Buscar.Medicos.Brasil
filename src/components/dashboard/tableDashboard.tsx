@@ -16,7 +16,7 @@ export const TableDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
 
-        const response = await GetUsers<IDataUserArray>('/users', 6, undefined, 'DESC')
+        const response = await GetUsers<IDataUserArray>('/users', 4, undefined, 'DESC')
           const tempData = response?.content.reduce((accumulator, currentValue) => {
             const user = {
               user: currentValue.lastName,

@@ -97,7 +97,8 @@ interface IDataPlans {
   planTitle: string;
   enabled: boolean;
   period: string;
-  value: number;
+  values: number;
+  type: string;
 }
 
 interface IDataPlansArray {
@@ -180,6 +181,7 @@ interface IDataNotifications {
   title: string;
   sendingDate: string;
   message: string;
+  type: string;
 }
 
 interface IDataNotificationsArray {
@@ -220,6 +222,7 @@ interface IDataQuestions {
   updatedBy: string | null;
   title: string;
   message: string;
+  type: string;
 }
 
 interface IDataQuestionsArray {

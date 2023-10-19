@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { GetUsers } from "../data/services/users";
 import Table from "../components/shared/table";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type UserDataProcessedType = {
   user: string;

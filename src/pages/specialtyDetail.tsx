@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { GetSpecialty } from "../data/services/specialties";
-import { PutSpecialty } from "../data/services/specialties";
+import Modal from 'react-modal';
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { GetSpecialty, PostSpecialty, PutSpecialty } from "../data/services/specialties";
 
 type Location = {
   state: {
-    action: "VIEW" | "EDIT" | "";
+    action: "VIEW" | "EDIT" | "NEW";
   };
 };
 
+type Params = {
+  id?: string,
+}
+
 const SpecialtyDetail = () => {
+  const params: Params = useParams();
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: {
       value: "",
@@ -19,11 +25,12 @@ const SpecialtyDetail = () => {
       value: true,
     },
   });
-  const params = useParams();
+  //MODAL
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
   // RECUPERANDO PARAMETROS DO USELOCATION
   const location: Location = useLocation();
-  const action = location?.state.action || "";
+  const [action, setAction] = useState(location?.state.action ? location?.state.action : "")
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,17 +56,28 @@ const SpecialtyDetail = () => {
     });
   };
 
+  //FUNÇÕES OPEN/CLOSE MODAL
+  function openModal() {
+    setIsOpen(true);
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   const handleSubmit = async () => {
-    console.log(formData.name.value, formData.enabled.value)
-    console.log(params.id)
-    if (params.id) {
+    if (params.id && action === "EDIT") {
       const response = await PutSpecialty(parseInt(params.id), formData.name.value, formData.enabled.value);
-      console.log(response)
+      navigate("/home/specialties")
+    }
+    if(action === "NEW") {
+      const response = await PostSpecialty(formData.name.value, formData.enabled.value)
+      navigate("/home/specialties")
     }
   };
 
   return (
     <>
+      {action === "VIEW" && <div><button onClick={() => setAction("EDIT")}>Editar</button><button onClick={() => openModal()}>Deletar</button></div> }
       <label htmlFor="name">Nome
         <input
           type="text"
@@ -83,7 +101,17 @@ const SpecialtyDetail = () => {
         />
         Habilitado
       </label>
-      {params.id && action === "EDIT" && <button onClick={() => handleSubmit()}>Salvar</button>}
+      {(params.id && action === "EDIT") && <button onClick={() => handleSubmit()}>Salvar</button>}
+      {(!params.id && action === "NEW") && <button onClick={() => handleSubmit()}>Salvar</button>}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Modal"
+      >
+        <h2>Hello</h2>
+        <button onClick={closeModal}>close</button>
+        <div>I am a modal</div>
+      </Modal>
     </>
   );
 };

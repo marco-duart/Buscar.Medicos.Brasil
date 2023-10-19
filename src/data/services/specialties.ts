@@ -44,20 +44,20 @@ export const GetSpecialty = async (id: number) => {
   }
 };
 
-export const PostSpecialty = async (title: string, content: string) => {
+export const PostSpecialty = async (name: string, enabled: boolean) => {
   try {
     const token = localStorage.getItem("token");
-    const cards = await api.post(
-      "/api/card",
+    const response = await api.post(
+      "/specialties",
       {
-        title,
-        content,
+        name,
+        enabled,
       },
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    return cards.data;
+    return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
       return null;
@@ -69,10 +69,10 @@ export const PostSpecialty = async (title: string, content: string) => {
 export const DeleteSpecialty = async (id: number) => {
   try {
     const token = localStorage.getItem("token");
-    const cards = await api.delete(`/api/card/${id}`, {
+    const response = await api.delete(`/specialties/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    return cards.data;
+    return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
       return null;

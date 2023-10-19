@@ -1,16 +1,15 @@
-import React, {
-  createContext,
+import {
   useState,
-  useContext,
   useEffect,
   ReactNode,
 } from "react";
-import { GetPlans } from "../data/services/plans";
+import Modal from 'react-modal';
+import { DeletePlan, GetPlans } from "../data/services/plans";
 import { Table } from "../components/shared/table";
 import See from "../assets/icon/eye-off-line.svg";
 import Edit from "../assets/icon/eye-off-line.svg";
 import Delete from "../assets/icon/eye-off-line.svg";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type PlansDataProcessedType = {
   name: string;
@@ -31,11 +30,14 @@ const Plans = () => {
   //PAGINAÇÃO
   const [page, setPage] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
-  const navigate = useNavigate();
   //FILTRO TODOS/MEDICO/CONTRATANTE
   const [currentTab, setCurrentTab] = useState<
     "MEDICO" | "CONTRATANTE"
   >("MEDICO");
+  //DEFININDO O NAVIGATE
+  const navigate = useNavigate();
+  //MODAL
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +51,7 @@ const Plans = () => {
       const tempData = response?.content.reduce((accumulator, currentValue) => {
         const plan = {
           name: currentValue.planTitle,
-          value: currentValue.value,
+          value: currentValue.values,
           enabled: (
             <div>
               <input type="checkbox" checked={currentValue.enabled} />
@@ -60,19 +62,23 @@ const Plans = () => {
             <div>
               <button
                 onClick={() =>
-                  navigate(`especialidades/visualizar/${currentValue.id}`)
+                  navigate(`/home/plans/${currentValue.id}`, {
+                    state: { action: "VIEW" },
+                  })
                 }
               >
                 <img src={See} />
               </button>
               <button
                 onClick={() =>
-                  navigate(`especialidades/editar/${currentValue.id}`)
+                  navigate(`/home/plans/${currentValue.id}`, {
+                    state: { action: "EDIT" },
+                  })
                 }
               >
                 <img src={Edit} />
               </button>
-              <button onClick={() => {}}>
+              <button onClick={() => handleDelete(currentValue.id)}>
                 <img src={Delete} />
               </button>
             </div>
@@ -86,6 +92,19 @@ const Plans = () => {
     fetchData();
   }, [searchValue, page, currentTab, setPlansDataProcessed]);
 
+  const handleDelete = async (id: number) => {
+    await DeletePlan(id);
+    navigate("/home/plans");
+  };
+
+  //FUNÇÕES OPEN/CLOSE MODAL
+  function openModal() {
+    setIsOpen(true);
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <>
       <div>
@@ -98,6 +117,13 @@ const Plans = () => {
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
       />
+      <button
+            onClick={() =>
+              navigate("/home/specialties/new", { state: { action: "NEW" } })
+            }
+          >
+            Novo plano
+          </button>
       <Table HeadColumns={tableColumns} BodyRow={plansDataProcessed} />
       <div>
         {page > 0 && <button onClick={() => setPage(page - 1)}>←</button>}
@@ -118,6 +144,15 @@ const Plans = () => {
           <button onClick={() => setPage(page + 1)}>→</button>
         )}
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Modal"
+      >
+        <h2>Hello</h2>
+        <button onClick={closeModal}>close</button>
+        <div>I am a modal</div>
+      </Modal>
     </>
   );
 };

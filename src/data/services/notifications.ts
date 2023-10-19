@@ -24,35 +24,13 @@ export const GetNotifications = async (size?: number, search?: string, sort?: "A
   }
 };
 
-export const PostNotification = async (title: string, content: string) => {
+export const GetNotification = async (id: number) => {
   try {
     const token = localStorage.getItem("token");
-    const cards = await api.post(
-      "/api/card",
-      { 
-        title, 
-        content 
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    return cards.data;
-  } catch (error) {
-    if (isAxiosError(error)) {
-      return null;
-    }
-    return null;
-  }
-};
-
-export const DeleteNotification = async (id: string) => {
-  try {
-    const token = localStorage.getItem("token");
-    const cards = await api.delete(`/api/card/${id}`, {
+    const apiResponse = await api.get(`/notifications/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    return cards.data;
+    return apiResponse.data as IDataNotifications;
   } catch (error) {
     if (isAxiosError(error)) {
       return null;
@@ -61,20 +39,61 @@ export const DeleteNotification = async (id: string) => {
   }
 };
 
-export const PutNotification = async (id: string, title: string, content: string) => {
+export const PostNotification = async (title: string, sendingDate: string, message: string, type: string ) => {
   try {
     const token = localStorage.getItem("token");
-    const cards = await api.put(
-      `/api/card/${id}`,
-      {
-        title,
-        content,
+    const response = await api.post(
+      "/notifications",
+      { 
+        title, 
+        sendingDate,
+        message,
+        type
       },
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    return cards.data;
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return null;
+    }
+    return null;
+  }
+};
+
+export const DeleteNotification = async (id: number) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await api.delete(`/notifications/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return null;
+    }
+    return null;
+  }
+};
+
+export const PutNotification = async (id:number, title: string, sendingDate: string, message: string, type: string) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await api.put(
+      `/notifications/${id}`,
+      {
+        title,
+        sendingDate,
+        message,
+        type
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
       return null;

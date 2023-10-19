@@ -24,35 +24,13 @@ export const GetPlans = async (size?: number, search?: string, sort?: "ASC" | "D
   }
 };
 
-export const PostPlan = async (title: string, content: string) => {
+export const GetPlan = async (id: number) => {
   try {
     const token = localStorage.getItem("token");
-    const cards = await api.post(
-      "/api/card",
-      { 
-        title, 
-        content 
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    return cards.data;
-  } catch (error) {
-    if (isAxiosError(error)) {
-      return null;
-    }
-    return null;
-  }
-};
-
-export const DeletePlan = async (id: string) => {
-  try {
-    const token = localStorage.getItem("token");
-    const cards = await api.delete(`/api/card/${id}`, {
+    const apiResponse = await api.get(`/plans/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    return cards.data;
+    return apiResponse.data as IDataPlans;
   } catch (error) {
     if (isAxiosError(error)) {
       return null;
@@ -61,20 +39,63 @@ export const DeletePlan = async (id: string) => {
   }
 };
 
-export const PutPlan = async (id: string, title: string, content: string) => {
+export const PostPlan = async (planTitle: string, enabled: boolean, period: string, type: string, values: number) => {
   try {
     const token = localStorage.getItem("token");
-    const cards = await api.put(
-      `/api/card/${id}`,
-      {
-        title,
-        content,
+    const response = await api.post(
+      "/plans",
+      { 
+        planTitle, 
+        enabled,
+        period,
+        type,
+        values
       },
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    return cards.data;
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return null;
+    }
+    return null;
+  }
+};
+
+export const DeletePlan = async (id: number) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await api.delete(`/plans/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      return null;
+    }
+    return null;
+  }
+};
+
+export const PutPlan = async (id: number, planTitle: string, enabled: boolean, period: string, type: string, values: number ) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await api.put(
+      `/plans/${id}`,
+      {
+        planTitle, 
+        enabled,
+        period,
+        type,
+        values
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
       return null;
