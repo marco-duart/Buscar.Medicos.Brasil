@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Modal from 'react-modal';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { GetPlan, PostPlan, PutPlan } from "../data/services/plans";
+import { DeletePlan, GetPlan, PostPlan, PutPlan } from "../data/services/plans";
 
 type Location = {
   state: {
-    action: "VIEW" | "EDIT" | "NEW" | "";
+    action: "VIEW" | "EDIT" | "NEW" | "DELETE";
   };
 };
 
@@ -42,7 +42,7 @@ const PlanDetail = () => {
 
   // RECUPERANDO PARAMETROS DO USELOCATION
   const location: Location = useLocation();
-  const action = location?.state.action || "";
+  const [action, setAction] = useState(location?.state.action ? location?.state.action : "")
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,15 +72,45 @@ const PlanDetail = () => {
   };
 
   const handleSubmit = async () => {
+    if (!formData.title.value || !formData.period.value || !formData.values ) {
+      setFormData({
+        title: {
+          ...formData.title,
+          valid: formData.title.value.trim() !== "", //SE ESTIVER EM BRANCO, RESULTA EM FALSE
+        },
+        enabled: {
+          ...formData.enabled
+        },
+        period: {
+          ...formData.period,
+          valid: formData.period.value.trim() !== "",
+        },
+        type: {
+          ...formData.type
+        },
+        values : {
+          ...formData.values, 
+          valid: formData.values.value !== null && !isNaN(formData.values.value)
+        }
+      });
+      return
+    }
     if (params.id && action === "EDIT") {
       const response = await PutPlan(parseInt(params.id), formData.title.value, formData.enabled.value, formData.period.value, formData.type.value, formData.values.value);
-      navigate("/home/plans")
+      openModal()
     }
     if(action === "NEW") {
       const response = await PostPlan(formData.title.value, formData.enabled.value, formData.period.value, formData.type.value, formData.values.value)
-      navigate("/home/plans")
+      openModal()
     }
   };
+
+  const handleDelete = async (id: number) => {
+    await DeletePlan(id);
+    closeModal()
+    navigate("/home/plans")
+  };
+
 
   //FUNÇÕES OPEN/CLOSE MODAL
   function openModal() {
@@ -92,6 +122,7 @@ const PlanDetail = () => {
 
   return (
     <>
+      {action === "VIEW" && <div><button onClick={() => setAction("EDIT")}>Editar</button><button onClick={() => openModal()}>Deletar</button></div> }
       <label htmlFor="title">Título
         <input
           type="text"
@@ -117,7 +148,7 @@ const PlanDetail = () => {
       </label>
       <label htmlFor="period">Período
         <input
-          type="date"
+          type="text"
           name="period"
           id="period"
           value={formData.period.value}
@@ -139,16 +170,16 @@ const PlanDetail = () => {
           }
         />
       </label>
-      {params.id && action === "EDIT" && <button onClick={() => handleSubmit()}>Salvar</button>}
-      {action === "NEW" && <button onClick={() => handleSubmit()}>Salvar</button>}
+      {(action === "NEW" || action === "EDIT") && <button onClick={() => handleSubmit()}>Salvar</button>}
+      {(!formData.title.valid || !formData.period.valid || !formData.values.valid) && (<small>Preencha todos os campos!</small>)}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
-        <h2>Hello</h2>
         <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
+        {(action === "DELETE") && <div><div>Tem certeza que deseja *excluir* este item?</div><button onClick={() => {params.id && handleDelete(parseInt(params.id))}}>Sim, excluir item</button><button onClick={() => closeModal()}>Voltar</button></div>}
+        {(action === "NEW" || action === "EDIT") && <div>** salvo com sucesso! <button onClick={() => navigate("/home/plans")}>Voltar</button></div>}
       </Modal>
     </>
   );

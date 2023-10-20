@@ -38,6 +38,8 @@ const Plans = () => {
   const navigate = useNavigate();
   //MODAL
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  //ID DO ITEM PARA DELETAR
+  const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,7 +80,7 @@ const Plans = () => {
               >
                 <img src={Edit} />
               </button>
-              <button onClick={() => handleDelete(currentValue.id)}>
+              <button onClick={() => openModal(currentValue.id)}>
                 <img src={Delete} />
               </button>
             </div>
@@ -94,22 +96,31 @@ const Plans = () => {
 
   const handleDelete = async (id: number) => {
     await DeletePlan(id);
-    navigate("/home/plans");
+    closeModal()
+    setPage(0);
   };
 
   //FUNÇÕES OPEN/CLOSE MODAL
-  function openModal() {
+  const openModal = (id: number) => {
+    setDeleteItemId(id);
     setIsOpen(true);
   }
-  function closeModal() {
+  const closeModal = () => {
+    setDeleteItemId(null);
     setIsOpen(false);
+  }
+
+  //SETANDO A PAGE COMO 0 AO MUDAR DE ABA
+  const changeTab = (value: "CONTRATANTE" | "MEDICO") => {
+    setPage(0)
+    setCurrentTab(value)
   }
 
   return (
     <>
       <div>
-        <button onClick={() => setCurrentTab("MEDICO")}>Médicos</button>
-        <button onClick={() => setCurrentTab("CONTRATANTE")}>Contratantes</button>
+        <button onClick={() => changeTab("MEDICO")}>Médicos</button>
+        <button onClick={() => changeTab("CONTRATANTE")}>Contratantes</button>
       </div>
       <input
         type="text"
@@ -119,7 +130,7 @@ const Plans = () => {
       />
       <button
             onClick={() =>
-              navigate("/home/specialties/new", { state: { action: "NEW" } })
+              navigate(`/home/plans/new/${currentTab}`, { state: { action: "NEW" } })
             }
           >
             Novo plano
@@ -149,9 +160,10 @@ const Plans = () => {
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
-        <h2>Hello</h2>
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
+        <button onClick={() => closeModal()}>close</button>
+        <div>Tem certeza que deseja *excluir* este item?</div>
+        <button onClick={() => {deleteItemId && handleDelete(deleteItemId)}}>Sim, excluir item</button>
+        <button onClick={() => closeModal()}>Voltar</button>
       </Modal>
     </>
   );

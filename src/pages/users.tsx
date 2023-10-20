@@ -86,14 +86,20 @@ export const Users = () => {
     fetchData();
   }, [searchValue, page, currentTab, setUserDataProcessed]);
 
+  //SETANDO A PAGE COMO 0 AO MUDAR DE ABA
+  const changeTab = (value: "TODOS" | "CONTRATANTE" | "MEDICO") => {
+    setPage(0)
+    setCurrentTab(value)
+  }
+
   return (
     <div>
       <div>
-        <button onClick={() => setCurrentTab("TODOS")}>Todos</button>
-        <button onClick={() => setCurrentTab("CONTRATANTE")}>
+        <button onClick={() => changeTab("TODOS")}>Todos</button>
+        <button onClick={() => changeTab("CONTRATANTE")}>
           Contratantes
         </button>
-        <button onClick={() => setCurrentTab("MEDICO")}>Médicos</button>
+        <button onClick={() => changeTab("MEDICO")}>Médicos</button>
       </div>
       <input
         type="text"

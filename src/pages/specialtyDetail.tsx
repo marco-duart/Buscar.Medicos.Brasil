@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Modal from 'react-modal';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { GetSpecialty, PostSpecialty, PutSpecialty } from "../data/services/specialties";
+import { DeleteSpecialty, GetSpecialty, PostSpecialty, PutSpecialty } from "../data/services/specialties";
 
 type Location = {
   state: {
-    action: "VIEW" | "EDIT" | "NEW";
+    action: "VIEW" | "EDIT" | "NEW" | "DELETE";
   };
 };
 
@@ -56,6 +56,36 @@ const SpecialtyDetail = () => {
     });
   };
 
+  const handleSubmit = async () => {
+    if (!formData.name.value) {
+      setFormData({
+        name: {
+          ...formData.name,
+          valid: formData.name.value.trim() !== "", //SE ESTIVER EM BRANCO, RESULTA EM FALSE
+        },
+        enabled: {
+          ...formData.enabled,
+        }
+      });
+      return
+    }
+    if (params.id && action === "EDIT") {
+      const response = await PutSpecialty(parseInt(params.id), formData.name.value, formData.enabled.value);
+      openModal()
+    }
+    if(action === "NEW") {
+      const response = await PostSpecialty(formData.name.value, formData.enabled.value)
+      openModal()
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    await DeleteSpecialty(id);
+    closeModal()
+    navigate("/home/specialties")
+  };
+
+
   //FUNÇÕES OPEN/CLOSE MODAL
   function openModal() {
     setIsOpen(true);
@@ -64,20 +94,9 @@ const SpecialtyDetail = () => {
     setIsOpen(false);
   }
 
-  const handleSubmit = async () => {
-    if (params.id && action === "EDIT") {
-      const response = await PutSpecialty(parseInt(params.id), formData.name.value, formData.enabled.value);
-      navigate("/home/specialties")
-    }
-    if(action === "NEW") {
-      const response = await PostSpecialty(formData.name.value, formData.enabled.value)
-      navigate("/home/specialties")
-    }
-  };
-
   return (
     <>
-      {action === "VIEW" && <div><button onClick={() => setAction("EDIT")}>Editar</button><button onClick={() => openModal()}>Deletar</button></div> }
+      {action === "VIEW" && <div><button onClick={() => setAction("EDIT")}>Editar</button><button onClick={() => {setAction("DELETE"); openModal()}}>Deletar</button></div> }
       <label htmlFor="name">Nome
         <input
           type="text"
@@ -101,16 +120,16 @@ const SpecialtyDetail = () => {
         />
         Habilitado
       </label>
-      {(params.id && action === "EDIT") && <button onClick={() => handleSubmit()}>Salvar</button>}
-      {(!params.id && action === "NEW") && <button onClick={() => handleSubmit()}>Salvar</button>}
+      {(action === "NEW" || action === "EDIT") && <button onClick={() => handleSubmit()}>Salvar</button>}
+      {!formData.name.valid && (<small>Preencha todos os campos!</small>)}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
-        <h2>Hello</h2>
         <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
+        {(action === "DELETE") && <div><div>Tem certeza que deseja *excluir* este item?</div><button onClick={() => {params.id && handleDelete(parseInt(params.id))}}>Sim, excluir item</button><button onClick={() => closeModal()}>Voltar</button></div>}
+        {(action === "NEW" || action === "EDIT") && <div>** salvo com sucesso! <button onClick={() => navigate("/home/specialties")}>Voltar</button></div>}
       </Modal>
     </>
   );

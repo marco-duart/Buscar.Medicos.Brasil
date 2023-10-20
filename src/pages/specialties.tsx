@@ -144,11 +144,10 @@ const Specialties = () => {
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
-        <h2>Hello</h2>
         <button onClick={() => closeModal()}>close</button>
-        <div>I am a modal</div>
-        <button onClick={() => {deleteItemId && handleDelete(deleteItemId)}}>Sim</button>
-        <button onClick={() => closeModal()}>Não</button>
+        <div>Tem certeza que deseja *excluir* este item?</div>
+        <button onClick={() => {deleteItemId && handleDelete(deleteItemId)}}>Sim, excluir item</button>
+        <button onClick={() => closeModal()}>Voltar</button>
       </Modal>
       </div>
     </>
@@ -156,5 +155,3 @@ const Specialties = () => {
 };
 
 export default Specialties;
-
-//handleDelete(currentValue.id)
