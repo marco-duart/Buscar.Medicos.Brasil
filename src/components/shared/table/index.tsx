@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import * as S from "./styles"
 
 type TableRow = Record<string, string | number | ReactNode>;
 
@@ -9,25 +10,25 @@ type TableProps = {
 
 export const Table = ({ HeadColumns, BodyRow }: TableProps) => {
   return (
-    <table>
+    <S.SharedTableStyled>
       <thead>
         <tr>
           {HeadColumns.map((columnText, index) => (
-            <th key={`${index}-th`}>{columnText}</th>
+            <S.SharedTableThStyled key={`${index}-th`}>{columnText}</S.SharedTableThStyled>
           ))}
         </tr>
       </thead>
       <tbody>
         {/* EM VEZ DE OLHAR O OBJETO PELOS VALORES, RESOLVI VER PELAS CHAVES */}
         {BodyRow?.map((information, rowIndex) => (
-          <tr key={`${rowIndex}-tr`}>
+          <S.SharedTableRowStyled key={`${rowIndex}-tr`}>
             {Object.keys(information).map((key, cellIndex) => (
-              <td key={`${rowIndex}-${cellIndex}-td`}>{information[key]}</td>
+              <S.SharedTableTdStyled key={`${rowIndex}-${cellIndex}-td`}>{information[key]}</S.SharedTableTdStyled>
             ))}
-          </tr>
+          </S.SharedTableRowStyled>
         ))}
       </tbody>
-    </table>
+    </S.SharedTableStyled>
   );
 };
 

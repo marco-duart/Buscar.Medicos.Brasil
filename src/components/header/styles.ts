@@ -7,8 +7,8 @@ export const HeaderStyled = styled.header`
   justify-content: flex-end;
   align-items: center;
   gap: 15px;
+  margin-bottom: 30px;
 `
-
 
 export const HeaderIcoStyled = styled.img`
   width: 48px;
@@ -21,7 +21,6 @@ export const HeaderNameStyled = styled.div`
   font-weight: 600;
   color: ${props => props.theme.colors.darkGray100};
 `
-
 
 export const HeaderEmailStyled = styled.div`
   font-size: ${props => props.theme.fontSizes.sm};

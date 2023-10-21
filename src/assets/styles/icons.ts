@@ -17,6 +17,7 @@ import logout from "../../assets/icon/logout.svg"
 import edit from "../../assets/icon/edit.svg"
 import peopleSearch from "../../assets/icon/people-search-one.svg"
 import user from "../../assets/icon/user.svg"
+import calendar from "../../assets/icon/calendar.svg"
 
 
 const icons = {
@@ -39,6 +40,7 @@ const icons = {
     edit,
     peopleSearch,
     user,
+    calendar,
 };
 
 export default icons

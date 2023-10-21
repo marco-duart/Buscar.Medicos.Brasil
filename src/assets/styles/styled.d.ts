@@ -6,6 +6,8 @@ declare module 'styled-components' {
     colors: {
       white: string
       white100: string
+      white200: string
+      white300: string
       lightRed: string
       darkBlue: string
       orange: string
@@ -29,6 +31,7 @@ declare module 'styled-components' {
       xxxl: string
     },
     radius: {
+      xm: string
       sm: string
       md: string
     },

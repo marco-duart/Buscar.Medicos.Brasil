@@ -1,14 +1,24 @@
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom'
 import { GetUsers } from "../data/services/users";
 import { CountDashboard } from "../components/dashboard/countDashboard";
 import { TableDashboard } from "../components/dashboard/tableDashboard";
-import * as S from "./style"
-import woman from "../assets/image/woman.svg"
-import elipse from "../assets/image/Ellipse.svg"
-
+import icons from "../assets/styles/icons";
+import * as S from "./style";
+import woman from "../assets/image/woman.svg";
+import elipse from "../assets/image/Ellipse.svg";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 const Home = () => {
+  //DATA FORMATADA USANDO O DATE-FNS
+  const formatCurrentDate = () => {
+    const currentDate = new Date();
+    const formattedDate = format(currentDate, "dd 'de' MMMM 'de' yyyy", {
+      locale: ptBR,
+    });
+    return formattedDate;
+  };
+  const formatedDate = formatCurrentDate();
   //VERIFICAR O PROBLEMA COM ESSA TIPAGEM
   const [dashboardData, setDashboardData] = useState<IDataUserDashboard>({
     doctor: {
@@ -25,41 +35,65 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const dashboardResponse = await GetUsers<IDataUserDashboard>("/users/dashboard");
-        if (dashboardResponse) {
-          setDashboardData(dashboardResponse)
-        }
-      } catch (error) {
-        console.error("Erro ao buscar dados da API:", error);
+      const dashboardResponse = await GetUsers<IDataUserDashboard>(
+        "/users/dashboard"
+      );
+      if (dashboardResponse) {
+        setDashboardData(dashboardResponse);
       }
     };
     fetchData();
   }, []);
 
   return (
-    <>
-      <div>
+    <S.ContainerDashStyled>
+      <S.DivDFlexStyled>
         <S.SectionNewsDashStyled>
-            <S.DivDFlexEndStyled>
-              <S.RelativeDivDashStyled>
-                <img src={elipse} alt="" />
-                <S.AbsoluteImageDashStyled src={woman} alt="" />
-              </S.RelativeDivDashStyled>
-            </S.DivDFlexEndStyled>
-            <div>Calendar</div>
-            <div>Message</div>
+          <S.DivDFlexEndStyled>
+            <S.RelativeDivDashStyled>
+              <img src={elipse} alt="" />
+              <S.AbsoluteImageDashStyled src={woman} alt="" />
+            </S.RelativeDivDashStyled>
+          </S.DivDFlexEndStyled>
+          <S.DivDFlexCenterStyled>
+            <img src={icons.calendar} alt="" />
+            {formatedDate}
+          </S.DivDFlexCenterStyled>
+          <div>
+            <S.TitleDashStyled>Seja bem vindo!</S.TitleDashStyled>
+            <S.ContentDashStyled>
+              Neste painel você poderá administrar seu site de forma simples e
+              prática.
+            </S.ContentDashStyled>
+          </div>
         </S.SectionNewsDashStyled>
-        <div>
-          <CountDashboard title="Médicos" data={dashboardData.doctor} types={["Total", "Disponíveis", "Indisponíveis"]} />
-          <CountDashboard title="Contratantes" data={dashboardData.contractor} types={["Total", "Ativos", "Inativos"]} />
-        </div>
-      </div>
-      <div>
-        <div><Link to="/home/users">Ver tudo ➔</Link></div>
+        <S.CountDashStyled>
+          <CountDashboard
+            title="Médicos"
+            data={dashboardData.doctor}
+            types={["Total", "Disponíveis", "Indisponíveis"]}
+          />
+          <CountDashboard
+            title="Contratantes"
+            data={dashboardData.contractor}
+            types={["Total", "Ativos", "Inativos"]}
+          />
+        </S.CountDashStyled>
+      </S.DivDFlexStyled>
+      <S.TableDashStyled>
+        <S.DFlexStyled>
+          <S.TableDashTitleStyled>
+            Últimos usuários cadastrados
+          </S.TableDashTitleStyled>
+          <div>
+            <S.TableDashLinkStyled to="/home/users">
+              Ver tudo ➔
+            </S.TableDashLinkStyled>
+          </div>
+        </S.DFlexStyled>
         <TableDashboard />
-      </div>
-    </>
+      </S.TableDashStyled>
+    </S.ContainerDashStyled>
   );
 };
 

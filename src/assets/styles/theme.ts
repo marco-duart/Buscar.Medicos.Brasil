@@ -3,6 +3,8 @@ const light = {
   colors: {
     white: "#FFFFFF",
     white100: "#FCFCFC",
+    white200: "#E0E0E0",
+    white300: "#9E9E9E",
     lightRed: "#FF3333",
     darkBlue: "#004CE8",
     orange: "#FFB801",
@@ -26,6 +28,7 @@ const light = {
     xxxl: "3rem",
   },
   radius: {
+    xm: "5px",
     sm: "16px",
     md: "24px",
   },

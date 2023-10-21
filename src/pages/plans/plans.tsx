@@ -127,7 +127,10 @@ const Plans = () => {
         type="text"
         placeholder="Pesquise uma palavra-chave"
         value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        onChange={(e) => {
+          setSearchValue(e.target.value);
+          setPage(0);
+        }}
       />
       <button
             onClick={() =>

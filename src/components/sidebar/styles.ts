@@ -7,8 +7,8 @@ export const SideBarColumnStyled = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 14.3%;
-  height: 100vh;
+  width: 274px; //14.3%
+  height: 100%;
   background-color: ${props => props.theme.colors.darkGreen};
 `
 

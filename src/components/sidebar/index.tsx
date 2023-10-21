@@ -7,7 +7,7 @@ const Sidebar = () => {
         <S.SideBarColumnStyled>
             <S.LogoSidebarDivStyled><img src={logo} alt="" /></S.LogoSidebarDivStyled>
             <S.SideBarDivStyled>
-                <div><S.SidebarMenuStyled to="/home/dash"><S.IcoSidebarDivStyled src={icons.dash} alt="" />Dashboard</S.SidebarMenuStyled></div>
+                <div><S.SidebarMenuStyled to="/home/"><S.IcoSidebarDivStyled src={icons.dash} alt="" />Dashboard</S.SidebarMenuStyled></div>
                 <div><S.SidebarMenuStyled to="/home/users"><S.IcoSidebarDivStyled src={icons.users} alt="" />Usuarios Cadastrados</S.SidebarMenuStyled></div>
                 <div><S.SidebarMenuStyled to="/home/plans"><S.IcoSidebarDivStyled src={icons.plans} alt="" />Planos</S.SidebarMenuStyled></div>
                 <div><S.SidebarMenuStyled to="/home/specialties"><S.IcoSidebarDivStyled src={icons.spec} alt="" />Especialidades</S.SidebarMenuStyled></div>

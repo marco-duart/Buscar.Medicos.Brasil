@@ -10,13 +10,14 @@ type UserDataProcessedType = {
 }
 
 export const TableDashboard = () => {
+  const size = 4
   const tableColumns = ['Usuário', 'E-mail', 'WhatsApp', 'Tipo de Usuário']
   const [userDataProcessed, setUserDataProcessed] = useState<UserDataProcessedType[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
 
-        const response = await GetUsers<IDataUserArray>('/users', 4, undefined, 'DESC')
+        const response = await GetUsers<IDataUserArray>('/users', size)
           const tempData = response?.content.reduce((accumulator, currentValue) => {
             const user = {
               user: currentValue.lastName,
@@ -34,8 +35,8 @@ export const TableDashboard = () => {
     fetchData()
   }, [])
   return (
-    <div>
-        <Table HeadColumns={tableColumns} BodyRow={userDataProcessed} />
-    </div>
+    <>
+      <Table HeadColumns={tableColumns} BodyRow={userDataProcessed} />
+    </>
   )
 }
