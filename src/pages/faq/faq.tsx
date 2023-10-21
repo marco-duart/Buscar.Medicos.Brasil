@@ -1,39 +1,34 @@
-import {
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
+import { useState, useEffect, ReactNode } from "react";
 import Modal from 'react-modal';
-import { DeletePlan, GetPlans } from "../data/services/plans";
-import { Table } from "../components/shared/table";
-import See from "../assets/icon/eye-off-line.svg";
-import Edit from "../assets/icon/eye-off-line.svg";
-import Delete from "../assets/icon/eye-off-line.svg";
+import { DeleteQuestion, GetQuestions } from "../../data/services/questions";
+import { Table } from "../../components/shared/table";
+import See from "../../assets/icon/details.svg";
+import Edit from "../../assets/icon/edit.svg";
+import Delete from "../../assets/icon/delete.svg";
 import { useNavigate } from "react-router-dom";
 
-type PlansDataProcessedType = {
+type NotificationsDataProcessedType = {
   name: string;
-  value: number;
-  enabled: ReactNode;
   actions: ReactNode;
 };
 
-const Plans = () => {
+const FAQ = () => {
   // T HEADS
-  const tableColumns = ["Título", "Valor", "Situação", "Ações"];
+  const tableColumns = ["Título", "Ações"];
   //DADOS PROCESSADOS
-  const [plansDataProcessed, setPlansDataProcessed] = useState<
-    PlansDataProcessedType[]
+  const [notificationsDataProcessed, setPlansDataProcessed] = useState<
+    NotificationsDataProcessedType[]
   >([]);
   //PESQUISA
   const [searchValue, setSearchValue] = useState<string>("");
   //PAGINAÇÃO
+  const size = 7
   const [page, setPage] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
   //FILTRO TODOS/MEDICO/CONTRATANTE
   const [currentTab, setCurrentTab] = useState<
     "MEDICO" | "CONTRATANTE"
-  >("MEDICO");
+  >("CONTRATANTE");
   //DEFININDO O NAVIGATE
   const navigate = useNavigate();
   //MODAL
@@ -45,26 +40,18 @@ const Plans = () => {
     const fetchData = async () => {
       //TIPO RECEBE O VALOR DE CURRENTTAB
       const filterType = currentTab
-
-      const response = await GetPlans(7, searchValue, undefined, page, undefined, filterType);
+      const response = await GetQuestions(size, searchValue, undefined, page, undefined, filterType);
       //SETANDO O TOTAL DE PAGINAS PARA DEFINIR A PAGINAÇÃO
       setTotalPage(response?.totalPages ?? 0);
       //CRIANDO UM NOVO ARRAY DE OBJETOS ESPECÍFICO PARA O CASO
       const tempData = response?.content.reduce((accumulator, currentValue) => {
         const plan = {
-          name: currentValue.planTitle,
-          value: currentValue.values,
-          enabled: (
-            <div>
-              <input type="checkbox" checked={currentValue.enabled} />
-              <label>{currentValue.enabled ? "Ativo" : "Inativo"}</label>
-            </div>
-          ),
+          name: currentValue.title,
           actions: (
             <div>
               <button
                 onClick={() =>
-                  navigate(`/home/plans/${currentValue.id}`, {
+                  navigate(`/home/faq/${currentValue.id}`, {
                     state: { action: "VIEW" },
                   })
                 }
@@ -73,7 +60,7 @@ const Plans = () => {
               </button>
               <button
                 onClick={() =>
-                  navigate(`/home/plans/${currentValue.id}`, {
+                  navigate(`/home/faq/${currentValue.id}`, {
                     state: { action: "EDIT" },
                   })
                 }
@@ -87,7 +74,7 @@ const Plans = () => {
           ),
         };
         return [...accumulator, plan];
-      }, [] as PlansDataProcessedType[]);
+      }, [] as NotificationsDataProcessedType[]);
       //ATUALIZA COM TEMPDATA OU COM ARRAY VAZIO PARA LIDAR COM NULL E UNDEFINED
       setPlansDataProcessed(tempData ?? []);
     };
@@ -95,7 +82,7 @@ const Plans = () => {
   }, [searchValue, page, currentTab, setPlansDataProcessed]);
 
   const handleDelete = async (id: number) => {
-    await DeletePlan(id);
+    await DeleteQuestion(id);
     closeModal()
     setPage(0);
   };
@@ -119,8 +106,8 @@ const Plans = () => {
   return (
     <>
       <div>
-        <button onClick={() => changeTab("MEDICO")}>Médicos</button>
         <button onClick={() => changeTab("CONTRATANTE")}>Contratantes</button>
+        <button onClick={() => changeTab("MEDICO")}>Médicos</button>
       </div>
       <input
         type="text"
@@ -130,12 +117,12 @@ const Plans = () => {
       />
       <button
             onClick={() =>
-              navigate(`/home/plans/new/${currentTab}`, { state: { action: "NEW" } })
+              navigate(`/home/faq/new/${currentTab}`, { state: { action: "NEW" } })
             }
           >
-            Novo plano
+            Nova Pergunta
           </button>
-      <Table HeadColumns={tableColumns} BodyRow={plansDataProcessed} />
+      <Table HeadColumns={tableColumns} BodyRow={notificationsDataProcessed} />
       <div>
         {page > 0 && <button onClick={() => setPage(page - 1)}>←</button>}
       </div>
@@ -169,4 +156,4 @@ const Plans = () => {
   );
 };
 
-export default Plans;
+export default FAQ;

@@ -1,14 +1,15 @@
 import Router from "./config/router";
 import GlobalStyles from "./assets/styles/global-styles";
-import { ApiContextProvider } from "./data/contexts/apiContext";
+import { ThemeProvider } from "styled-components";
+import light from "./assets/styles/theme"
 
 function App() {
   return (
     <>
-      <GlobalStyles />
-      <ApiContextProvider>
+      <ThemeProvider theme={light}>
+        <GlobalStyles />
         <Router />
-      </ApiContextProvider>
+      </ThemeProvider>
     </>
   );
 }

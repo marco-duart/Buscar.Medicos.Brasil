@@ -4,35 +4,37 @@ import {
   ReactNode,
 } from "react";
 import Modal from 'react-modal';
-import { DeleteNotification, GetNotifications } from "../data/services/notifications";
-import { Table } from "../components/shared/table";
-import See from "../assets/icon/eye-off-line.svg";
-import Edit from "../assets/icon/eye-off-line.svg";
-import Delete from "../assets/icon/eye-off-line.svg";
+import { DeletePlan, GetPlans } from "../../data/services/plans";
+import { Table } from "../../components/shared/table";
+import See from "../../assets/icon/details.svg";
+import Edit from "../../assets/icon/edit.svg";
+import Delete from "../../assets/icon/delete.svg";
 import { useNavigate } from "react-router-dom";
 
-type NotificationsDataProcessedType = {
+type PlansDataProcessedType = {
   name: string;
-  dataEnvio: string;
+  value: number;
+  enabled: ReactNode;
   actions: ReactNode;
 };
 
-const Notifications = () => {
+const Plans = () => {
   // T HEADS
-  const tableColumns = ["Título", "Data de envio", "Ações"];
+  const tableColumns = ["Título", "Valor", "Situação", "Ações"];
   //DADOS PROCESSADOS
-  const [notificationsDataProcessed, setPlansDataProcessed] = useState<
-    NotificationsDataProcessedType[]
+  const [plansDataProcessed, setPlansDataProcessed] = useState<
+    PlansDataProcessedType[]
   >([]);
   //PESQUISA
   const [searchValue, setSearchValue] = useState<string>("");
   //PAGINAÇÃO
+  const size = 7
   const [page, setPage] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
   //FILTRO TODOS/MEDICO/CONTRATANTE
   const [currentTab, setCurrentTab] = useState<
     "MEDICO" | "CONTRATANTE"
-  >("CONTRATANTE");
+  >("MEDICO");
   //DEFININDO O NAVIGATE
   const navigate = useNavigate();
   //MODAL
@@ -45,19 +47,25 @@ const Notifications = () => {
       //TIPO RECEBE O VALOR DE CURRENTTAB
       const filterType = currentTab
 
-      const response = await GetNotifications(7, searchValue, undefined, page, undefined, filterType);
+      const response = await GetPlans(size, searchValue, undefined, page, undefined, filterType);
       //SETANDO O TOTAL DE PAGINAS PARA DEFINIR A PAGINAÇÃO
       setTotalPage(response?.totalPages ?? 0);
       //CRIANDO UM NOVO ARRAY DE OBJETOS ESPECÍFICO PARA O CASO
       const tempData = response?.content.reduce((accumulator, currentValue) => {
         const plan = {
-          name: currentValue.title,
-          dataEnvio: currentValue.sendingDate,
+          name: currentValue.planTitle,
+          value: currentValue.values,
+          enabled: (
+            <div>
+              <input type="checkbox" checked={currentValue.enabled} />
+              <label>{currentValue.enabled ? "Ativo" : "Inativo"}</label>
+            </div>
+          ),
           actions: (
             <div>
               <button
                 onClick={() =>
-                  navigate(`/home/notifications/${currentValue.id}`, {
+                  navigate(`/home/plans/${currentValue.id}`, {
                     state: { action: "VIEW" },
                   })
                 }
@@ -66,7 +74,7 @@ const Notifications = () => {
               </button>
               <button
                 onClick={() =>
-                  navigate(`/home/notifications/${currentValue.id}`, {
+                  navigate(`/home/plans/${currentValue.id}`, {
                     state: { action: "EDIT" },
                   })
                 }
@@ -80,7 +88,7 @@ const Notifications = () => {
           ),
         };
         return [...accumulator, plan];
-      }, [] as NotificationsDataProcessedType[]);
+      }, [] as PlansDataProcessedType[]);
       //ATUALIZA COM TEMPDATA OU COM ARRAY VAZIO PARA LIDAR COM NULL E UNDEFINED
       setPlansDataProcessed(tempData ?? []);
     };
@@ -88,7 +96,7 @@ const Notifications = () => {
   }, [searchValue, page, currentTab, setPlansDataProcessed]);
 
   const handleDelete = async (id: number) => {
-    await DeleteNotification(id);
+    await DeletePlan(id);
     closeModal()
     setPage(0);
   };
@@ -112,8 +120,8 @@ const Notifications = () => {
   return (
     <>
       <div>
-        <button onClick={() => changeTab("CONTRATANTE")}>Contratantes</button>
         <button onClick={() => changeTab("MEDICO")}>Médicos</button>
+        <button onClick={() => changeTab("CONTRATANTE")}>Contratantes</button>
       </div>
       <input
         type="text"
@@ -123,12 +131,12 @@ const Notifications = () => {
       />
       <button
             onClick={() =>
-              navigate(`/home/notifications/new/${currentTab}`, { state: { action: "NEW" } })
+              navigate(`/home/plans/new/${currentTab}`, { state: { action: "NEW" } })
             }
           >
-            Nova Notificação
+            Novo plano
           </button>
-      <Table HeadColumns={tableColumns} BodyRow={notificationsDataProcessed} />
+      <Table HeadColumns={tableColumns} BodyRow={plansDataProcessed} />
       <div>
         {page > 0 && <button onClick={() => setPage(page - 1)}>←</button>}
       </div>
@@ -162,4 +170,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+export default Plans;

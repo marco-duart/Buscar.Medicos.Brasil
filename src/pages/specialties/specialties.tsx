@@ -1,10 +1,10 @@
 import { ReactNode, useEffect, useState } from "react";
 import Modal from 'react-modal';
-import { DeleteSpecialty, GetSpecialties } from "../data/services/specialties";
-import { Table } from "../components/shared/table";
-import See from "../assets/icon/eye-off-line.svg";
-import Edit from "../assets/icon/eye-off-line.svg";
-import Delete from "../assets/icon/eye-off-line.svg";
+import { DeleteSpecialty, GetSpecialties } from "../../data/services/specialties";
+import { Table } from "../../components/shared/table";
+import See from "../../assets/icon/details.svg";
+import Edit from "../../assets/icon/edit.svg";
+import Delete from "../../assets/icon/delete.svg";
 import { useNavigate } from "react-router-dom";
 
 type SpecialtiesDataProcessedType = {
@@ -23,6 +23,7 @@ const Specialties = () => {
    //PESQUISA
   const [searchValue, setSearchValue] = useState<string>("");
   //PAGINAÇÃO
+  const size = 7
   const [page, setPage] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
   //DEFININDO O NAVIGATE
@@ -34,7 +35,7 @@ const Specialties = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await GetSpecialties(7, searchValue, undefined, page);
+      const response = await GetSpecialties(size, searchValue, undefined, page);
       //SETANDO O TOTAL DE PAGINAS PARA DEFINIR A PAGINAÇÃO
       setTotalPage(response?.totalPages ?? 0);
       //CRIANDO UM NOVO ARRAY DE OBJETOS ESPECÍFICO PARA O CASO

@@ -1,20 +1,25 @@
-import { useState, useEffect, ReactNode } from "react";
+import {
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import Modal from 'react-modal';
-import { DeleteQuestion, GetQuestions } from "../data/services/questions";
-import { Table } from "../components/shared/table";
-import See from "../assets/icon/eye-off-line.svg";
-import Edit from "../assets/icon/eye-off-line.svg";
-import Delete from "../assets/icon/eye-off-line.svg";
+import { DeleteNotification, GetNotifications } from "../../data/services/notifications";
+import { Table } from "../../components/shared/table";
+import See from "../../assets/icon/details.svg";
+import Edit from "../../assets/icon/edit.svg";
+import Delete from "../../assets/icon/delete.svg";
 import { useNavigate } from "react-router-dom";
 
 type NotificationsDataProcessedType = {
   name: string;
+  dataEnvio: string;
   actions: ReactNode;
 };
 
-const FAQ = () => {
+const Notifications = () => {
   // T HEADS
-  const tableColumns = ["Título", "Ações"];
+  const tableColumns = ["Título", "Data de envio", "Ações"];
   //DADOS PROCESSADOS
   const [notificationsDataProcessed, setPlansDataProcessed] = useState<
     NotificationsDataProcessedType[]
@@ -22,6 +27,7 @@ const FAQ = () => {
   //PESQUISA
   const [searchValue, setSearchValue] = useState<string>("");
   //PAGINAÇÃO
+  const size = 7
   const [page, setPage] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
   //FILTRO TODOS/MEDICO/CONTRATANTE
@@ -39,18 +45,20 @@ const FAQ = () => {
     const fetchData = async () => {
       //TIPO RECEBE O VALOR DE CURRENTTAB
       const filterType = currentTab
-      const response = await GetQuestions(7, searchValue, undefined, page, undefined, filterType);
+
+      const response = await GetNotifications(size, searchValue, undefined, page, undefined, filterType);
       //SETANDO O TOTAL DE PAGINAS PARA DEFINIR A PAGINAÇÃO
       setTotalPage(response?.totalPages ?? 0);
       //CRIANDO UM NOVO ARRAY DE OBJETOS ESPECÍFICO PARA O CASO
       const tempData = response?.content.reduce((accumulator, currentValue) => {
         const plan = {
           name: currentValue.title,
+          dataEnvio: currentValue.sendingDate,
           actions: (
             <div>
               <button
                 onClick={() =>
-                  navigate(`/home/faq/${currentValue.id}`, {
+                  navigate(`/home/notifications/${currentValue.id}`, {
                     state: { action: "VIEW" },
                   })
                 }
@@ -59,7 +67,7 @@ const FAQ = () => {
               </button>
               <button
                 onClick={() =>
-                  navigate(`/home/faq/${currentValue.id}`, {
+                  navigate(`/home/notifications/${currentValue.id}`, {
                     state: { action: "EDIT" },
                   })
                 }
@@ -81,7 +89,7 @@ const FAQ = () => {
   }, [searchValue, page, currentTab, setPlansDataProcessed]);
 
   const handleDelete = async (id: number) => {
-    await DeleteQuestion(id);
+    await DeleteNotification(id);
     closeModal()
     setPage(0);
   };
@@ -116,10 +124,10 @@ const FAQ = () => {
       />
       <button
             onClick={() =>
-              navigate(`/home/faq/new/${currentTab}`, { state: { action: "NEW" } })
+              navigate(`/home/notifications/new/${currentTab}`, { state: { action: "NEW" } })
             }
           >
-            Nova Pergunta
+            Nova Notificação
           </button>
       <Table HeadColumns={tableColumns} BodyRow={notificationsDataProcessed} />
       <div>
@@ -155,4 +163,4 @@ const FAQ = () => {
   );
 };
 
-export default FAQ;
+export default Notifications;

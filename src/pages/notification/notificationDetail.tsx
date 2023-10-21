@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Modal from 'react-modal';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { DeletePlan, GetPlan, PostPlan, PutPlan } from "../data/services/plans";
+import { DeleteNotification, GetNotification, PostNotification, PutNotification } from "../../data/services/notifications";
 
 type Location = {
   state: {
@@ -14,7 +14,7 @@ type Params = {
   type?: "MEDICO" | "CONTRATANTE"
 }
 
-const PlanDetail = () => {
+const NotificationDetail = () => {
   const params: Params = useParams();
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
@@ -22,19 +22,16 @@ const PlanDetail = () => {
       value: "",
       valid: true,
     },
-    enabled: {
-      value: true,
-    },
-    period: {
+    sendingDate: {
       value: "",
-      valid: true
+      valid: true,
+    },
+    message: {
+      value: "",
+      valid: true,
     },
     type: {
-      value: params.type ? params.type : ""
-    },
-    values: {
-      value: 0,
-      valid: true
+      value: params.type ? params.type : "",
     }
   });
   //MODAL
@@ -47,14 +44,13 @@ const PlanDetail = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (params.id) {
-        const response = await GetPlan(parseInt(params.id));
+        const response = await GetNotification(parseInt(params.id));
         if (response) {
           setFormData({
-            title: { value: response.planTitle, valid: true },
-            enabled: { value: response.enabled },
-            period: { value: response.period, valid: true },
-            type: { value: response.type },
-            values: { value: response.values, valid: true}
+            title: { value: response.title, valid: true },
+            sendingDate: { value: response.sendingDate, valid: true },
+            message: { value: response.message, valid: true},
+            type: { value: response.type}
           });
         }
       }
@@ -62,53 +58,41 @@ const PlanDetail = () => {
     params.id && fetchData();
   }, [params.id]);
 
-  const handleCheckboxChange = () => {
-    setFormData({
-      ...formData,
-      enabled: {
-        value: !formData.enabled.value,
-      },
-    });
-  };
-
   const handleSubmit = async () => {
-    if (!formData.title.value || !formData.period.value || !formData.values ) {
+    if (!formData.title.value || !formData.sendingDate.value || !formData.message.value) {
       setFormData({
         title: {
           ...formData.title,
           valid: formData.title.value.trim() !== "", //SE ESTIVER EM BRANCO, RESULTA EM FALSE
         },
-        enabled: {
-          ...formData.enabled
+        sendingDate: {
+          ...formData.sendingDate,
+          valid: formData.sendingDate.value.trim() !== "",
         },
-        period: {
-          ...formData.period,
-          valid: formData.period.value.trim() !== "",
+        message: {
+          ...formData.message,
+          valid: formData.message.value.trim() !== "",
         },
         type: {
           ...formData.type
-        },
-        values : {
-          ...formData.values, 
-          valid: formData.values.value !== null && !isNaN(formData.values.value)
         }
       });
       return
     }
     if (params.id && action === "EDIT") {
-      const response = await PutPlan(parseInt(params.id), formData.title.value, formData.enabled.value, formData.period.value, formData.type.value, formData.values.value);
+      const response = await PutNotification(parseInt(params.id), formData.title.value, formData.sendingDate.value, formData.message.value, formData.type.value);
       openModal()
     }
     if(action === "NEW") {
-      const response = await PostPlan(formData.title.value, formData.enabled.value, formData.period.value, formData.type.value, formData.values.value)
+      const response = await PostNotification(formData.title.value, formData.sendingDate.value, formData.message.value, formData.type.value)
       openModal()
     }
   };
 
   const handleDelete = async (id: number) => {
-    await DeletePlan(id);
+    await DeleteNotification(id);
     closeModal()
-    navigate("/home/plans")
+    navigate("/home/notifications")
   };
 
 
@@ -135,43 +119,23 @@ const PlanDetail = () => {
           }
         />
       </label>
-      <label htmlFor="enabled">
-        <input
-          type="checkbox"
-          name="enabled"
-          id="enabled"
-          checked={formData.enabled.value}
-          disabled={action === "VIEW"}
-          onChange={handleCheckboxChange}
-        />
-        Habilitado
+      <label htmlFor="">Data Enviado
+        <input type="date" name="sendingDate" id="sendingDate" value={formData.sendingDate.value}/>
       </label>
-      <label htmlFor="period">Período
+      <label htmlFor="title">Mensagem
         <input
           type="text"
-          name="period"
-          id="period"
-          value={formData.period.value}
+          name="message"
+          id="message"
+          value={formData.message.value}
           disabled={action === "VIEW"}
           onChange={(event) =>
-            setFormData({ ...formData, period: { value: event.target.value, valid: true }})
-          }
-        />
-      </label>
-      <label htmlFor="values">Valor
-        <input
-          type="number"
-          name="values"
-          id="values"
-          value={formData.values.value}
-          disabled={action === "VIEW"}
-          onChange={(event) =>
-            setFormData({ ...formData, values: { value: parseFloat(event.target.value), valid: true }})
+            setFormData({ ...formData, message: { value: event.target.value, valid: true }})
           }
         />
       </label>
       {(action === "NEW" || action === "EDIT") && <button onClick={() => handleSubmit()}>Salvar</button>}
-      {(!formData.title.valid || !formData.period.valid || !formData.values.valid) && (<small>Preencha todos os campos!</small>)}
+      {(!formData.title.valid || !formData.sendingDate.valid || !formData.message.valid) && (<small>Preencha todos os campos!</small>)}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -179,10 +143,10 @@ const PlanDetail = () => {
       >
         <button onClick={closeModal}>close</button>
         {(action === "DELETE") && <div><div>Tem certeza que deseja *excluir* este item?</div><button onClick={() => {params.id && handleDelete(parseInt(params.id))}}>Sim, excluir item</button><button onClick={() => closeModal()}>Voltar</button></div>}
-        {(action === "NEW" || action === "EDIT") && <div>** salvo com sucesso! <button onClick={() => navigate("/home/plans")}>Voltar</button></div>}
+        {(action === "NEW" || action === "EDIT") && <div>** salvo com sucesso! <button onClick={() => navigate("/home/specialties")}>Voltar</button></div>}
       </Modal>
     </>
   );
 };
 
-export default PlanDetail;
+export default NotificationDetail;

@@ -1,15 +1,18 @@
 import { Outlet } from "react-router-dom"
+import * as S from "./styles"
 import Header from "../header"
 import Sidebar from "../sidebar"
 
 const BaseLayout = () => {
     return (
         <>
-            <div>
-                <Header />
+            <S.BaseLayoutPageStyled>
                 <Sidebar />
-                <Outlet />
-            </div>
+                <S.BaseLayoutDivStyled>
+                    <Header />
+                    <Outlet />
+                </S.BaseLayoutDivStyled>
+            </S.BaseLayoutPageStyled>
         </>
     )
 }

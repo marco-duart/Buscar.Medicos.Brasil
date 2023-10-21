@@ -1,19 +1,38 @@
-export const theme = {
-    colors: {
-      white: "#FFF",
-      lightBlue: "#3A72F8",
-      darkBlue: "#0A2668",
-      gray100: "#EFEFEF",
-      gray200: "#EAEAEA",
-      gray300: "#F8F8F8",
-      gray400: "#575757",
-    },
-    fontSizes: {
-      sm: "16px",
-      md: "20px",
-      lg: "24px",
-      xl: "32px",
-      xxl: "48px",
-    },
-    fontFamily: "'Poppins', sans-serif",
+const light = {
+  title: "Default",
+  colors: {
+    white: "#FFFFFF",
+    white100: "#FCFCFC",
+    lightRed: "#FF3333",
+    darkBlue: "#004CE8",
+    orange: "#FFB801",
+    yellowGreen: "#B4E08E",
+    lightGreen100: "#00C247",
+    lightGreen200: "#0E9658",
+    darkGreen: "#046639",
+    gray100: "#757575",
+    gray200: "#FAFAFA",
+    gray300: "#F5F5F5",
+    gray600: "#424242",
+    darkGray100: "#212121",
+  },
+  fontSizes: {
+    xsm: "0.875rem",
+    sm: "1rem",
+    md: "1.25rem",
+    lg: "1.5rem",
+    xl: "2rem",
+    xxl: "2.25rem",
+    xxxl: "3rem",
+  },
+  radius: {
+    sm: "16px",
+    md: "24px",
+  },
+  fontFamily: {
+    Poppins: "'Poppins', sans-serif",
+    Sora: "'Sora', sans-serif",
   }
+}
+
+export default light

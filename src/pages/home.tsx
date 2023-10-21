@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom'
 import { GetUsers } from "../data/services/users";
 import { CountDashboard } from "../components/dashboard/countDashboard";
 import { TableDashboard } from "../components/dashboard/tableDashboard";
+import * as S from "./style"
+import woman from "../assets/image/woman.svg"
+import elipse from "../assets/image/Ellipse.svg"
+
 
 const Home = () => {
   //VERIFICAR O PROBLEMA COM ESSA TIPAGEM
@@ -35,12 +39,25 @@ const Home = () => {
 
   return (
     <>
-      <h1>Olá, página HOME</h1>
-      <CountDashboard title="Médicos" data={dashboardData.doctor} types={["Total", "Disponíveis", "Indisponíveis"]} />
-      <CountDashboard title="Contratantes" data={dashboardData.contractor} types={["Total", "Ativos", "Inativos"]} />
+      <div>
+        <S.SectionNewsDashStyled>
+            <S.DivDFlexEndStyled>
+              <S.RelativeDivDashStyled>
+                <img src={elipse} alt="" />
+                <S.AbsoluteImageDashStyled src={woman} alt="" />
+              </S.RelativeDivDashStyled>
+            </S.DivDFlexEndStyled>
+            <div>Calendar</div>
+            <div>Message</div>
+        </S.SectionNewsDashStyled>
+        <div>
+          <CountDashboard title="Médicos" data={dashboardData.doctor} types={["Total", "Disponíveis", "Indisponíveis"]} />
+          <CountDashboard title="Contratantes" data={dashboardData.contractor} types={["Total", "Ativos", "Inativos"]} />
+        </div>
+      </div>
       <div>
         <div><Link to="/home/users">Ver tudo ➔</Link></div>
-      <TableDashboard />
+        <TableDashboard />
       </div>
     </>
   );

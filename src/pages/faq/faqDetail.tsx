@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Modal from 'react-modal';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { DeleteSpecialty, GetSpecialty, PostSpecialty, PutSpecialty } from "../data/services/specialties";
+import { DeleteQuestion, GetQuestion, PostQuestion, PutQuestion } from "../../data/services/questions";
 
 type Location = {
   state: {
@@ -11,23 +11,28 @@ type Location = {
 
 type Params = {
   id?: string,
+  type?: "MEDICO" | "CONTRATANTE"
 }
 
-const SpecialtyDetail = () => {
+const FAQDetail = () => {
   const params: Params = useParams();
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    name: {
+    title: {
       value: "",
       valid: true,
     },
-    enabled: {
-      value: true,
+    message: {
+      value: "",
+      valid: true,
     },
+    type: {
+      value: params.type ? params.type : "",
+    }
   });
   //MODAL
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-
+  
   // RECUPERANDO PARAMETROS DO USELOCATION
   const location: Location = useLocation();
   const [action, setAction] = useState(location?.state.action ? location?.state.action : "")
@@ -35,11 +40,12 @@ const SpecialtyDetail = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (params.id) {
-        const response = await GetSpecialty(parseInt(params.id));
+        const response = await GetQuestion(parseInt(params.id));
         if (response) {
           setFormData({
-            name: { value: response.name, valid: true },
-            enabled: { value: response.enabled },
+            title: { value: response.title, valid: true },
+            message: { value: response.message, valid: true },
+            type: { value: response.type }
           });
         }
       }
@@ -47,42 +53,37 @@ const SpecialtyDetail = () => {
     params.id && fetchData();
   }, [params.id]);
 
-  const handleCheckboxChange = () => {
-    setFormData({
-      ...formData,
-      enabled: {
-        value: !formData.enabled.value,
-      },
-    });
-  };
-
   const handleSubmit = async () => {
-    if (!formData.name.value) {
+    if (!formData.title.value || !formData.message.value) {
       setFormData({
-        name: {
-          ...formData.name,
-          valid: formData.name.value.trim() !== "", //SE ESTIVER EM BRANCO, RESULTA EM FALSE
+        title: {
+          ...formData.title,
+          valid: formData.title.value.trim() !== "", //SE ESTIVER EM BRANCO, RESULTA EM FALSE
         },
-        enabled: {
-          ...formData.enabled,
+        message: {
+          ...formData.message,
+          valid: formData.message.value.trim() !== "",
+        },
+        type: {
+          ...formData.type
         }
       });
       return
     }
     if (params.id && action === "EDIT") {
-      const response = await PutSpecialty(parseInt(params.id), formData.name.value, formData.enabled.value);
+      const response = await PutQuestion(parseInt(params.id), formData.title.value, formData.message.value, formData.type.value);
       openModal()
     }
     if(action === "NEW") {
-      const response = await PostSpecialty(formData.name.value, formData.enabled.value)
+      const response = await PostQuestion(formData.title.value, formData.message.value, formData.type.value)
       openModal()
     }
   };
 
   const handleDelete = async (id: number) => {
-    await DeleteSpecialty(id);
+    await DeleteQuestion(id);
     closeModal()
-    navigate("/home/specialties")
+    navigate("/home/faq")
   };
 
 
@@ -96,32 +97,33 @@ const SpecialtyDetail = () => {
 
   return (
     <>
-      {action === "VIEW" && <div><button onClick={() => setAction("EDIT")}>Editar</button><button onClick={() => {setAction("DELETE"); openModal()}}>Deletar</button></div> }
-      <label htmlFor="name">Nome
+      {action === "VIEW" && <div><button onClick={() => setAction("EDIT")}>Editar</button><button onClick={() => openModal()}>Deletar</button></div> }
+      <label htmlFor="title">Título
         <input
           type="text"
-          name="name"
-          id="name"
-          value={formData.name.value}
+          name="title"
+          id="title"
+          value={formData.title.value}
           disabled={action === "VIEW"}
           onChange={(event) =>
-            setFormData({ ...formData, name: { value: event.target.value, valid: true }})
+            setFormData({ ...formData, title: { value: event.target.value, valid: true }})
           }
         />
       </label>
-      <label htmlFor="enabled">
+      <label htmlFor="message">Mensagem
         <input
-          type="checkbox"
-          name="enabled"
-          id="enabled"
-          checked={formData.enabled.value}
+          type="text"
+          name="message"
+          id="message"
+          value={formData.message.value}
           disabled={action === "VIEW"}
-          onChange={handleCheckboxChange}
+          onChange={(event) =>
+            setFormData({ ...formData, message: { value: event.target.value, valid: true }})
+          }
         />
-        Habilitado
       </label>
       {(action === "NEW" || action === "EDIT") && <button onClick={() => handleSubmit()}>Salvar</button>}
-      {!formData.name.valid && (<small>Preencha todos os campos!</small>)}
+      {(!formData.title.valid || !formData.message.valid) && (<small>Preencha todos os campos!</small>)}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -135,4 +137,4 @@ const SpecialtyDetail = () => {
   );
 };
 
-export default SpecialtyDetail;
+export default FAQDetail;

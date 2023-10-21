@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate, useParams, useLocation } from "react-router-dom"
-import { GetUsers } from "../data/services/users"
+import { GetUsers } from "../../data/services/users"
 
 const UserDetail = () => {
   /* const params = useParams()
