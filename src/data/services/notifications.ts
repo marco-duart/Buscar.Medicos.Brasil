@@ -63,21 +63,6 @@ export const PostNotification = async (title: string, sendingDate: string, messa
   }
 };
 
-export const DeleteNotification = async (id: number) => {
-  try {
-    const token = localStorage.getItem("token");
-    const response = await api.delete(`/notifications/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return response.data;
-  } catch (error) {
-    if (isAxiosError(error)) {
-      return null;
-    }
-    return null;
-  }
-};
-
 export const PutNotification = async (id:number, title: string, sendingDate: string, message: string, type: string) => {
   try {
     const token = localStorage.getItem("token");

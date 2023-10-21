@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
-import Modal from 'react-modal';
+import Modal from "react-modal";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { DeletePlan, GetPlan, PostPlan, PutPlan } from "../../data/services/plans";
+import {
+  DeletePlan,
+  GetPlan,
+  PostPlan,
+  PutPlan,
+} from "../../data/services/plans";
+import * as S from "../../assets/styles/shared";
+import icons from "../../assets/styles/icons";
 
 type Location = {
   state: {
@@ -10,13 +17,13 @@ type Location = {
 };
 
 type Params = {
-  id?: string,
-  type?: "MEDICO" | "CONTRATANTE"
-}
+  id?: string;
+  type?: "MEDICO" | "CONTRATANTE";
+};
 
 const PlanDetail = () => {
   const params: Params = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: {
       value: "",
@@ -27,22 +34,24 @@ const PlanDetail = () => {
     },
     period: {
       value: "",
-      valid: true
+      valid: true,
     },
     type: {
-      value: params.type ? params.type : ""
+      value: params.type ? params.type : "",
     },
     values: {
       value: 0,
-      valid: true
-    }
+      valid: true,
+    },
   });
   //MODAL
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
   // RECUPERANDO PARAMETROS DO USELOCATION
   const location: Location = useLocation();
-  const [action, setAction] = useState(location?.state.action ? location?.state.action : "")
+  const [action, setAction] = useState(
+    location?.state.action ? location?.state.action : ""
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,7 +63,7 @@ const PlanDetail = () => {
             enabled: { value: response.enabled },
             period: { value: response.period, valid: true },
             type: { value: response.type },
-            values: { value: response.values, valid: true}
+            values: { value: response.values, valid: true },
           });
         }
       }
@@ -72,45 +81,58 @@ const PlanDetail = () => {
   };
 
   const handleSubmit = async () => {
-    if (!formData.title.value || !formData.period.value || !formData.values ) {
+    if (!formData.title.value || !formData.period.value || !formData.values) {
       setFormData({
         title: {
           ...formData.title,
           valid: formData.title.value.trim() !== "", //SE ESTIVER EM BRANCO, RESULTA EM FALSE
         },
         enabled: {
-          ...formData.enabled
+          ...formData.enabled,
         },
         period: {
           ...formData.period,
           valid: formData.period.value.trim() !== "",
         },
         type: {
-          ...formData.type
+          ...formData.type,
         },
-        values : {
-          ...formData.values, 
-          valid: formData.values.value !== null && !isNaN(formData.values.value)
-        }
+        values: {
+          ...formData.values,
+          valid:
+            formData.values.value !== null && !isNaN(formData.values.value),
+        },
       });
-      return
+      return;
     }
     if (params.id && action === "EDIT") {
-      const response = await PutPlan(parseInt(params.id), formData.title.value, formData.enabled.value, formData.period.value, formData.type.value, formData.values.value);
-      openModal()
+      const response = await PutPlan(
+        parseInt(params.id),
+        formData.title.value,
+        formData.enabled.value,
+        formData.period.value,
+        formData.type.value,
+        formData.values.value
+      );
+      openModal();
     }
-    if(action === "NEW") {
-      const response = await PostPlan(formData.title.value, formData.enabled.value, formData.period.value, formData.type.value, formData.values.value)
-      openModal()
+    if (action === "NEW") {
+      const response = await PostPlan(
+        formData.title.value,
+        formData.enabled.value,
+        formData.period.value,
+        formData.type.value,
+        formData.values.value
+      );
+      openModal();
     }
   };
 
   const handleDelete = async (id: number) => {
     await DeletePlan(id);
-    closeModal()
-    navigate("/home/plans")
+    closeModal();
+    navigate("/home/plans");
   };
-
 
   //FUNÇÕES OPEN/CLOSE MODAL
   function openModal() {
@@ -122,64 +144,121 @@ const PlanDetail = () => {
 
   return (
     <>
-      {action === "VIEW" && <div><button onClick={() => setAction("EDIT")}>Editar</button><button onClick={() => openModal()}>Deletar</button></div> }
-      <label htmlFor="title">Título
-        <input
-          type="text"
-          name="title"
-          id="title"
-          value={formData.title.value}
-          disabled={action === "VIEW"}
-          onChange={(event) =>
-            setFormData({ ...formData, title: { value: event.target.value, valid: true }})
-          }
-        />
-      </label>
-      <label htmlFor="enabled">
-        <input
-          type="checkbox"
-          name="enabled"
-          id="enabled"
-          checked={formData.enabled.value}
-          disabled={action === "VIEW"}
-          onChange={handleCheckboxChange}
-        />
-        Habilitado
-      </label>
-      <label htmlFor="period">Período
-        <input
-          type="text"
-          name="period"
-          id="period"
-          value={formData.period.value}
-          disabled={action === "VIEW"}
-          onChange={(event) =>
-            setFormData({ ...formData, period: { value: event.target.value, valid: true }})
-          }
-        />
-      </label>
-      <label htmlFor="values">Valor
-        <input
-          type="number"
-          name="values"
-          id="values"
-          value={formData.values.value}
-          disabled={action === "VIEW"}
-          onChange={(event) =>
-            setFormData({ ...formData, values: { value: parseFloat(event.target.value), valid: true }})
-          }
-        />
-      </label>
-      {(action === "NEW" || action === "EDIT") && <button onClick={() => handleSubmit()}>Salvar</button>}
-      {(!formData.title.valid || !formData.period.valid || !formData.values.valid) && (<small>Preencha todos os campos!</small>)}
+      <S.ContentRefil>
+        <div>
+          <S.TableLink to="/home/plans">
+            <img src={icons.leftArrow} alt="" />
+          </S.TableLink>
+          {action === "NEW" && <div>Novo plano - contratante</div>}
+          {action === "EDIT" && <div>Planos</div>}
+          <div>
+          {action === "VIEW" && (
+            <div>
+              <button onClick={() => setAction("EDIT")}>Editar</button>
+              <button onClick={() => openModal()}>Deletar</button>
+            </div>
+          )}
+          </div>
+        </div>
+        <S.TableContainer>
+          <div>
+            <label htmlFor="title">
+              Título
+              <S.TableTextInput
+                type="text"
+                name="title"
+                id="title"
+                value={formData.title.value}
+                disabled={action === "VIEW"}
+                onChange={(event) =>
+                  setFormData({
+                    ...formData,
+                    title: { value: event.target.value, valid: true },
+                  })
+                }
+              />
+            </label>
+            <label htmlFor="enabled">
+              <input
+                type="checkbox"
+                name="enabled"
+                id="enabled"
+                checked={formData.enabled.value}
+                disabled={action === "VIEW"}
+                onChange={handleCheckboxChange}
+              />
+              Habilitado
+            </label>
+            <label htmlFor="period">
+              Período
+              <input
+                type="text"
+                name="period"
+                id="period"
+                value={formData.period.value}
+                disabled={action === "VIEW"}
+                onChange={(event) =>
+                  setFormData({
+                    ...formData,
+                    period: { value: event.target.value, valid: true },
+                  })
+                }
+              />
+            </label>
+          </div>
+          <label htmlFor="values">
+            Valor
+            <S.TableValueInput
+              type="number"
+              name="values"
+              id="values"
+              value={formData.values.value}
+              disabled={action === "VIEW"}
+              onChange={(event) =>
+                setFormData({
+                  ...formData,
+                  values: {
+                    value: parseFloat(event.target.value),
+                    valid: true,
+                  },
+                })
+              }
+            />
+          </label>
+          {(action === "NEW" || action === "EDIT") && (
+            <button onClick={() => handleSubmit()}>Salvar</button>
+          )}
+          {(!formData.title.valid ||
+            !formData.period.valid ||
+            !formData.values.valid) && <small>Preencha todos os campos!</small>}
+        </S.TableContainer>
+      </S.ContentRefil>
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
         <button onClick={closeModal}>close</button>
-        {(action === "DELETE") && <div><div>Tem certeza que deseja *excluir* este item?</div><button onClick={() => {params.id && handleDelete(parseInt(params.id))}}>Sim, excluir item</button><button onClick={() => closeModal()}>Voltar</button></div>}
-        {(action === "NEW" || action === "EDIT") && <div>** salvo com sucesso! <button onClick={() => navigate("/home/plans")}>Voltar</button></div>}
+        {action === "DELETE" && (
+          <div>
+            <div>Tem certeza que deseja *excluir* este item?</div>
+            <button
+              onClick={() => {
+                params.id && handleDelete(parseInt(params.id));
+              }}
+            >
+              Sim, excluir item
+            </button>
+            <button onClick={() => closeModal()}>Voltar</button>
+          </div>
+        )}
+        {(action === "NEW" || action === "EDIT") && (
+          <div>
+            ** salvo com sucesso!{" "}
+            <button onClick={() => navigate("/home/plans")}>Voltar</button>
+          </div>
+        )}
       </Modal>
     </>
   );

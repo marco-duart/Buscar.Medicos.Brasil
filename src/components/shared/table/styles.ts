@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const SharedTableStyled = styled.table`
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 6px; 
+  border-spacing: 0 6px;
 `;
 
 export const SharedTableThStyled = styled.th`
@@ -22,6 +22,7 @@ export const SharedTableThStyled = styled.th`
 
   &:last-child {
     border-top-right-radius: 16px;
+    text-align: center;
   }
 `;
 
@@ -41,4 +42,8 @@ export const SharedTableTdStyled = styled.td`
   font-size: ${(props) => props.theme.fontSizes.sm};
   font-family: ${(props) => props.theme.fontFamily.Poppins};
   color: ${(props) => props.theme.colors.darkGray100};
+
+  &:last-child {
+    text-align: center;
+  }
 `;

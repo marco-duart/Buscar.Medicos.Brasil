@@ -18,7 +18,7 @@ import edit from "../../assets/icon/edit.svg"
 import peopleSearch from "../../assets/icon/people-search-one.svg"
 import user from "../../assets/icon/user.svg"
 import calendar from "../../assets/icon/calendar.svg"
-
+import leftArrow from "../../assets/icon/left-small.svg"
 
 const icons = {
     dash,
@@ -41,6 +41,7 @@ const icons = {
     peopleSearch,
     user,
     calendar,
+    leftArrow,
 };
 
 export default icons

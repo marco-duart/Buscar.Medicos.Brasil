@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { GetUsers } from "../../data/services/users";
 import Table from "../../components/shared/table";
 import { useNavigate } from "react-router-dom";
-import * as S from "./styles";
+import * as S from "../../assets/styles/shared";
 
 type UserDataProcessedType = {
   user: string;
@@ -15,7 +15,7 @@ type UserDataProcessedType = {
 };
 
 export const Users = () => {
-  const size = 7
+  const size = 7;
   //T HEADS
   const tableColumns = [
     "Usuário",
@@ -31,19 +31,18 @@ export const Users = () => {
     UserDataProcessedType[]
   >([]);
   //DADOS DO DASHBOARD
-  const [dashboardData, setDashboardData] = useState<IDataUserCount>({
+  const [dashboardData, setCountData] = useState<IDataUserCount>({
     total: 0,
     totalDoctors: 0,
-    totalContractor: 0
+    totalContractor: 0,
   });
   //PESQUISA
   const [searchValue, setSearchValue] = useState<string>("");
   //PAGINAÇÃO
   const [page, setPage] = useState<number>(0);
   const [totalPage, setTotalPage] = useState<number>(0);
-
-  const [currentTotal, SetCurrentTotal] = useState<number>(0)
-  const [offsetTotalItens, setOffsetTotalItens] = useState<number[]>([0,0]);
+  const [currentTotal, SetCurrentTotal] = useState<number>(0);
+  const [offsetTotalItens, setOffsetTotalItens] = useState<number[]>([0, 0]);
   //FILTRO TODOS/MEDICO/CONTRATANTE
   const [currentTab, setCurrentTab] = useState<
     "TODOS" | "MEDICO" | "CONTRATANTE"
@@ -69,16 +68,19 @@ export const Users = () => {
         undefined,
         filterType
       );
-      const dashboardResponse = await GetUsers<IDataUserCount>(
-        "/users/count"
-      );
+      const dashboardResponse = await GetUsers<IDataUserCount>("/users/count");
       if (dashboardResponse) {
-        setDashboardData(dashboardResponse);
+        setCountData(dashboardResponse);
       }
       //SETANDO O TOTAL DE PAGINAS PARA DEFINIR A PAGINAÇÃO
-      SetCurrentTotal(response?.totalElements ?? 0)
+      SetCurrentTotal(response?.totalElements ?? 0);
       setTotalPage(response?.totalPages ?? 0);
-      setOffsetTotalItens([((response?.numberOfElements ?? 0) + (response?.pageable.offset ?? 0) ?? 0) ?? 0, response?.totalElements ?? 0]);
+      setOffsetTotalItens([
+        (response?.numberOfElements ?? 0) + (response?.pageable.offset ?? 0) ??
+          0 ??
+          0,
+        response?.totalElements ?? 0,
+      ]);
       //CRIANDO UM NOVO ARRAY DE OBJETOS ESPECÍFICO PARA O CASO
       const tempData = response?.content.reduce((accumulator, currentValue) => {
         const user = {
@@ -102,7 +104,7 @@ export const Users = () => {
       setUserDataProcessed(tempData ?? []);
     };
     fetchData();
-  }, [searchValue, page, currentTab, setDashboardData, setUserDataProcessed]);
+  }, [searchValue, page, currentTab, setCountData, setUserDataProcessed]);
 
   //SETANDO A PAGE COMO 0 AO MUDAR DE ABA
   const changeTab = (value: "TODOS" | "CONTRATANTE" | "MEDICO") => {
@@ -111,17 +113,14 @@ export const Users = () => {
   };
 
   return (
-    <div>
-      <div>Usuários Cadastrados | Todos</div>
+    <S.ContentRefil>
+      <S.PageTitle>Usuários Cadastrados | Todos</S.PageTitle>
       <S.TableButtonsTab>
         <S.TableButtonTab
           active={currentTab === "TODOS" ? "ACTIVE" : ""}
           onClick={() => changeTab("TODOS")}
         >
-          Todos{" "}
-          <span>
-            {dashboardData.total}
-          </span>
+          Todos <span>{dashboardData.total}</span>
         </S.TableButtonTab>
         <S.TableButtonTab
           active={currentTab === "CONTRATANTE" ? "ACTIVE" : ""}
@@ -149,17 +148,19 @@ export const Users = () => {
           />
           <div>
             <S.TableCountText>Total de usuários</S.TableCountText>
-            <S.TableCountValue>
-              {currentTotal}
-            </S.TableCountValue>
+            <S.TableCountValue>{currentTotal}</S.TableCountValue>
           </div>
         </S.TableDFlexTab>
         <Table HeadColumns={tableColumns} BodyRow={userDataProcessed} />
         <S.TableDFlexTab>
-          <S.PageCountOffset>{offsetTotalItens[0]} de {offsetTotalItens[1]}</S.PageCountOffset>
+          <S.PageCountOffset>
+            {offsetTotalItens[0]} de {offsetTotalItens[1]}
+          </S.PageCountOffset>
           <S.TableButtonsTab>
             <div>
-              <S.PageCountButton onClick={() => page > 0 && setPage(page - 1)}>⮜</S.PageCountButton>
+              <S.PageCountButton onClick={() => page > 0 && setPage(page - 1)}>
+                ⮜
+              </S.PageCountButton>
             </div>
             {Array.from(
               { length: 4 },
@@ -173,7 +174,11 @@ export const Users = () => {
                 )
             )}
             <div>
-              <S.PageCountButton onClick={() => page < totalPage - 1 && setPage(page + 1)}>⮞</S.PageCountButton>
+              <S.PageCountButton
+                onClick={() => page < totalPage - 1 && setPage(page + 1)}
+              >
+                ⮞
+              </S.PageCountButton>
             </div>
           </S.TableButtonsTab>
         </S.TableDFlexTab>
@@ -181,7 +186,7 @@ export const Users = () => {
           <button onClick={() => toDetail()}>UseNavigate</button>
         </div>
       </S.TableContainer>
-    </div>
+    </S.ContentRefil>
   );
 };
 

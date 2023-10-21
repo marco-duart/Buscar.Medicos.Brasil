@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Modal from 'react-modal';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { DeleteNotification, GetNotification, PostNotification, PutNotification } from "../../data/services/notifications";
+import { GetNotification, PostNotification, PutNotification } from "../../data/services/notifications";
 
 type Location = {
   state: {
-    action: "VIEW" | "EDIT" | "NEW" | "DELETE";
+    action: "VIEW" | "EDIT" | "NEW";
   };
 };
 
@@ -89,12 +89,6 @@ const NotificationDetail = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    await DeleteNotification(id);
-    closeModal()
-    navigate("/home/notifications")
-  };
-
 
   //FUNÇÕES OPEN/CLOSE MODAL
   function openModal() {
@@ -142,7 +136,6 @@ const NotificationDetail = () => {
         contentLabel="Modal"
       >
         <button onClick={closeModal}>close</button>
-        {(action === "DELETE") && <div><div>Tem certeza que deseja *excluir* este item?</div><button onClick={() => {params.id && handleDelete(parseInt(params.id))}}>Sim, excluir item</button><button onClick={() => closeModal()}>Voltar</button></div>}
         {(action === "NEW" || action === "EDIT") && <div>** salvo com sucesso! <button onClick={() => navigate("/home/specialties")}>Voltar</button></div>}
       </Modal>
     </>
