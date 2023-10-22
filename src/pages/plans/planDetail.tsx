@@ -11,7 +11,6 @@ import * as S from "../../assets/styles/shared";
 import icons from "../../assets/styles/icons";
 import Switch from "../../components/shared/toggle";
 
-
 type Location = {
   state: {
     action: "VIEW" | "EDIT" | "NEW" | "DELETE";
@@ -204,12 +203,11 @@ const PlanDetail = () => {
                   disabled={action === "VIEW"}
                 />
               </S.LabelCheckboxColumn>
-              <S.StatusCheckbox>{formData.enabled.value ? "Ativo" : "Inativo"}</S.StatusCheckbox>
+              <S.StatusCheckbox>
+                {formData.enabled.value ? "Ativo" : "Inativo"}
+              </S.StatusCheckbox>
             </S.LabelCheckboxFlex>
             <S.DivRelativeInput>
-              <S.LabelAbsoluteInput htmlFor="period">
-                Período
-              </S.LabelAbsoluteInput>
               <S.TableSelect
                 name="period"
                 id="period"
@@ -226,6 +224,9 @@ const PlanDetail = () => {
                 <option value="Semanal">Semanal</option>
                 <option value="Anual">Anual</option>
               </S.TableSelect>
+              <S.LabelAbsoluteInput htmlFor="period">
+                Período
+              </S.LabelAbsoluteInput>
             </S.DivRelativeInput>
           </S.TableButtonsTab>
           <S.DivRelativeInput>
@@ -266,7 +267,9 @@ const PlanDetail = () => {
         <button onClick={closeModal}>close</button>
         {action === "DELETE" && (
           <div>
-            <div>Tem certeza que deseja <span>excluir</span> este item?</div>
+            <div>
+              Tem certeza que deseja <span>excluir</span> este item?
+            </div>
             <button
               onClick={() => {
                 params.id && handleDelete(parseInt(params.id));

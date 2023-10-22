@@ -35,7 +35,7 @@ const light = {
   fontFamily: {
     Poppins: "'Poppins', sans-serif",
     Sora: "'Sora', sans-serif",
-  }
-}
+  },
+};
 
-export default light
+export default light;

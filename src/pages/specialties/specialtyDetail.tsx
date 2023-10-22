@@ -171,7 +171,9 @@ const SpecialtyDetail = () => {
                   disabled={action === "VIEW"}
                 />
               </S.LabelCheckboxColumn>
-              <S.StatusCheckbox>{formData.enabled.value ? "Ativo" : "Inativo"}</S.StatusCheckbox>
+              <S.StatusCheckbox>
+                {formData.enabled.value ? "Ativo" : "Inativo"}
+              </S.StatusCheckbox>
             </S.LabelCheckboxFlex>
           </S.TableButtonsTab>
           {(action === "NEW" || action === "EDIT") && (

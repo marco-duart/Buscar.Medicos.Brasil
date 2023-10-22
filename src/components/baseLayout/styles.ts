@@ -5,12 +5,11 @@ export const BaseLayoutPageStyled = styled.nav`
 `;
 
 export const BaseLayoutSidebarStyled = styled.div`
-  width: 274px;
-  background-color: red;
   display: flex;
 `;
 
 export const BaseLayoutDivStyled = styled.div`
+  width: 100%;
   padding: 25px;
   display: flex;
   flex-direction: column;

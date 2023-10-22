@@ -1,21 +1,60 @@
-import logo from "../../assets/icon/logo.svg"
-import * as S from "./styles"
+import logo from "../../assets/icon/logo.svg";
+import * as S from "./styles";
 import icons from "../../assets/styles/icons";
+import { useState } from "react";
 
 const Sidebar = () => {
-    return (
-        <S.SideBarColumnStyled>
-            <S.LogoSidebarDivStyled><img src={logo} alt="" /></S.LogoSidebarDivStyled>
-            <S.SideBarDivStyled>
-                <div><S.SidebarMenuStyled to="/home/"><S.IcoSidebarDivStyled src={icons.dash} alt="" />Dashboard</S.SidebarMenuStyled></div>
-                <div><S.SidebarMenuStyled to="/home/users"><S.IcoSidebarDivStyled src={icons.users} alt="" />Usuarios Cadastrados</S.SidebarMenuStyled></div>
-                <div><S.SidebarMenuStyled to="/home/plans"><S.IcoSidebarDivStyled src={icons.plans} alt="" />Planos</S.SidebarMenuStyled></div>
-                <div><S.SidebarMenuStyled to="/home/specialties"><S.IcoSidebarDivStyled src={icons.spec} alt="" />Especialidades</S.SidebarMenuStyled></div>
-                <div><S.SidebarMenuStyled to="/home/notifications"><S.IcoSidebarDivStyled src={icons.notif} alt="" />Notificações</S.SidebarMenuStyled></div>
-                <div><S.SidebarMenuStyled to="/home/faq"><S.IcoSidebarDivStyled src={icons.faq} alt="" />FAQ</S.SidebarMenuStyled></div>
-            </S.SideBarDivStyled>
-        </S.SideBarColumnStyled>
-    )
-}
+  const [expanded, setExpanded] = useState<boolean>(true);
+  return (
+    <S.SideBarColumnStyled expanded={expanded}>
+      <S.LogoSidebarDivStyled>
+        {expanded && <img src={logo} alt="" />}
+        <S.SideIcoDiv>
+          <S.SidebarIco onClick={() => setExpanded(!expanded)}>
+            <img src={icons.deft} alt="" />
+          </S.SidebarIco>
+        </S.SideIcoDiv>
+      </S.LogoSidebarDivStyled>
+      <S.SideBarDivStyled>
+        <div>
+          <S.SidebarMenuStyled to="/home/">
+            <S.IcoSidebarDivStyled src={icons.dash} alt="" />
+            {expanded && "Dashboard"}
+          </S.SidebarMenuStyled>
+        </div>
+        <div>
+          <S.SidebarMenuStyled to="/home/users">
+            <S.IcoSidebarDivStyled src={icons.users} alt="" />
+            {expanded && "Usuarios Cadastrados"}
+          </S.SidebarMenuStyled>
+        </div>
+        <div>
+          <S.SidebarMenuStyled to="/home/plans">
+            <S.IcoSidebarDivStyled src={icons.plans} alt="" />
+            {expanded && "Planos"}
+          </S.SidebarMenuStyled>
+        </div>
+        <div>
+          <S.SidebarMenuStyled to="/home/specialties">
+            <S.IcoSidebarDivStyled src={icons.spec} alt="" />
+            {expanded && "Especialidades"}
+          </S.SidebarMenuStyled>
+        </div>
+        <div>
+          <S.SidebarMenuStyled to="/home/notifications">
+            <S.IcoSidebarDivStyled src={icons.notif} alt="" />
+            {expanded && "Notificações"}
+          </S.SidebarMenuStyled>
+        </div>
+        <div>
+          <S.SidebarMenuStyled to="/home/faq">
+            <S.IcoSidebarDivStyled src={icons.faq} alt="" />
+            {expanded && "FAQ"}
+          </S.SidebarMenuStyled>
+        </div>
+      </S.SideBarDivStyled>
+    </S.SideBarColumnStyled>
+  );
+};
 
-export default Sidebar
+export default Sidebar;

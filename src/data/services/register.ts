@@ -9,7 +9,7 @@ export const LoginAPI = async (email: string, password: string) => {
     const { token, message } = apiResponse.data;
     //ATRIBUINDO O TOKEN
     localStorage.setItem("token", token);
-    api.defaults.headers.Authorization = token
+    api.defaults.headers.Authorization = token;
     return message;
   } catch (error) {
     if (isAxiosError(error)) {
@@ -19,7 +19,7 @@ export const LoginAPI = async (email: string, password: string) => {
 };
 
 export const MeAPI = async () => {
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   try {
     const apiResponse: AxiosResponse<IMeAPI> = await api.get("/me", {
       headers: { Authorization: `Bearer ${token}` },
@@ -29,7 +29,6 @@ export const MeAPI = async () => {
     if (isAxiosError(error)) {
       return null;
     }
-    return null
+    return null;
   }
 };
- 

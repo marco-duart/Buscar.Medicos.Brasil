@@ -1,7 +1,14 @@
 import { isAxiosError } from "axios";
 import api from "./api";
 
-export const GetPlans = async (size?: number, search?: string, sort?: "ASC" | "DESC", page?: number, id?:number, type?: string ) => {
+export const GetPlans = async (
+  size?: number,
+  search?: string,
+  sort?: "ASC" | "DESC",
+  page?: number,
+  id?: number,
+  type?: string
+) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.get("/plans", {
@@ -12,10 +19,10 @@ export const GetPlans = async (size?: number, search?: string, sort?: "ASC" | "D
         search,
         size,
         id,
-        type
-      }
+        type,
+      },
     });
-    return response.data as IDataPlansArray; 
+    return response.data as IDataPlansArray;
   } catch (error) {
     if (isAxiosError(error)) {
       return null;
@@ -39,17 +46,23 @@ export const GetPlan = async (id: number) => {
   }
 };
 
-export const PostPlan = async (planTitle: string, enabled: boolean, period: string, type: string, values: number) => {
+export const PostPlan = async (
+  planTitle: string,
+  enabled: boolean,
+  period: string,
+  type: string,
+  values: number
+) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.post(
       "/plans",
-      { 
-        planTitle, 
+      {
+        planTitle,
         enabled,
         period,
         type,
-        values
+        values,
       },
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -79,17 +92,24 @@ export const DeletePlan = async (id: number) => {
   }
 };
 
-export const PutPlan = async (id: number, planTitle: string, enabled: boolean, period: string, type: string, values: number ) => {
+export const PutPlan = async (
+  id: number,
+  planTitle: string,
+  enabled: boolean,
+  period: string,
+  type: string,
+  values: number
+) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.put(
       `/plans/${id}`,
       {
-        planTitle, 
+        planTitle,
         enabled,
         period,
         type,
-        values
+        values,
       },
       {
         headers: { Authorization: `Bearer ${token}` },

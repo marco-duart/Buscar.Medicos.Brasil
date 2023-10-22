@@ -152,7 +152,7 @@ const FAQ = () => {
                 })
               }
             >
-            <span>+</span> Nova Pergunta
+              <span>+</span> Nova Pergunta
             </S.TableNewButton>
           </S.TableDFlexTab>
           <Table

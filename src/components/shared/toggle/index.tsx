@@ -1,15 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-const SwitchWrapper = styled("label")<{ isActive: boolean, disabled: boolean }>`
+const SwitchWrapper = styled("label")<{ isActive: boolean; disabled: boolean }>`
   display: inline-block;
   width: 58px;
   height: 28px;
-  background-color: ${(props: { isActive: boolean }) => props.isActive ? '#00C247' : 'grey'};
+  background-color: ${(props: { isActive: boolean }) =>
+    props.isActive ? "#00C247" : "grey"};
   border-radius: 20px;
   position: relative;
-  cursor: ${(props: { disabled: boolean }) => (props.disabled ? 'not-allowed' : 'pointer')};
-  pointer-events: ${(props: { disabled: boolean }) => (props.disabled ? 'none' : 'auto')};
+  cursor: ${(props: { disabled: boolean }) =>
+    props.disabled ? "not-allowed" : "pointer"};
+  pointer-events: ${(props: { disabled: boolean }) =>
+    props.disabled ? "none" : "auto"};
 `;
 
 const SwitchBall = styled("div")<{ isActive: boolean }>`
@@ -19,7 +22,7 @@ const SwitchBall = styled("div")<{ isActive: boolean }>`
   border-radius: 50%;
   position: absolute;
   transition: transform 0.2s;
-  left: ${(props: { isActive: boolean }) => (props.isActive ? '30px' : '2px')};
+  left: ${(props: { isActive: boolean }) => (props.isActive ? "30px" : "2px")};
   top: 1.28px;
 `;
 
@@ -29,13 +32,20 @@ interface SwitchProps {
   disabled?: boolean;
 }
 
-const Switch: React.FC<SwitchProps> = ({ onToggle, isActive, disabled = false }) => {
+const Switch: React.FC<SwitchProps> = ({
+  onToggle,
+  isActive,
+  disabled = false,
+}) => {
   return (
-    <SwitchWrapper isActive={isActive} disabled={disabled} onClick={disabled ? undefined : onToggle}>
+    <SwitchWrapper
+      isActive={isActive}
+      disabled={disabled}
+      onClick={disabled ? undefined : onToggle}
+    >
       <SwitchBall isActive={isActive} />
     </SwitchWrapper>
   );
 };
 
 export default Switch;
-

@@ -1,7 +1,14 @@
 import { isAxiosError } from "axios";
 import api from "./api";
 
-export const GetNotifications = async (size?: number, search?: string, sort?: "ASC" | "DESC", page?: number, id?:number, type?: string ) => {
+export const GetNotifications = async (
+  size?: number,
+  search?: string,
+  sort?: "ASC" | "DESC",
+  page?: number,
+  id?: number,
+  type?: string
+) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.get("/notifications", {
@@ -12,10 +19,10 @@ export const GetNotifications = async (size?: number, search?: string, sort?: "A
         search,
         size,
         id,
-        type
-      }
+        type,
+      },
     });
-    return response.data as IDataNotificationsArray; 
+    return response.data as IDataNotificationsArray;
   } catch (error) {
     if (isAxiosError(error)) {
       return null;
@@ -39,16 +46,21 @@ export const GetNotification = async (id: number) => {
   }
 };
 
-export const PostNotification = async (title: string, sendingDate: string, message: string, type: string ) => {
+export const PostNotification = async (
+  title: string,
+  sendingDate: string,
+  message: string,
+  type: string
+) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.post(
       "/notifications",
-      { 
-        title, 
+      {
+        title,
         sendingDate,
         message,
-        type
+        type,
       },
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -63,7 +75,13 @@ export const PostNotification = async (title: string, sendingDate: string, messa
   }
 };
 
-export const PutNotification = async (id:number, title: string, sendingDate: string, message: string, type: string) => {
+export const PutNotification = async (
+  id: number,
+  title: string,
+  sendingDate: string,
+  message: string,
+  type: string
+) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.put(
@@ -72,7 +90,7 @@ export const PutNotification = async (id:number, title: string, sendingDate: str
         title,
         sendingDate,
         message,
-        type
+        type,
       },
       {
         headers: { Authorization: `Bearer ${token}` },

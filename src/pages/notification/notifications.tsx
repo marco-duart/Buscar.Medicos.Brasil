@@ -58,7 +58,7 @@ const Notifications = () => {
       //CRIANDO UM NOVO ARRAY DE OBJETOS ESPECÍFICO PARA O CASO
       const tempData = response?.content.reduce((accumulator, currentValue) => {
         const data = parseISO(currentValue.sendingDate);
-        const dataFormatada = format(data, 'dd/MM/yyyy', { locale: ptBR }); 
+        const dataFormatada = format(data, "dd/MM/yyyy", { locale: ptBR });
         const plan = {
           name: currentValue.title,
           dataEnvio: dataFormatada,

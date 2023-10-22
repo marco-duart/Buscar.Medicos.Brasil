@@ -12,9 +12,7 @@ import Notifications from "../pages/notification/notifications";
 import NotificationDetail from "../pages/notification/notificationDetail";
 import FAQ from "../pages/faq/faq";
 import FAQDetail from "../pages/faq/faqDetail";
-
-
-
+import LoggedUser from "../pages/login/loggedUser";
 
 export default function Router() {
   return (
@@ -32,11 +30,18 @@ export default function Router() {
           <Route path="/home/specialties/:id" element={<SpecialtyDetail />} />
           <Route path="/home/specialties/new" element={<SpecialtyDetail />} />
           <Route path="/home/notifications" element={<Notifications />} />
-          <Route path="/home/notifications/:id" element={<NotificationDetail />} />
-          <Route path="/home/notifications/new/:type" element={<NotificationDetail />} />
+          <Route
+            path="/home/notifications/:id"
+            element={<NotificationDetail />}
+          />
+          <Route
+            path="/home/notifications/new/:type"
+            element={<NotificationDetail />}
+          />
           <Route path="/home/faq" element={<FAQ />} />
           <Route path="/home/faq/:id" element={<FAQDetail />} />
           <Route path="/home/faq/new/:type" element={<FAQDetail />} />
+          <Route path="/home/me" element={<LoggedUser />} />
         </Route>
       </Routes>
     </BrowserRouter>

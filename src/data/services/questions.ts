@@ -1,7 +1,14 @@
 import { isAxiosError } from "axios";
 import api from "./api";
 
-export const GetQuestions = async (size?: number, search?: string, sort?: "ASC" | "DESC", page?: number, id?:number, type?: string ) => {
+export const GetQuestions = async (
+  size?: number,
+  search?: string,
+  sort?: "ASC" | "DESC",
+  page?: number,
+  id?: number,
+  type?: string
+) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.get("/questions", {
@@ -12,10 +19,10 @@ export const GetQuestions = async (size?: number, search?: string, sort?: "ASC" 
         search,
         size,
         id,
-        type
-      }
+        type,
+      },
     });
-    return response.data as IDataQuestionsArray; 
+    return response.data as IDataQuestionsArray;
   } catch (error) {
     if (isAxiosError(error)) {
       return null;
@@ -39,15 +46,19 @@ export const GetQuestion = async (id: number) => {
   }
 };
 
-export const PostQuestion = async (title: string, message: string, type: string) => {
+export const PostQuestion = async (
+  title: string,
+  message: string,
+  type: string
+) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.post(
       "/questions",
-      { 
-        title, 
+      {
+        title,
         message,
-        type
+        type,
       },
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -77,7 +88,12 @@ export const DeleteQuestion = async (id: number) => {
   }
 };
 
-export const PutQuestion = async (id: number, title: string, message: string, type: string) => {
+export const PutQuestion = async (
+  id: number,
+  title: string,
+  message: string,
+  type: string
+) => {
   try {
     const token = localStorage.getItem("token");
     const response = await api.put(
@@ -85,7 +101,7 @@ export const PutQuestion = async (id: number, title: string, message: string, ty
       {
         title,
         message,
-        type
+        type,
       },
       {
         headers: { Authorization: `Bearer ${token}` },

@@ -67,12 +67,14 @@ const Plans = () => {
           value: currentValue.values,
           enabled: (
             <S.LabelCheckboxFlex>
-                <Switch
-                  onToggle={handleCheckboxChange}
-                  isActive={currentValue.enabled}
-                  disabled={true}
-                />
-              <S.StatusCheckbox>{currentValue.enabled ? "Ativo" : "Inativo"}</S.StatusCheckbox>
+              <Switch
+                onToggle={handleCheckboxChange}
+                isActive={currentValue.enabled}
+                disabled={true}
+              />
+              <S.StatusCheckbox>
+                {currentValue.enabled ? "Ativo" : "Inativo"}
+              </S.StatusCheckbox>
             </S.LabelCheckboxFlex>
           ),
           actions: (
@@ -171,7 +173,7 @@ const Plans = () => {
                 })
               }
             >
-            <span>+</span> Novo plano
+              <span>+</span> Novo plano
             </S.TableNewButton>
           </S.TableDFlexTab>
           <Table HeadColumns={tableColumns} BodyRow={plansDataProcessed} />

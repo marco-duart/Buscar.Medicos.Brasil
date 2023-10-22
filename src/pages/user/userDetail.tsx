@@ -8,7 +8,7 @@ const UserDetail = () => {
   const urlAPI = "/users";
   const { id } = useParams();
   const [curerntUser, setCurrentUser] = useState<IDataUser>();
-  const [specialties, setSpecialties] = useState<string>("")
+  const [specialties, setSpecialties] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,9 +18,14 @@ const UserDetail = () => {
           const tempData = response.content.find(
             (item) => item.id === parseInt(id)
           );
-          if(tempData?.specialties) {
-            const tempSpecialty = tempData?.specialties?.length > 0 ? tempData?.specialties?.map((specialty) => specialty.name).join(' - ') : ""
-            setSpecialties(tempSpecialty)
+          if (tempData?.specialties) {
+            const tempSpecialty =
+              tempData?.specialties?.length > 0
+                ? tempData?.specialties
+                    ?.map((specialty) => specialty.name)
+                    .join(" - ")
+                : "";
+            setSpecialties(tempSpecialty);
           }
           setCurrentUser(tempData);
         }
@@ -207,46 +212,58 @@ const UserDetail = () => {
           Disponibilidade de dia e horário
         </S.LabelNotAbsoluteInput>
         <S.CheckboxUserDiv>
-          <S.UserCheckbox type="checkbox" name="" id="" disabled/>
+          <S.UserCheckbox type="checkbox" name="" id="" disabled />
           <S.LabelUserCheckbox htmlFor="">Domingo</S.LabelUserCheckbox>
         </S.CheckboxUserDiv>
         <S.DivCheckboxPad>
           <S.CheckboxUserDiv>
-            <S.UserCheckbox type="checkbox" name="" id="" disabled/>
+            <S.UserCheckbox type="checkbox" name="" id="" disabled />
             <S.LabelUserCheckbox htmlFor="">Manhã</S.LabelUserCheckbox>
           </S.CheckboxUserDiv>
           <S.CheckboxUserDiv>
-            <S.UserCheckbox type="checkbox" name="" id="" disabled/>
+            <S.UserCheckbox type="checkbox" name="" id="" disabled />
             <S.LabelUserCheckbox htmlFor="">Tarde</S.LabelUserCheckbox>
           </S.CheckboxUserDiv>
           <S.CheckboxUserDiv>
-            <S.UserCheckbox type="checkbox" name="" id="" disabled/>
+            <S.UserCheckbox type="checkbox" name="" id="" disabled />
             <S.LabelUserCheckbox htmlFor="">Noite</S.LabelUserCheckbox>
           </S.CheckboxUserDiv>
         </S.DivCheckboxPad>
         <S.HrStyled />
         <S.CheckboxUserDiv>
-          <S.UserCheckbox type="checkbox" name="" id="" disabled/>
+          <S.UserCheckbox type="checkbox" name="" id="" disabled />
           <S.LabelUserCheckbox htmlFor="">Sexta</S.LabelUserCheckbox>
         </S.CheckboxUserDiv>
         <S.HrStyled />
         <S.CheckboxUserDiv>
-          <S.UserCheckbox type="checkbox" name="" id="" disabled/>
+          <S.UserCheckbox type="checkbox" name="" id="" disabled />
           <S.LabelUserCheckbox htmlFor="">Sábado</S.LabelUserCheckbox>
         </S.CheckboxUserDiv>
         <S.HrStyled />
         <S.TableButtonsTab>
           <S.DivRelativeInput>
             <S.LabelAbsoluteInput htmlFor="">Sobre</S.LabelAbsoluteInput>
-            <S.UserTextArea name="sobre" id="sobre" value="" disabled></S.UserTextArea>
+            <S.UserTextArea
+              name="sobre"
+              id="sobre"
+              value=""
+              disabled
+            ></S.UserTextArea>
           </S.DivRelativeInput>
           <S.DivRelativeInput>
             <S.LabelAbsoluteInput htmlFor="">Observações</S.LabelAbsoluteInput>
-            <S.UserTextArea name="obs" id="obs" value="" disabled></S.UserTextArea>
+            <S.UserTextArea
+              name="obs"
+              id="obs"
+              value=""
+              disabled
+            ></S.UserTextArea>
           </S.DivRelativeInput>
         </S.TableButtonsTab>
         <S.DetailFormTitle>Plano</S.DetailFormTitle>
-        <S.LabelNotAbsoluteInput htmlFor="">Plano que viria na API</S.LabelNotAbsoluteInput>
+        <S.LabelNotAbsoluteInput htmlFor="">
+          Plano que viria na API
+        </S.LabelNotAbsoluteInput>
       </S.TableContainerRad>
     </S.ContentRefil>
   );

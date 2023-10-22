@@ -54,12 +54,14 @@ const Specialties = () => {
           name: currentValue.name,
           enabled: (
             <S.LabelCheckboxFlex>
-                <Switch
-                  onToggle={handleCheckboxChange}
-                  isActive={currentValue.enabled}
-                  disabled={true}
-                />
-              <S.StatusCheckbox>{currentValue.enabled ? "Ativo" : "Inativo"}</S.StatusCheckbox>
+              <Switch
+                onToggle={handleCheckboxChange}
+                isActive={currentValue.enabled}
+                disabled={true}
+              />
+              <S.StatusCheckbox>
+                {currentValue.enabled ? "Ativo" : "Inativo"}
+              </S.StatusCheckbox>
             </S.LabelCheckboxFlex>
           ),
           actions: (
@@ -137,7 +139,7 @@ const Specialties = () => {
                 navigate("/home/specialties/new", { state: { action: "NEW" } })
               }
             >
-            <span>+</span> Nova Especialidade
+              <span>+</span> Nova Especialidade
             </S.TableNewButton>
           </S.TableDFlexTab>
           <Table

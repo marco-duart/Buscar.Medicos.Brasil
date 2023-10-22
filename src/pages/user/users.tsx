@@ -85,7 +85,7 @@ export const Users = () => {
       //CRIANDO UM NOVO ARRAY DE OBJETOS ESPECÍFICO PARA O CASO
       const tempData = response?.content.reduce((accumulator, currentValue) => {
         const user = {
-          id: (currentValue.id).toString(),
+          id: currentValue.id.toString(),
           user: currentValue.lastName,
           email: currentValue.email,
           whatsapp: currentValue.phone,
@@ -153,7 +153,11 @@ export const Users = () => {
             <S.TableCountValue>{currentTotal}</S.TableCountValue>
           </div>
         </S.TableDFlexTab>
-        <Table HeadColumns={tableColumns} BodyRow={userDataProcessed} toDetail={toDetail} />
+        <Table
+          HeadColumns={tableColumns}
+          BodyRow={userDataProcessed}
+          toDetail={toDetail}
+        />
         <S.TableDFlexTab>
           <S.PageCountOffset>
             {offsetTotalItens[0]} de {offsetTotalItens[1]}

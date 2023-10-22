@@ -18,7 +18,11 @@ export const CountDashboard = ({ title, data, types }: Props) => {
       <S.CardsSectionCountStyled>
         <CardDashboard profile={title} value={data.total} type={types[0]} />
         <CardDashboard profile={title} value={data.available} type={types[1]} />
-        <CardDashboard profile={title} value={data.unavailable} type={types[2]} />
+        <CardDashboard
+          profile={title}
+          value={data.unavailable}
+          type={types[2]}
+        />
       </S.CardsSectionCountStyled>
     </S.ContainerCountStyled>
   );

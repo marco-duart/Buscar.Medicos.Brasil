@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 
-
 //GENÉRICO
 
 export const TableDFlexTab = styled.div`
@@ -31,7 +30,8 @@ export const DetailFormTitle = styled.div`
 
 //PARA TABLES COM TAB
 export const TableContainer = styled.div`
-  width: 1582px;
+  min-width: 1582px;
+  /* width: 1582px; */
   padding: 30px;
   border-radius: 0px 24px 24px 24px;
   background-color: ${(props) => props.theme.colors.white};
@@ -40,7 +40,8 @@ export const TableContainer = styled.div`
 
 //RADIOS COMPLETO
 export const TableContainerRad = styled.div`
-  width: 1582px;
+  min-width: 1582px;
+  /* width: 1582px; */
   padding: 30px;
   border-radius: 24px;
   background-color: ${(props) => props.theme.colors.white};
@@ -56,6 +57,9 @@ export const TableButtonsTab = styled.div`
 
 //COMPLETAR ESPAÇO
 export const ContentRefil = styled.div`
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
   min-height: 900px;
 `;
 
@@ -63,7 +67,10 @@ export const ContentRefil = styled.div`
 export const TableButtonTab = styled("button")<{ active: string }>`
   background-color: ${(props) => (props.active ? "#FFFFFF" : "#F5F5F5")};
   font-size: ${(props) => props.theme.fontSizes.md};
-  font-family: ${(props) => (props.active ? "font-family: 'Sora', sans-serif;" : "font-family: 'Poppins', sans-serif")};
+  font-family: ${(props) =>
+    props.active
+      ? "font-family: 'Sora', sans-serif;"
+      : "font-family: 'Poppins', sans-serif"};
   color: ${(props) => props.theme.colors.darkGray100};
   font-weight: ${(props) => (props.active ? 600 : 400)};
   border: none;
@@ -154,7 +161,7 @@ export const TableLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   border-radius: 50%;
   img {
     width: 24px;
@@ -248,18 +255,18 @@ export const LabelAbsoluteInput = styled.label`
   top: -15px;
   left: 12px;
   padding: 5px;
-  font-size: ${props => props.theme.fontSizes.xsm};
-  font-family: ${props => props.theme.fontFamily.Poppins};
-  background-color: ${props => props.theme.colors.white};
-  color:  ${props => props.theme.colors.gray100};
+  font-size: ${(props) => props.theme.fontSizes.xsm};
+  font-family: ${(props) => props.theme.fontFamily.Poppins};
+  background-color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.colors.gray100};
 `;
 
 export const LabelNotAbsoluteInput = styled.label`
   padding: 5px;
-  font-size: ${props => props.theme.fontSizes.xsm};
-  font-family: ${props => props.theme.fontFamily.Poppins};
-  background-color: ${props => props.theme.colors.white};
-  color:  ${props => props.theme.colors.gray100};
+  font-size: ${(props) => props.theme.fontSizes.xsm};
+  font-family: ${(props) => props.theme.fontFamily.Poppins};
+  background-color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.colors.gray100};
 `;
 
 export const DivCheckboxPad = styled.div`
@@ -269,28 +276,28 @@ export const DivCheckboxPad = styled.div`
 export const HrStyled = styled.hr`
   width: 382px;
   margin: 20px 0;
-  color:  ${props => props.theme.colors.gray100};
+  color: ${(props) => props.theme.colors.gray100};
 `;
 
 export const LabelUserCheckbox = styled.label`
-  font-size: ${props => props.theme.fontSizes.sm};
-  font-family: ${props => props.theme.fontFamily.Poppins};
-  color:  ${props => props.theme.colors.gray100};
+  font-size: ${(props) => props.theme.fontSizes.sm};
+  font-family: ${(props) => props.theme.fontFamily.Poppins};
+  color: ${(props) => props.theme.colors.gray100};
 `;
 
 export const UserCheckbox = styled.input`
   all: unset;
   display: inline-block;
-  border: 1px solid ${props => props.theme.colors.white200};
+  border: 1px solid ${(props) => props.theme.colors.white200};
   width: 18px;
   height: 18px;
   &:checked {
-    background-color: ${props => props.theme.colors.white200};
+    background-color: ${(props) => props.theme.colors.white200};
   }
   &:checked::before {
-    content: '✓';
+    content: "✓";
     font-size: 14px;
-    color: #FFF;
+    color: #fff;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -325,10 +332,10 @@ export const ModalMessage = styled.div`
   font-family: ${(props) => props.theme.fontFamily.Sora};
   color: ${(props) => props.theme.colors.darkGray100};
   span {
-    color: #FF3333;
+    color: #ff3333;
     text-decoration: underline;
   }
-`
+`;
 //S.TableNewButton
 
 //CHECKBOX
@@ -347,13 +354,13 @@ export const LabelCheckboxColumn = styled.div`
 `;
 
 export const StatusCheckbox = styled.div`
-  font-size: ${props => props.theme.fontSizes.sm};
-  font-family: ${props => props.theme.fontFamily.Poppins};
+  font-size: ${(props) => props.theme.fontSizes.sm};
+  font-family: ${(props) => props.theme.fontFamily.Poppins};
   color: ${(props) => props.theme.colors.darkGray100};
 `;
 
 export const LabelCheckbox = styled.label`
-  font-size: ${props => props.theme.fontSizes.xsm};
-  font-family: ${props => props.theme.fontFamily.Poppins};
+  font-size: ${(props) => props.theme.fontSizes.xsm};
+  font-family: ${(props) => props.theme.fontFamily.Poppins};
   color: ${(props) => props.theme.colors.gray100};
 `;

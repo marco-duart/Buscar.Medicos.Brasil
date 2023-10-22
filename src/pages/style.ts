@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const ContainerDashStyled = styled.div`
+  min-height: 900px;
   display: flex;
   flex-direction: column;
   gap: 30px;

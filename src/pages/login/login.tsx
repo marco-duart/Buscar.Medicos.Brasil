@@ -47,8 +47,8 @@ const Login = () => {
 
   return (
     <S.LoginPageStyled>
-        <S.CardLoginStyled>
-          <S.BlockLoginStyled>
+      <S.CardLoginStyled>
+        <S.BlockLoginStyled>
           <S.SubtitleLoginStyled>Seja bem vindo!</S.SubtitleLoginStyled>
           <S.TitleLoginStyled>Realize seu Login</S.TitleLoginStyled>
           <S.InputSectionStyled>
@@ -69,7 +69,7 @@ const Login = () => {
               <small>Insira o e-mail!</small>
             )}
             {loginResult === 404 && <small>Usuário não cadastrado</small>}
-            </S.InputSectionStyled>
+          </S.InputSectionStyled>
           <S.InputSectionStyled>
             <S.LabelStyled htmlFor="password">Senha</S.LabelStyled>
             <S.InputStyled
@@ -92,15 +92,19 @@ const Login = () => {
           <S.DivDFlexStyled>
             <S.DivDFlexStyled>
               <input type="checkbox" name="" id="" />
-              <S.labelCheckboxStyled htmlFor="">Lembrar-me</S.labelCheckboxStyled>
+              <S.labelCheckboxStyled htmlFor="">
+                Lembrar-me
+              </S.labelCheckboxStyled>
             </S.DivDFlexStyled>
             <div>Esqueci minha senha</div>
           </S.DivDFlexStyled>
           <div>
-            <S.ButtonStyled onClick={() => handleSubmit()}>ENTRAR</S.ButtonStyled>
+            <S.ButtonStyled onClick={() => handleSubmit()}>
+              ENTRAR
+            </S.ButtonStyled>
           </div>
-          </S.BlockLoginStyled>
-        </S.CardLoginStyled>
+        </S.BlockLoginStyled>
+      </S.CardLoginStyled>
     </S.LoginPageStyled>
   );
 };
