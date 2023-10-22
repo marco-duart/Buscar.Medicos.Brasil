@@ -5,6 +5,7 @@ import { Table } from "../../components/shared/table";
 import icons from "../../assets/styles/icons";
 import { useNavigate } from "react-router-dom";
 import * as S from "../../assets/styles/shared";
+import Switch from "../../components/shared/toggle";
 
 type PlansDataProcessedType = {
   name: string;
@@ -65,10 +66,14 @@ const Plans = () => {
           name: currentValue.planTitle,
           value: currentValue.values,
           enabled: (
-            <div>
-              <input type="checkbox" checked={currentValue.enabled} />
-              <label>{currentValue.enabled ? "Ativo" : "Inativo"}</label>
-            </div>
+            <S.LabelCheckboxFlex>
+                <Switch
+                  onToggle={handleCheckboxChange}
+                  isActive={currentValue.enabled}
+                  disabled={true}
+                />
+              <S.StatusCheckbox>{currentValue.enabled ? "Ativo" : "Inativo"}</S.StatusCheckbox>
+            </S.LabelCheckboxFlex>
           ),
           actions: (
             <div>
@@ -103,6 +108,10 @@ const Plans = () => {
     };
     fetchData();
   }, [searchValue, page, currentTab, setPlansDataProcessed]);
+
+  const handleCheckboxChange = () => {
+    //pensar
+  };
 
   const handleDelete = async (id: number) => {
     await DeletePlan(id);

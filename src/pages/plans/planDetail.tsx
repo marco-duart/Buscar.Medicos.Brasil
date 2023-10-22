@@ -9,6 +9,8 @@ import {
 } from "../../data/services/plans";
 import * as S from "../../assets/styles/shared";
 import icons from "../../assets/styles/icons";
+import Switch from "../../components/shared/toggle";
+
 
 type Location = {
   state: {
@@ -145,25 +147,40 @@ const PlanDetail = () => {
   return (
     <>
       <S.ContentRefil>
-        <div>
-          <S.TableLink to="/home/plans">
-            <img src={icons.leftArrow} alt="" />
-          </S.TableLink>
-          {action === "NEW" && <div>Novo plano - contratante</div>}
-          {action === "EDIT" && <div>Planos</div>}
+        <S.TableDFlexTab>
+          <S.TableButtonsTab>
+            <S.TableLink to="/home/plans">
+              <img src={icons.leftArrow} alt="" />
+            </S.TableLink>
+            {action === "NEW" && (
+              <S.NewEditTitle>
+                Novo plano - {(params.type ?? "").toLowerCase()}
+              </S.NewEditTitle>
+            )}
+            {(action === "EDIT" || action === "VIEW") && (
+              <S.NewEditTitle>Planos</S.NewEditTitle>
+            )}
+          </S.TableButtonsTab>
           <div>
-          {action === "VIEW" && (
-            <div>
-              <button onClick={() => setAction("EDIT")}>Editar</button>
-              <button onClick={() => openModal()}>Deletar</button>
-            </div>
-          )}
+            {action === "VIEW" && (
+              <div>
+                <S.TableIco onClick={() => setAction("EDIT")}>
+                  <img src={icons.edit} alt="" />
+                </S.TableIco>
+                <S.TableIco onClick={() => openModal()}>
+                  <img src={icons.delet} alt="" />
+                </S.TableIco>
+              </div>
+            )}
           </div>
-        </div>
-        <S.TableContainer>
-          <div>
-            <label htmlFor="title">
-              Título
+        </S.TableDFlexTab>
+        <S.TableContainerRad>
+          <S.DetailFormTitle>Dados do plano</S.DetailFormTitle>
+          <S.TableButtonsTab>
+            <S.DivRelativeInput>
+              <S.LabelAbsoluteInput htmlFor="title">
+                Título
+              </S.LabelAbsoluteInput>
               <S.TableTextInput
                 type="text"
                 name="title"
@@ -177,22 +194,23 @@ const PlanDetail = () => {
                   })
                 }
               />
-            </label>
-            <label htmlFor="enabled">
-              <input
-                type="checkbox"
-                name="enabled"
-                id="enabled"
-                checked={formData.enabled.value}
-                disabled={action === "VIEW"}
-                onChange={handleCheckboxChange}
-              />
-              Habilitado
-            </label>
-            <label htmlFor="period">
-              Período
-              <input
-                type="text"
+            </S.DivRelativeInput>
+            <S.LabelCheckboxFlex>
+              <S.LabelCheckboxColumn>
+                <S.LabelCheckbox htmlFor="">Situação</S.LabelCheckbox>
+                <Switch
+                  onToggle={handleCheckboxChange}
+                  isActive={formData.enabled.value}
+                  disabled={action === "VIEW"}
+                />
+              </S.LabelCheckboxColumn>
+              <S.StatusCheckbox>{formData.enabled.value ? "Ativo" : "Inativo"}</S.StatusCheckbox>
+            </S.LabelCheckboxFlex>
+            <S.DivRelativeInput>
+              <S.LabelAbsoluteInput htmlFor="period">
+                Período
+              </S.LabelAbsoluteInput>
+              <S.TableSelect
                 name="period"
                 id="period"
                 value={formData.period.value}
@@ -203,11 +221,15 @@ const PlanDetail = () => {
                     period: { value: event.target.value, valid: true },
                   })
                 }
-              />
-            </label>
-          </div>
-          <label htmlFor="values">
-            Valor
+              >
+                <option value="Mensal">Mensal</option>
+                <option value="Semanal">Semanal</option>
+                <option value="Anual">Anual</option>
+              </S.TableSelect>
+            </S.DivRelativeInput>
+          </S.TableButtonsTab>
+          <S.DivRelativeInput>
+            <S.LabelAbsoluteInput htmlFor="values">Valor</S.LabelAbsoluteInput>
             <S.TableValueInput
               type="number"
               name="values"
@@ -224,14 +246,16 @@ const PlanDetail = () => {
                 })
               }
             />
-          </label>
+          </S.DivRelativeInput>
           {(action === "NEW" || action === "EDIT") && (
-            <button onClick={() => handleSubmit()}>Salvar</button>
+            <S.TableSubmitButton onClick={() => handleSubmit()}>
+              Salvar
+            </S.TableSubmitButton>
           )}
           {(!formData.title.valid ||
             !formData.period.valid ||
             !formData.values.valid) && <small>Preencha todos os campos!</small>}
-        </S.TableContainer>
+        </S.TableContainerRad>
       </S.ContentRefil>
 
       <Modal

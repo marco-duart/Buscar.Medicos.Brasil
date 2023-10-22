@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
-import Modal from 'react-modal';
+import Modal from "react-modal";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { DeleteSpecialty, GetSpecialty, PostSpecialty, PutSpecialty } from "../../data/services/specialties";
+import {
+  DeleteSpecialty,
+  GetSpecialty,
+  PostSpecialty,
+  PutSpecialty,
+} from "../../data/services/specialties";
+import * as S from "../../assets/styles/shared";
+import icons from "../../assets/styles/icons";
+import Switch from "../../components/shared/toggle";
 
 type Location = {
   state: {
@@ -10,12 +18,12 @@ type Location = {
 };
 
 type Params = {
-  id?: string,
-}
+  id?: string;
+};
 
 const SpecialtyDetail = () => {
   const params: Params = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: {
       value: "",
@@ -30,7 +38,9 @@ const SpecialtyDetail = () => {
 
   // RECUPERANDO PARAMETROS DO USELOCATION
   const location: Location = useLocation();
-  const [action, setAction] = useState(location?.state.action ? location?.state.action : "")
+  const [action, setAction] = useState(
+    location?.state.action ? location?.state.action : ""
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,26 +75,32 @@ const SpecialtyDetail = () => {
         },
         enabled: {
           ...formData.enabled,
-        }
+        },
       });
-      return
+      return;
     }
     if (params.id && action === "EDIT") {
-      const response = await PutSpecialty(parseInt(params.id), formData.name.value, formData.enabled.value);
-      openModal()
+      const response = await PutSpecialty(
+        parseInt(params.id),
+        formData.name.value,
+        formData.enabled.value
+      );
+      openModal();
     }
-    if(action === "NEW") {
-      const response = await PostSpecialty(formData.name.value, formData.enabled.value)
-      openModal()
+    if (action === "NEW") {
+      const response = await PostSpecialty(
+        formData.name.value,
+        formData.enabled.value
+      );
+      openModal();
     }
   };
 
   const handleDelete = async (id: number) => {
     await DeleteSpecialty(id);
-    closeModal()
-    navigate("/home/specialties")
+    closeModal();
+    navigate("/home/specialties");
   };
-
 
   //FUNÇÕES OPEN/CLOSE MODAL
   function openModal() {
@@ -96,40 +112,104 @@ const SpecialtyDetail = () => {
 
   return (
     <>
-      {action === "VIEW" && <div><button onClick={() => setAction("EDIT")}>Editar</button><button onClick={() => {setAction("DELETE"); openModal()}}>Deletar</button></div> }
-      <label htmlFor="name">Nome
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={formData.name.value}
-          disabled={action === "VIEW"}
-          onChange={(event) =>
-            setFormData({ ...formData, name: { value: event.target.value, valid: true }})
-          }
-        />
-      </label>
-      <label htmlFor="enabled">
-        <input
-          type="checkbox"
-          name="enabled"
-          id="enabled"
-          checked={formData.enabled.value}
-          disabled={action === "VIEW"}
-          onChange={handleCheckboxChange}
-        />
-        Habilitado
-      </label>
-      {(action === "NEW" || action === "EDIT") && <button onClick={() => handleSubmit()}>Salvar</button>}
-      {!formData.name.valid && (<small>Preencha todos os campos!</small>)}
+      <S.ContentRefil>
+        <S.TableDFlexTab>
+          <S.TableButtonsTab>
+            <S.TableLink to="/home/notifications">
+              <img src={icons.leftArrow} alt="" />
+            </S.TableLink>
+            {action === "NEW" && (
+              <S.NewEditTitle>Nova especialidade</S.NewEditTitle>
+            )}
+            {(action === "EDIT" || action === "VIEW") && (
+              <S.NewEditTitle>Especialidades</S.NewEditTitle>
+            )}
+          </S.TableButtonsTab>
+          <div>
+            {action === "VIEW" && (
+              <div>
+                <S.TableIco onClick={() => setAction("EDIT")}>
+                  <img src={icons.edit} alt="" />
+                </S.TableIco>
+                <S.TableIco
+                  onClick={() => {
+                    setAction("DELETE");
+                    openModal();
+                  }}
+                >
+                  <img src={icons.delet} alt="" />
+                </S.TableIco>
+              </div>
+            )}
+          </div>
+        </S.TableDFlexTab>
+        <S.TableContainerRad>
+          <S.DetailFormTitle>Dados da especialidade</S.DetailFormTitle>
+          <S.TableButtonsTab>
+            <S.DivRelativeInput>
+              <S.LabelAbsoluteInput htmlFor="name">Nome</S.LabelAbsoluteInput>
+              <S.TableTextInput
+                type="text"
+                name="name"
+                id="name"
+                value={formData.name.value}
+                disabled={action === "VIEW"}
+                onChange={(event) =>
+                  setFormData({
+                    ...formData,
+                    name: { value: event.target.value, valid: true },
+                  })
+                }
+              />
+            </S.DivRelativeInput>
+            <S.LabelCheckboxFlex>
+              <S.LabelCheckboxColumn>
+                <S.LabelCheckbox htmlFor="">Situação</S.LabelCheckbox>
+                <Switch
+                  onToggle={handleCheckboxChange}
+                  isActive={formData.enabled.value}
+                  disabled={action === "VIEW"}
+                />
+              </S.LabelCheckboxColumn>
+              <S.StatusCheckbox>{formData.enabled.value ? "Ativo" : "Inativo"}</S.StatusCheckbox>
+            </S.LabelCheckboxFlex>
+          </S.TableButtonsTab>
+          {(action === "NEW" || action === "EDIT") && (
+            <S.TableSubmitButton onClick={() => handleSubmit()}>
+              Salvar
+            </S.TableSubmitButton>
+          )}
+          {!formData.name.valid && <small>Preencha todos os campos!</small>}
+        </S.TableContainerRad>
+      </S.ContentRefil>
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
         <button onClick={closeModal}>close</button>
-        {(action === "DELETE") && <div><div>Tem certeza que deseja *excluir* este item?</div><button onClick={() => {params.id && handleDelete(parseInt(params.id))}}>Sim, excluir item</button><button onClick={() => closeModal()}>Voltar</button></div>}
-        {(action === "NEW" || action === "EDIT") && <div>** salvo com sucesso! <button onClick={() => navigate("/home/specialties")}>Voltar</button></div>}
+        {action === "DELETE" && (
+          <div>
+            <div>Tem certeza que deseja *excluir* este item?</div>
+            <button
+              onClick={() => {
+                params.id && handleDelete(parseInt(params.id));
+              }}
+            >
+              Sim, excluir item
+            </button>
+            <button onClick={() => closeModal()}>Voltar</button>
+          </div>
+        )}
+        {(action === "NEW" || action === "EDIT") && (
+          <div>
+            ** salvo com sucesso!{" "}
+            <button onClick={() => navigate("/home/specialties")}>
+              Voltar
+            </button>
+          </div>
+        )}
       </Modal>
     </>
   );

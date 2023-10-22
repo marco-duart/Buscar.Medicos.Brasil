@@ -1,11 +1,14 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
+
 //GENÉRICO
 
 export const TableDFlexTab = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 `;
 
 //GLOBAL???
@@ -17,10 +20,28 @@ export const PageTitle = styled.div`
   margin-bottom: 30px;
 `;
 
+export const DetailFormTitle = styled.div`
+  font-size: ${(props) => props.theme.fontSizes.md};
+  font-family: ${(props) => props.theme.fontFamily.Sora};
+  color: ${(props) => props.theme.colors.darkGray100};
+  font-weight: 600;
+  margin-bottom: 30px;
+`;
+
+//PARA TABLES COM TAB
 export const TableContainer = styled.div`
   width: 1582px;
   padding: 30px;
   border-radius: 0px 24px 24px 24px;
+  background-color: ${(props) => props.theme.colors.white};
+  box-shadow: 0px 7px 30px 0px #bbc0cd66;
+`;
+
+//RADIOS COMPLETO
+export const TableContainerRad = styled.div`
+  width: 1582px;
+  padding: 30px;
+  border-radius: 24px;
   background-color: ${(props) => props.theme.colors.white};
   box-shadow: 0px 7px 30px 0px #bbc0cd66;
 `;
@@ -68,7 +89,16 @@ export const TableSearchInput = styled.input`
 `;
 
 export const TableTextInput = styled.input`
-  width: 184px;
+  width: 400px;
+  height: 56px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: ${(props) => props.theme.radius.sm};
+  padding: 0 15px;
+  margin-bottom: 20px;
+`;
+
+export const TableSelect = styled.select`
+  width: 400px;
   height: 56px;
   border: 1.5px solid #e0e0e0;
   border-radius: ${(props) => props.theme.radius.sm};
@@ -83,6 +113,37 @@ export const TableValueInput = styled.input`
   border-radius: ${(props) => props.theme.radius.sm};
   padding: 0 15px;
   margin-bottom: 20px;
+`;
+
+export const TableTextArea = styled.textarea`
+  width: 824px;
+  height: 182px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: ${(props) => props.theme.radius.sm};
+  padding: 20px 15px;
+  margin-bottom: 20px;
+`;
+
+export const TableSubmitButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 400px;
+  height: 56px;
+  border: none;
+  background-color: ${(props) => props.theme.colors.darkGreen};
+  font-size: ${(props) => props.theme.fontSizes.sm};
+  font-family: ${(props) => props.theme.fontFamily.Poppins};
+  color: ${(props) => props.theme.colors.white};
+  border-radius: ${(props) => props.theme.radius.md};
+  font-weight: 600;
+  cursor: pointer;
+
+  span {
+    font-size: ${(props) => props.theme.fontSizes.xl};
+    font-weight: 400;
+  }
 `;
 
 //LINK
@@ -100,6 +161,13 @@ export const TableLink = styled(Link)`
   }
 `;
 
+export const NewEditTitle = styled.div`
+  font-size: ${(props) => props.theme.fontSizes.md};
+  font-family: ${(props) => props.theme.fontFamily.Sora};
+  color: ${(props) => props.theme.colors.darkGray100};
+  font-weight: 600;
+`;
+
 //BUTTON
 export const TableNewButton = styled.button`
   display: flex;
@@ -115,6 +183,7 @@ export const TableNewButton = styled.button`
   color: ${(props) => props.theme.colors.white};
   border-radius: ${(props) => props.theme.radius.md};
   font-weight: 600;
+  cursor: pointer;
 
   span {
     font-size: ${(props) => props.theme.fontSizes.xl};
@@ -124,8 +193,8 @@ export const TableNewButton = styled.button`
 
 //INPUT
 export const TableIco = styled.button`
-  background: none;
   border: none;
+  background: none;
   padding: 0;
   visibility: hidden;
   img {
@@ -168,5 +237,44 @@ export const PageCountButton = styled.button`
   cursor: pointer;
 `;
 
+//ABSOLUTE AND RELATIVE
+export const DivRelativeInput = styled.div`
+  position: relative;
+`;
 
-//I HATE CHECKBOX
+export const LabelAbsoluteInput = styled.label`
+  position: absolute;
+  top: -15px;
+  left: 12px;
+  padding: 5px;
+  font-size: ${props => props.theme.fontSizes.xsm};
+  font-family: ${props => props.theme.fontFamily.Poppins};
+  background-color: ${props => props.theme.colors.white};
+`;
+
+//CHECKBOX
+
+export const LabelCheckboxFlex = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 150px;
+`;
+
+export const LabelCheckboxColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+`;
+
+export const StatusCheckbox = styled.div`
+  font-size: ${props => props.theme.fontSizes.sm};
+  font-family: ${props => props.theme.fontFamily.Poppins};
+  color: ${(props) => props.theme.colors.darkGray100};
+`;
+
+export const LabelCheckbox = styled.label`
+  font-size: ${props => props.theme.fontSizes.xsm};
+  font-family: ${props => props.theme.fontFamily.Poppins};
+  color: ${(props) => props.theme.colors.gray100};
+`;

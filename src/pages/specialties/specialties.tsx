@@ -8,6 +8,7 @@ import { Table } from "../../components/shared/table";
 import icons from "../../assets/styles/icons";
 import { useNavigate } from "react-router-dom";
 import * as S from "../../assets/styles/shared";
+import Switch from "../../components/shared/toggle";
 
 type SpecialtiesDataProcessedType = {
   name: string;
@@ -52,10 +53,14 @@ const Specialties = () => {
         const specialty = {
           name: currentValue.name,
           enabled: (
-            <div>
-              <input type="checkbox" checked={currentValue.enabled} />
-              <label>{currentValue.enabled ? "Ativo" : "Inativo"}</label>
-            </div>
+            <S.LabelCheckboxFlex>
+                <Switch
+                  onToggle={handleCheckboxChange}
+                  isActive={currentValue.enabled}
+                  disabled={true}
+                />
+              <S.StatusCheckbox>{currentValue.enabled ? "Ativo" : "Inativo"}</S.StatusCheckbox>
+            </S.LabelCheckboxFlex>
           ),
           actions: (
             <div>
@@ -92,6 +97,10 @@ const Specialties = () => {
     fetchData();
   }, [searchValue, page, setSpecialtiesDataProcessed]);
 
+  const handleCheckboxChange = () => {
+    //pensar
+  };
+
   const handleDelete = async (id: number) => {
     await DeleteSpecialty(id);
     closeModal();
@@ -112,7 +121,7 @@ const Specialties = () => {
     <>
       <S.ContentRefil>
         <S.PageTitle>Especialidades</S.PageTitle>
-        <S.TableContainer>
+        <S.TableContainerRad>
           <S.TableDFlexTab>
             <S.TableSearchInput
               type="text"
@@ -167,7 +176,7 @@ const Specialties = () => {
               </div>
             </S.TableButtonsTab>
           </S.TableDFlexTab>
-        </S.TableContainer>
+        </S.TableContainerRad>
       </S.ContentRefil>
 
       <div>

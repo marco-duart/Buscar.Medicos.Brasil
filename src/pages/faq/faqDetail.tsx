@@ -1,7 +1,14 @@
-import { useState, useEffect } from "react";
-import Modal from 'react-modal';
+import { useState, useEffect, ChangeEvent } from "react";
+import Modal from "react-modal";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { DeleteQuestion, GetQuestion, PostQuestion, PutQuestion } from "../../data/services/questions";
+import {
+  DeleteQuestion,
+  GetQuestion,
+  PostQuestion,
+  PutQuestion,
+} from "../../data/services/questions";
+import * as S from "../../assets/styles/shared";
+import icons from "../../assets/styles/icons";
 
 type Location = {
   state: {
@@ -10,13 +17,13 @@ type Location = {
 };
 
 type Params = {
-  id?: string,
-  type?: "MEDICO" | "CONTRATANTE"
-}
+  id?: string;
+  type?: "MEDICO" | "CONTRATANTE";
+};
 
 const FAQDetail = () => {
   const params: Params = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: {
       value: "",
@@ -28,14 +35,16 @@ const FAQDetail = () => {
     },
     type: {
       value: params.type ? params.type : "",
-    }
+    },
   });
   //MODAL
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
-  
+
   // RECUPERANDO PARAMETROS DO USELOCATION
   const location: Location = useLocation();
-  const [action, setAction] = useState(location?.state.action ? location?.state.action : "")
+  const [action, setAction] = useState(
+    location?.state.action ? location?.state.action : ""
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +54,7 @@ const FAQDetail = () => {
           setFormData({
             title: { value: response.title, valid: true },
             message: { value: response.message, valid: true },
-            type: { value: response.type }
+            type: { value: response.type },
           });
         }
       }
@@ -65,27 +74,35 @@ const FAQDetail = () => {
           valid: formData.message.value.trim() !== "",
         },
         type: {
-          ...formData.type
-        }
+          ...formData.type,
+        },
       });
-      return
+      return;
     }
     if (params.id && action === "EDIT") {
-      const response = await PutQuestion(parseInt(params.id), formData.title.value, formData.message.value, formData.type.value);
-      openModal()
+      const response = await PutQuestion(
+        parseInt(params.id),
+        formData.title.value,
+        formData.message.value,
+        formData.type.value
+      );
+      openModal();
     }
-    if(action === "NEW") {
-      const response = await PostQuestion(formData.title.value, formData.message.value, formData.type.value)
-      openModal()
+    if (action === "NEW") {
+      const response = await PostQuestion(
+        formData.title.value,
+        formData.message.value,
+        formData.type.value
+      );
+      openModal();
     }
   };
 
   const handleDelete = async (id: number) => {
     await DeleteQuestion(id);
-    closeModal()
-    navigate("/home/faq")
+    closeModal();
+    navigate("/home/faq");
   };
-
 
   //FUNÇÕES OPEN/CLOSE MODAL
   function openModal() {
@@ -97,41 +114,102 @@ const FAQDetail = () => {
 
   return (
     <>
-      {action === "VIEW" && <div><button onClick={() => setAction("EDIT")}>Editar</button><button onClick={() => openModal()}>Deletar</button></div> }
-      <label htmlFor="title">Título
-        <input
-          type="text"
-          name="title"
-          id="title"
-          value={formData.title.value}
-          disabled={action === "VIEW"}
-          onChange={(event) =>
-            setFormData({ ...formData, title: { value: event.target.value, valid: true }})
-          }
-        />
-      </label>
-      <label htmlFor="message">Mensagem
-        <input
-          type="text"
-          name="message"
-          id="message"
-          value={formData.message.value}
-          disabled={action === "VIEW"}
-          onChange={(event) =>
-            setFormData({ ...formData, message: { value: event.target.value, valid: true }})
-          }
-        />
-      </label>
-      {(action === "NEW" || action === "EDIT") && <button onClick={() => handleSubmit()}>Salvar</button>}
-      {(!formData.title.valid || !formData.message.valid) && (<small>Preencha todos os campos!</small>)}
+      <S.ContentRefil>
+        <S.TableDFlexTab>
+          <S.TableButtonsTab>
+            <S.TableLink to="/home/faq">
+              <img src={icons.leftArrow} alt="" />
+            </S.TableLink>
+            {action === "NEW" && <S.NewEditTitle>Novo FAQ</S.NewEditTitle>}
+            {(action === "EDIT" || action === "VIEW") && (
+              <S.NewEditTitle>Planos</S.NewEditTitle>
+            )}
+          </S.TableButtonsTab>
+          <div>
+            {action === "VIEW" && (
+              <div>
+                <S.TableIco onClick={() => setAction("EDIT")}>
+                  <img src={icons.edit} alt="" />
+                </S.TableIco>
+                <S.TableIco onClick={() => openModal()}>
+                  <img src={icons.delet} alt="" />
+                </S.TableIco>
+              </div>
+            )}
+          </div>
+        </S.TableDFlexTab>
+        <S.TableContainerRad>
+          <S.DetailFormTitle>Dados da pergunta</S.DetailFormTitle>
+          <S.DivRelativeInput>
+            <S.LabelAbsoluteInput htmlFor="title">Título</S.LabelAbsoluteInput>
+            <S.TableTextInput
+              type="text"
+              name="title"
+              id="title"
+              value={formData.title.value}
+              disabled={action === "VIEW"}
+              onChange={(event) =>
+                setFormData({
+                  ...formData,
+                  title: { value: event.target.value, valid: true },
+                })
+              }
+            />
+          </S.DivRelativeInput>
+          <S.DivRelativeInput>
+            <S.LabelAbsoluteInput htmlFor="message">
+              Mensagem
+            </S.LabelAbsoluteInput>
+            <S.TableTextArea
+              name="message"
+              id="message"
+              value={formData.message.value}
+              disabled={action === "VIEW"}
+              onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                setFormData({
+                  ...formData,
+                  message: { value: event.target.value, valid: true },
+                })
+              }
+            />
+          </S.DivRelativeInput>
+          {(action === "NEW" || action === "EDIT") && (
+            <S.TableSubmitButton onClick={() => handleSubmit()}>
+              Salvar
+            </S.TableSubmitButton>
+          )}
+          {(!formData.title.valid || !formData.message.valid) && (
+            <small>Preencha todos os campos!</small>
+          )}
+        </S.TableContainerRad>
+      </S.ContentRefil>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
         <button onClick={closeModal}>close</button>
-        {(action === "DELETE") && <div><div>Tem certeza que deseja *excluir* este item?</div><button onClick={() => {params.id && handleDelete(parseInt(params.id))}}>Sim, excluir item</button><button onClick={() => closeModal()}>Voltar</button></div>}
-        {(action === "NEW" || action === "EDIT") && <div>** salvo com sucesso! <button onClick={() => navigate("/home/specialties")}>Voltar</button></div>}
+        {action === "DELETE" && (
+          <div>
+            <div>Tem certeza que deseja *excluir* este item?</div>
+            <button
+              onClick={() => {
+                params.id && handleDelete(parseInt(params.id));
+              }}
+            >
+              Sim, excluir item
+            </button>
+            <button onClick={() => closeModal()}>Voltar</button>
+          </div>
+        )}
+        {(action === "NEW" || action === "EDIT") && (
+          <div>
+            ** salvo com sucesso!{" "}
+            <button onClick={() => navigate("/home/specialties")}>
+              Voltar
+            </button>
+          </div>
+        )}
       </Modal>
     </>
   );
