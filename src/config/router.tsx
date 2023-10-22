@@ -24,7 +24,7 @@ export default function Router() {
         <Route path="/home" element={<BaseLayout />}>
           <Route path="/home/" element={<Home />} />
           <Route path="/home/users" element={<Users />} />
-          <Route path="/home/user/detail" element={<UserDetail />} />
+          <Route path="/home/user/detail/:id" element={<UserDetail />} />
           <Route path="/home/plans" element={<Plans />} />
           <Route path="/home/plans/:id" element={<PlanDetail />} />
           <Route path="/home/plans/new/:type" element={<PlanDetail />} />

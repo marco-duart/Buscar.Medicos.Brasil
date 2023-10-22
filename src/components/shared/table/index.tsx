@@ -6,9 +6,10 @@ type TableRow = Record<string, string | number | ReactNode>;
 type TableProps = { 
   HeadColumns: string[]; 
   BodyRow: TableRow[];
+  toDetail?: (userId: string) => void 
 };
 
-export const Table = ({ HeadColumns, BodyRow }: TableProps) => {
+export const Table = ({ HeadColumns, BodyRow, toDetail }: TableProps) => {
   return (
     <S.SharedTableStyled>
       <thead>
@@ -19,11 +20,16 @@ export const Table = ({ HeadColumns, BodyRow }: TableProps) => {
         </tr>
       </thead>
       <tbody>
-        {/* EM VEZ DE OLHAR O OBJETO PELOS VALORES, RESOLVI VER PELAS CHAVES */}
         {BodyRow?.map((information, rowIndex) => (
-          <S.SharedTableRowStyled key={`${rowIndex}-tr`}>
+          //ON CLICK ATRIBUIDO PARA CADA LINHA
+          <S.SharedTableRowStyled key={`${rowIndex}-tr`} onClick={toDetail ? () => toDetail(information.id as string) : undefined}>
             {Object.keys(information).map((key, cellIndex) => (
-              <S.SharedTableTdStyled key={`${rowIndex}-${cellIndex}-td`}>{information[key]}</S.SharedTableTdStyled>
+              //NÃO RENDERIZAR O ITEM CASO A KEY FOR ID, PRECISO DO ID PARA OUTRA COISA
+              key !== 'id' ? (
+                <S.SharedTableTdStyled key={`${rowIndex}-${cellIndex}-td`}>
+                  {information[key]}
+                </S.SharedTableTdStyled>
+              ) : null
             ))}
           </S.SharedTableRowStyled>
         ))}
@@ -31,5 +37,6 @@ export const Table = ({ HeadColumns, BodyRow }: TableProps) => {
     </S.SharedTableStyled>
   );
 };
+
 
 export default Table;

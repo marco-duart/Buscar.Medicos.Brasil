@@ -266,7 +266,7 @@ const PlanDetail = () => {
         <button onClick={closeModal}>close</button>
         {action === "DELETE" && (
           <div>
-            <div>Tem certeza que deseja *excluir* este item?</div>
+            <div>Tem certeza que deseja <span>excluir</span> este item?</div>
             <button
               onClick={() => {
                 params.id && handleDelete(parseInt(params.id));

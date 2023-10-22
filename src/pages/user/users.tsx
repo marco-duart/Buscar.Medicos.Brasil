@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import * as S from "../../assets/styles/shared";
 
 type UserDataProcessedType = {
+  id: string;
   user: string;
   email: string;
   whatsapp: string;
@@ -48,10 +49,10 @@ export const Users = () => {
     "TODOS" | "MEDICO" | "CONTRATANTE"
   >("TODOS");
 
-  //TESTANDO
+  //REDIRECIONANDO
   const navigate = useNavigate();
-  const toDetail = () => {
-    navigate("/home/user/detail", { state: { data: userDataProcessed } });
+  const toDetail = (id: string) => {
+    navigate(`/home/user/detail/${id}`);
   };
 
   useEffect(() => {
@@ -84,6 +85,7 @@ export const Users = () => {
       //CRIANDO UM NOVO ARRAY DE OBJETOS ESPECÍFICO PARA O CASO
       const tempData = response?.content.reduce((accumulator, currentValue) => {
         const user = {
+          id: (currentValue.id).toString(),
           user: currentValue.lastName,
           email: currentValue.email,
           whatsapp: currentValue.phone,
@@ -151,7 +153,7 @@ export const Users = () => {
             <S.TableCountValue>{currentTotal}</S.TableCountValue>
           </div>
         </S.TableDFlexTab>
-        <Table HeadColumns={tableColumns} BodyRow={userDataProcessed} />
+        <Table HeadColumns={tableColumns} BodyRow={userDataProcessed} toDetail={toDetail} />
         <S.TableDFlexTab>
           <S.PageCountOffset>
             {offsetTotalItens[0]} de {offsetTotalItens[1]}
@@ -182,9 +184,6 @@ export const Users = () => {
             </div>
           </S.TableButtonsTab>
         </S.TableDFlexTab>
-        <div>
-          <button onClick={() => toDetail()}>UseNavigate</button>
-        </div>
       </S.TableContainer>
     </S.ContentRefil>
   );

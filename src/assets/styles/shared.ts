@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
+import Modal from "react-modal";
 
 
 //GENÉRICO
@@ -250,7 +251,85 @@ export const LabelAbsoluteInput = styled.label`
   font-size: ${props => props.theme.fontSizes.xsm};
   font-family: ${props => props.theme.fontFamily.Poppins};
   background-color: ${props => props.theme.colors.white};
+  color:  ${props => props.theme.colors.gray100};
 `;
+
+export const LabelNotAbsoluteInput = styled.label`
+  padding: 5px;
+  font-size: ${props => props.theme.fontSizes.xsm};
+  font-family: ${props => props.theme.fontFamily.Poppins};
+  background-color: ${props => props.theme.colors.white};
+  color:  ${props => props.theme.colors.gray100};
+`;
+
+export const DivCheckboxPad = styled.div`
+  margin-left: 20px;
+`;
+
+export const HrStyled = styled.hr`
+  width: 382px;
+  margin: 20px 0;
+  color:  ${props => props.theme.colors.gray100};
+`;
+
+export const LabelUserCheckbox = styled.label`
+  font-size: ${props => props.theme.fontSizes.sm};
+  font-family: ${props => props.theme.fontFamily.Poppins};
+  color:  ${props => props.theme.colors.gray100};
+`;
+
+export const UserCheckbox = styled.input`
+  all: unset;
+  display: inline-block;
+  border: 1px solid ${props => props.theme.colors.white200};
+  width: 18px;
+  height: 18px;
+  &:checked {
+    background-color: ${props => props.theme.colors.white200};
+  }
+  &:checked::before {
+    content: '✓';
+    font-size: 14px;
+    color: #FFF;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+export const CheckboxUserDiv = styled.div`
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+`;
+
+export const UserTextArea = styled.textarea`
+  width: 400px;
+  height: 182px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: ${(props) => props.theme.radius.sm};
+  padding: 20px 15px;
+  margin-bottom: 20px;
+`;
+
+//MODAL
+export const ModalDelete = styled(Modal)`
+  width: 593px;
+  height: 388px;
+  background-color: ${(props) => props.theme.colors.darkGreen};
+`;
+
+export const ModalMessage = styled.div`
+  font-size: ${(props) => props.theme.fontSizes.xl};
+  font-family: ${(props) => props.theme.fontFamily.Sora};
+  color: ${(props) => props.theme.colors.darkGray100};
+  span {
+    color: #FF3333;
+    text-decoration: underline;
+  }
+`
+//S.TableNewButton
 
 //CHECKBOX
 

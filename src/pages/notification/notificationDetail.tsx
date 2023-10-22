@@ -177,6 +177,7 @@ const NotificationDetail = () => {
                 type="text"
                 name="sendingDate"
                 id="sendingDate"
+                disabled={action === "VIEW"}
                 value={formData.sendingDate.value}
                 onChange={(event) =>
                   setFormData({
