@@ -23,7 +23,7 @@ export const GetSpecialties = async (
     return apiResponse.data as IDataSpecialtiesArray;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -38,7 +38,7 @@ export const GetSpecialty = async (id: number) => {
     return apiResponse.data as IDataSpecialties;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -60,7 +60,7 @@ export const PostSpecialty = async (name: string, enabled: boolean) => {
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -75,7 +75,7 @@ export const DeleteSpecialty = async (id: number) => {
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -101,7 +101,7 @@ export const PutSpecialty = async (
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }

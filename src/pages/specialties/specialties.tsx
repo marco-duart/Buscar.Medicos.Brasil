@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useState } from "react";
-import Modal from "react-modal";
 import {
   DeleteSpecialty,
   GetSpecialties,
+  PutSpecialty,
 } from "../../data/services/specialties";
 import { Table } from "../../components/shared/table";
 import icons from "../../assets/styles/icons";
@@ -36,6 +36,8 @@ const Specialties = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   //ID DO ITEM PARA DELETAR
   const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
+  //FORÇAR A RENDERIZAÇÃO APÓS O CHECKBOX ****GAMBIARRA PERDE FEIO PRA ISSO***** MAS TENHO POUCAS HORAS
+  const [checkboxState, setCheckboxState] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,9 +57,8 @@ const Specialties = () => {
           enabled: (
             <S.LabelCheckboxFlex>
               <Switch
-                onToggle={handleCheckboxChange}
+                onToggle={() => handleCheckboxChange(currentValue.id, currentValue.name, !currentValue.enabled)}
                 isActive={currentValue.enabled}
-                disabled={true}
               />
               <S.StatusCheckbox>
                 {currentValue.enabled ? "Ativo" : "Inativo"}
@@ -97,11 +98,13 @@ const Specialties = () => {
     };
 
     fetchData();
-  }, [searchValue, page, setSpecialtiesDataProcessed]);
+  }, [checkboxState, searchValue, page, setSpecialtiesDataProcessed]);
 
-  const handleCheckboxChange = () => {
-    //pensar
-  };
+  const handleCheckboxChange = async (id: number, name: string, enabled: boolean) => {
+    const response = await PutSpecialty(id,name,enabled);
+    console.log(response);
+    setCheckboxState(!checkboxState);
+};
 
   const handleDelete = async (id: number) => {
     await DeleteSpecialty(id);
@@ -117,6 +120,7 @@ const Specialties = () => {
   function closeModal() {
     setDeleteItemId(null);
     setIsOpen(false);
+    setPage(0);
   }
 
   return (
@@ -181,24 +185,28 @@ const Specialties = () => {
         </S.TableContainerRad>
       </S.ContentRefil>
 
-      <div>
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          contentLabel="Modal"
-        >
-          <button onClick={() => closeModal()}>close</button>
-          <div>Tem certeza que deseja *excluir* este item?</div>
-          <button
+      <S.ModalEditDelete
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Modal"
+      >
+        <S.ModalCloseDiv>
+          <button onClick={() => closeModal()}>X</button>
+        </S.ModalCloseDiv>
+        <S.ModalContainer>
+          <S.ModalMessage>
+            Tem certeza que deseja <span>excluir</span> este item?
+          </S.ModalMessage>
+          <S.ModalButton
             onClick={() => {
               deleteItemId && handleDelete(deleteItemId);
             }}
           >
             Sim, excluir item
-          </button>
-          <button onClick={() => closeModal()}>Voltar</button>
-        </Modal>
-      </div>
+          </S.ModalButton>
+          <S.ModalLink onClick={() => closeModal()}>Voltar</S.ModalLink>
+        </S.ModalContainer>
+      </S.ModalEditDelete>
     </>
   );
 };

@@ -22,5 +22,4 @@ export default createGlobalStyle`
     font-size: 1rem;
     color: var(--dark);
   }
-
 `;

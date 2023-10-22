@@ -25,7 +25,7 @@ export const GetQuestions = async (
     return response.data as IDataQuestionsArray;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error)
     }
     return null;
   }
@@ -40,7 +40,7 @@ export const GetQuestion = async (id: number) => {
     return apiResponse.data as IDataQuestions;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error)
     }
     return null;
   }
@@ -67,7 +67,7 @@ export const PostQuestion = async (
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error)
     }
     return null;
   }
@@ -82,7 +82,7 @@ export const DeleteQuestion = async (id: number) => {
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error)
     }
     return null;
   }
@@ -110,7 +110,7 @@ export const PutQuestion = async (
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error)
     }
     return null;
   }

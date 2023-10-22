@@ -25,7 +25,7 @@ export const GetPlans = async (
     return response.data as IDataPlansArray;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -40,7 +40,7 @@ export const GetPlan = async (id: number) => {
     return apiResponse.data as IDataPlans;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -71,7 +71,7 @@ export const PostPlan = async (
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -86,7 +86,7 @@ export const DeletePlan = async (id: number) => {
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -118,7 +118,7 @@ export const PutPlan = async (
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }

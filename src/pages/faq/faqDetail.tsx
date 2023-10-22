@@ -1,5 +1,4 @@
 import { useState, useEffect, ChangeEvent } from "react";
-import Modal from "react-modal";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   DeleteQuestion,
@@ -86,7 +85,7 @@ const FAQDetail = () => {
         formData.message.value,
         formData.type.value
       );
-      console.log(response)
+      console.log(response);
       openModal();
     }
     if (action === "NEW") {
@@ -95,7 +94,7 @@ const FAQDetail = () => {
         formData.message.value,
         formData.type.value
       );
-      console.log(response)
+      console.log(response);
       openModal();
     }
   };
@@ -111,6 +110,7 @@ const FAQDetail = () => {
     setIsOpen(true);
   }
   function closeModal() {
+    (action === "NEW" || action === "EDIT") && navigate("/home/faq");
     setIsOpen(false);
   }
 
@@ -185,34 +185,38 @@ const FAQDetail = () => {
           )}
         </S.TableContainerRad>
       </S.ContentRefil>
-      <Modal
+      <S.ModalEditDelete
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
-        <button onClick={closeModal}>close</button>
+        <S.ModalCloseDiv>
+          <button onClick={() => closeModal()}>X</button>
+        </S.ModalCloseDiv>
         {action === "DELETE" && (
-          <div>
-            <div>Tem certeza que deseja *excluir* este item?</div>
-            <button
+          <S.ModalContainer>
+            <S.ModalMessage>
+              Tem certeza que deseja <span>excluir</span> este item?
+            </S.ModalMessage>
+            <S.ModalButton
               onClick={() => {
                 params.id && handleDelete(parseInt(params.id));
               }}
             >
               Sim, excluir item
-            </button>
-            <button onClick={() => closeModal()}>Voltar</button>
-          </div>
+            </S.ModalButton>
+            <S.ModalLink onClick={() => closeModal()}>Voltar</S.ModalLink>
+          </S.ModalContainer>
         )}
+
         {(action === "NEW" || action === "EDIT") && (
-          <div>
-            ** salvo com sucesso!{" "}
-            <button onClick={() => navigate("/home/specialties")}>
-              Voltar
-            </button>
-          </div>
+          <S.ModalContainer>
+            <S.ModalConfirmation>
+              Pergunta salva com sucesso!
+            </S.ModalConfirmation>
+          </S.ModalContainer>
         )}
-      </Modal>
+      </S.ModalEditDelete>
     </>
   );
 };

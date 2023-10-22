@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginAPI } from "../../data/services/register";
 import * as S from "./styles";
+import icons from "../../assets/styles/icons";
 
 const Login = () => {
   localStorage.removeItem("token");
@@ -20,6 +21,7 @@ const Login = () => {
   const [remenber, setRemember] = useState<boolean>(
     localStorage.getItem("remember") ? true : false
   );
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleSubmit = async () => {
     if (!formData.email.value || !formData.password.value) {
@@ -79,7 +81,7 @@ const Login = () => {
           <S.InputSectionStyled>
             <S.LabelStyled htmlFor="password">Senha</S.LabelStyled>
             <S.InputStyled
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               value={formData.password.value}
@@ -89,6 +91,11 @@ const Login = () => {
                   password: { value: event.target.value, valid: true },
                 })
               }
+            />
+            <S.IcoPassword
+              src={showPassword ? icons.eyes : icons.eyeoffline}
+              alt=""
+              onClick={() => setShowPassword(!showPassword)}
             />
             {!formData.password.valid && loginResult === 400 && (
               <small>Insira a senha!</small>

@@ -1,6 +1,5 @@
 import { useState, useEffect, ReactNode } from "react";
-import Modal from "react-modal";
-import { DeletePlan, GetPlans } from "../../data/services/plans";
+import { DeletePlan, GetPlans, PutPlan } from "../../data/services/plans";
 import { Table } from "../../components/shared/table";
 import icons from "../../assets/styles/icons";
 import { useNavigate } from "react-router-dom";
@@ -38,6 +37,8 @@ const Plans = () => {
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   //ID DO ITEM PARA DELETAR
   const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
+  //FORÇAR A RENDERIZAÇÃO APÓS O CHECKBOX ****GAMBIARRA PERDE FEIO PRA ISSO***** MAS TENHO POUCAS HORAS
+  const [checkboxState, setCheckboxState] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,9 +69,17 @@ const Plans = () => {
           enabled: (
             <S.LabelCheckboxFlex>
               <Switch
-                onToggle={handleCheckboxChange}
+                onToggle={() =>
+                  handleCheckboxChange(
+                    currentValue.id,
+                    currentValue.planTitle,
+                    !currentValue.enabled,
+                    currentValue.period,
+                    currentValue.type,
+                    currentValue.values
+                  )
+                }
                 isActive={currentValue.enabled}
-                disabled={true}
               />
               <S.StatusCheckbox>
                 {currentValue.enabled ? "Ativo" : "Inativo"}
@@ -109,10 +118,19 @@ const Plans = () => {
       setPlansDataProcessed(tempData ?? []);
     };
     fetchData();
-  }, [searchValue, page, currentTab, setPlansDataProcessed]);
+  }, [checkboxState, searchValue, page, currentTab, setPlansDataProcessed]);
 
-  const handleCheckboxChange = () => {
-    //pensar
+  const handleCheckboxChange = async (
+    id: number,
+    title: string,
+    enabled: boolean,
+    period: string,
+    type: string,
+    values: number
+  ) => {
+    const response = await PutPlan(id, title, enabled, period, type, values);
+    console.log(response);
+    setCheckboxState(!checkboxState);
   };
 
   const handleDelete = async (id: number) => {
@@ -129,6 +147,7 @@ const Plans = () => {
   const closeModal = () => {
     setDeleteItemId(null);
     setIsOpen(false);
+    setPage(0);
   };
 
   //SETANDO A PAGE COMO 0 AO MUDAR DE ABA
@@ -212,22 +231,28 @@ const Plans = () => {
         </S.TableContainer>
       </S.ContentRefil>
 
-      <Modal
+      <S.ModalEditDelete
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
-        <button onClick={() => closeModal()}>close</button>
-        <div>Tem certeza que deseja *excluir* este item?</div>
-        <button
-          onClick={() => {
-            deleteItemId && handleDelete(deleteItemId);
-          }}
-        >
-          Sim, excluir item
-        </button>
-        <button onClick={() => closeModal()}>Voltar</button>
-      </Modal>
+        <S.ModalCloseDiv>
+          <button onClick={() => closeModal()}>X</button>
+        </S.ModalCloseDiv>
+        <S.ModalContainer>
+          <S.ModalMessage>
+            Tem certeza que deseja <span>excluir</span> este item?
+          </S.ModalMessage>
+          <S.ModalButton
+            onClick={() => {
+              deleteItemId && handleDelete(deleteItemId);
+            }}
+          >
+            Sim, excluir item
+          </S.ModalButton>
+          <S.ModalLink onClick={() => closeModal()}>Voltar</S.ModalLink>
+        </S.ModalContainer>
+      </S.ModalEditDelete>
     </>
   );
 };

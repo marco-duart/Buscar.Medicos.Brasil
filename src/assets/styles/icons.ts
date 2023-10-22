@@ -11,6 +11,7 @@ import denay from "../../assets/icon/denay.svg";
 import details from "../../assets/icon/details.svg";
 import everyUser from "../../assets/icon/every-user.svg";
 import eyeoffline from "../../assets/icon/eye-off-line.svg";
+import eyes from "../../assets/icon/eyes.svg";
 import loggedUser from "../../assets/icon/logged-user.svg";
 import logo from "../../assets/icon/logo.svg";
 import logout from "../../assets/icon/logout.svg";
@@ -44,6 +45,7 @@ const icons = {
   calendar,
   leftArrow,
   deft,
+  eyes,
 };
 
 export default icons;

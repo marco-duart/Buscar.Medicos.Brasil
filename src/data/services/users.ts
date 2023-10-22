@@ -32,7 +32,7 @@ export const GetUsers = async <T>(
     return apiResponse.data as T;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error)
     }
     return null;
   }

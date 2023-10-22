@@ -321,13 +321,22 @@ export const UserTextArea = styled.textarea`
 `;
 
 //MODAL
-export const ModalDelete = styled(Modal)`
-  width: 593px;
-  height: 388px;
-  background-color: ${(props) => props.theme.colors.darkGreen};
-`;
 
+export const ModalEditDelete = styled(Modal)`
+  padding: 40px 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 24px;
+  width: 618px;
+  height: 359px;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0px 0px 25px 0px #A3A3A333;
+`;
+ 
 export const ModalMessage = styled.div`
+  text-align: center;
   font-size: ${(props) => props.theme.fontSizes.xl};
   font-family: ${(props) => props.theme.fontFamily.Sora};
   color: ${(props) => props.theme.colors.darkGray100};
@@ -336,7 +345,54 @@ export const ModalMessage = styled.div`
     text-decoration: underline;
   }
 `;
-//S.TableNewButton
+
+export const ModalConfirmation = styled.div`
+  text-align: center;
+  font-size: ${(props) => props.theme.fontSizes.xxl};
+  font-family: ${(props) => props.theme.fontFamily.Sora};
+  color: ${(props) => props.theme.colors.darkGray100};
+`;
+
+export const ModalButton = styled.button`
+  gap: 5px;
+  width: 262px;
+  height: 56px;
+  border: none;
+  background-color: ${(props) => props.theme.colors.lightGreen100};
+  font-size: ${(props) => props.theme.fontSizes.sm};
+  font-family: ${(props) => props.theme.fontFamily.Poppins};
+  color: ${(props) => props.theme.colors.white};
+  border-radius: ${(props) => props.theme.radius.md};
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+export const ModalLink = styled.div`
+  font-size: ${(props) => props.theme.fontSizes.sm};
+  font-family: ${(props) => props.theme.fontFamily.Poppins};
+  color: red;
+  cursor: pointer;
+`;
+
+export const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+`;
+
+export const ModalCloseDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-bottom: 20px;
+  button {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+  }
+`;
 
 //CHECKBOX
 

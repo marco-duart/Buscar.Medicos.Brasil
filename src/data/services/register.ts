@@ -27,7 +27,7 @@ export const MeAPI = async () => {
     return apiResponse.data as IMeAPI;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error)
     }
     return null;
   }

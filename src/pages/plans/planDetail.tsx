@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Modal from "react-modal";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   DeletePlan,
@@ -115,7 +114,7 @@ const PlanDetail = () => {
         formData.type.value,
         formData.values.value
       );
-      console.log(response)
+      console.log(response);
       openModal();
     }
     if (action === "NEW") {
@@ -126,7 +125,7 @@ const PlanDetail = () => {
         formData.type.value,
         formData.values.value
       );
-      console.log(response)
+      console.log(response);
       openModal();
     }
   };
@@ -261,34 +260,36 @@ const PlanDetail = () => {
         </S.TableContainerRad>
       </S.ContentRefil>
 
-      <Modal
+      <S.ModalEditDelete
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
-        <button onClick={closeModal}>close</button>
+        <S.ModalCloseDiv>
+          <button onClick={() => closeModal()}>X</button>
+        </S.ModalCloseDiv>
         {action === "DELETE" && (
-          <div>
-            <div>
+          <S.ModalContainer>
+            <S.ModalMessage>
               Tem certeza que deseja <span>excluir</span> este item?
-            </div>
-            <button
+            </S.ModalMessage>
+            <S.ModalButton
               onClick={() => {
                 params.id && handleDelete(parseInt(params.id));
               }}
             >
               Sim, excluir item
-            </button>
-            <button onClick={() => closeModal()}>Voltar</button>
-          </div>
+            </S.ModalButton>
+            <S.ModalLink onClick={() => closeModal()}>Voltar</S.ModalLink>
+          </S.ModalContainer>
         )}
+
         {(action === "NEW" || action === "EDIT") && (
-          <div>
-            ** salvo com sucesso!{" "}
-            <button onClick={() => navigate("/home/plans")}>Voltar</button>
-          </div>
+          <S.ModalContainer>
+            <S.ModalConfirmation>Plano salvo com sucesso!</S.ModalConfirmation>
+          </S.ModalContainer>
         )}
-      </Modal>
+      </S.ModalEditDelete>
     </>
   );
 };

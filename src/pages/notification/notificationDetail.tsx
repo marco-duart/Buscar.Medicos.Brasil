@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent } from "react";
-import Modal from "react-modal";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
+  DeleteNotification,
   GetNotification,
   PostNotification,
   PutNotification,
@@ -114,6 +114,12 @@ const NotificationDetail = () => {
     }
   };
 
+  const handleDelete = async (id: number) => {
+    await DeleteNotification(id);
+    closeModal();
+    navigate("/home/notifications");
+  };
+
   //FUNÇÕES OPEN/CLOSE MODAL
   function openModal() {
     setIsOpen(true);
@@ -219,21 +225,38 @@ const NotificationDetail = () => {
           )}
         </S.TableContainerRad>
       </S.ContentRefil>
-      <Modal
+      <S.ModalEditDelete
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
-        <button onClick={closeModal}>close</button>
-        {(action === "NEW" || action === "EDIT") && (
-          <div>
-            ** salvo com sucesso!{" "}
-            <button onClick={() => navigate("/home/specialties")}>
-              Voltar
-            </button>
-          </div>
+        <S.ModalCloseDiv>
+          <button onClick={() => closeModal()}>X</button>
+        </S.ModalCloseDiv>
+        {action === "DELETE" && (
+          <S.ModalContainer>
+            <S.ModalMessage>
+              Tem certeza que deseja <span>excluir</span> este item?
+            </S.ModalMessage>
+            <S.ModalButton
+              onClick={() => {
+                params.id && handleDelete(parseInt(params.id));
+              }}
+            >
+              Sim, excluir item
+            </S.ModalButton>
+            <S.ModalLink onClick={() => closeModal()}>Voltar</S.ModalLink>
+          </S.ModalContainer>
         )}
-      </Modal>
+
+        {(action === "NEW" || action === "EDIT") && (
+          <S.ModalContainer>
+            <S.ModalConfirmation>
+              Pergunta salva com sucesso!
+            </S.ModalConfirmation>
+          </S.ModalContainer>
+        )}
+      </S.ModalEditDelete>
     </>
   );
 };

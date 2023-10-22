@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import * as S from "../../assets/styles/shared";
 import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import Modal from "react-modal";
 
 type NotificationsDataProcessedType = {
   name: string;
@@ -115,6 +114,7 @@ const Notifications = () => {
   const closeModal = () => {
     setDeleteItemId(null);
     setIsOpen(false);
+    setPage(0);
   };
 
   //SETANDO A PAGE COMO 0 AO MUDAR DE ABA
@@ -201,22 +201,24 @@ const Notifications = () => {
         </S.TableContainer>
       </S.ContentRefil>
 
-      <Modal
+      <S.ModalEditDelete
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Modal"
       >
-        <button onClick={() => closeModal()}>close</button>
-        <div>Tem certeza que deseja *excluir* este item?</div>
-        <button
-          onClick={() => {
-            deleteItemId && handleDelete(deleteItemId);
-          }}
-        >
-          Sim, excluir item
-        </button>
-        <button onClick={() => closeModal()}>Voltar</button>
-      </Modal>
+        <S.ModalCloseDiv><button onClick={() => closeModal()}>X</button></S.ModalCloseDiv>
+        <S.ModalContainer>
+          <S.ModalMessage>Tem certeza que deseja <span>excluir</span> este item?</S.ModalMessage>
+          <S.ModalButton
+            onClick={() => {
+              deleteItemId && handleDelete(deleteItemId);
+            }}
+          >
+            Sim, excluir item
+          </S.ModalButton>
+          <S.ModalLink onClick={() => closeModal()}>Voltar</S.ModalLink>
+        </S.ModalContainer>
+      </S.ModalEditDelete>
     </>
   );
 };

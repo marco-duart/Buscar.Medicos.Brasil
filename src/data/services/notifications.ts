@@ -25,7 +25,7 @@ export const GetNotifications = async (
     return response.data as IDataNotificationsArray;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -40,7 +40,7 @@ export const GetNotification = async (id: number) => {
     return apiResponse.data as IDataNotifications;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -69,7 +69,7 @@ export const PostNotification = async (
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -84,7 +84,7 @@ export const DeleteNotification = async (id: number) => {
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }
@@ -114,7 +114,7 @@ export const PutNotification = async (
     return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
-      return null;
+      console.log(error);
     }
     return null;
   }

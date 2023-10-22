@@ -87,6 +87,7 @@ export const LabelStyled = styled.label`
   padding: 5px;
   font-size: ${(props) => props.theme.fontSizes.xsm};
   font-family: ${(props) => props.theme.fontFamily.Poppins};
+  color: ${(props) => props.theme.colors.gray100};;
   background-color: ${(props) => props.theme.colors.white};
 `;
 
@@ -95,6 +96,13 @@ export const labelCheckboxStyled = styled.label`
   font-family: ${(props) => props.theme.fontFamily.Poppins};
   font-weight: 600;
   margin-left: 8px;
+`;
+
+export const IcoPassword = styled.img`
+  position: absolute;
+  top: 17px;
+  right: 15px;
+  cursor: pointer;
 `;
 
 //BOTÕES, PROVAVELMENTE MOVER PARA GLOBAL
