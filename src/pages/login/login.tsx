@@ -9,7 +9,7 @@ const Login = () => {
   const [loginResult, setLoginResult] = useState<number>();
   const [formData, setFormData] = useState({
     email: {
-      value: "",
+      value: localStorage.getItem("remember") ?? "",
       valid: true,
     },
     password: {
@@ -17,6 +17,9 @@ const Login = () => {
       valid: true,
     },
   });
+  const [remenber, setRemember] = useState<boolean>(
+    localStorage.getItem("remember") ? true : false
+  );
 
   const handleSubmit = async () => {
     if (!formData.email.value || !formData.password.value) {
@@ -41,6 +44,9 @@ const Login = () => {
       setLoginResult(result);
     }
     if (typeof result === "string") {
+      remenber
+        ? localStorage.setItem("remember", formData.email.value)
+        : localStorage.removeItem("remember");
       navigate("/home");
     }
   };
@@ -91,7 +97,13 @@ const Login = () => {
           </S.InputSectionStyled>
           <S.DivDFlexStyled>
             <S.DivDFlexStyled>
-              <input type="checkbox" name="" id="" />
+              <input
+                type="checkbox"
+                name=""
+                id=""
+                checked={remenber}
+                onChange={() => setRemember(!remenber)}
+              />
               <S.labelCheckboxStyled htmlFor="">
                 Lembrar-me
               </S.labelCheckboxStyled>
