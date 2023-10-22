@@ -85,6 +85,7 @@ const SpecialtyDetail = () => {
         formData.name.value,
         formData.enabled.value
       );
+      console.log(response)
       openModal();
     }
     if (action === "NEW") {
@@ -92,6 +93,7 @@ const SpecialtyDetail = () => {
         formData.name.value,
         formData.enabled.value
       );
+      console.log(response)
       openModal();
     }
   };

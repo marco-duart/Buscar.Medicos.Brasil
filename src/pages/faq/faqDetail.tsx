@@ -86,6 +86,7 @@ const FAQDetail = () => {
         formData.message.value,
         formData.type.value
       );
+      console.log(response)
       openModal();
     }
     if (action === "NEW") {
@@ -94,6 +95,7 @@ const FAQDetail = () => {
         formData.message.value,
         formData.type.value
       );
+      console.log(response)
       openModal();
     }
   };

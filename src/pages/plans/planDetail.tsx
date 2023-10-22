@@ -115,6 +115,7 @@ const PlanDetail = () => {
         formData.type.value,
         formData.values.value
       );
+      console.log(response)
       openModal();
     }
     if (action === "NEW") {
@@ -125,6 +126,7 @@ const PlanDetail = () => {
         formData.type.value,
         formData.values.value
       );
+      console.log(response)
       openModal();
     }
   };

@@ -99,6 +99,7 @@ const NotificationDetail = () => {
         formData.message.value,
         formData.type.value
       );
+      console.log(response)
       openModal();
     }
     if (action === "NEW") {
@@ -108,6 +109,7 @@ const NotificationDetail = () => {
         formData.message.value,
         formData.type.value
       );
+      console.log(response)
       openModal();
     }
   };
