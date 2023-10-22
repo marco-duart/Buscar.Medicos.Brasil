@@ -1,7 +1,7 @@
 <h1 align="center">Buscar Médicos Brasil</h1>
 
 <p align="center">
-  <strong>Um projeto incrível de busca de médicos em todo o Brasil.</strong>
+  <strong>Um projeto incrível que une contratantes e médicos em busca de serviço em todo o Brasil.</strong>
 </p>
 
 <p align="center">
@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="COLOCAR">Acesse a aplicação aqui</a>
+  <a href="https://buscar-medicos-brasil.vercel.app/">Acesse a aplicação aqui</a>
 </p>
 
 <h2 align="center">Visão Geral</h2>
@@ -50,14 +50,17 @@ npm start
 </p>
 <h2 align="center">Deploy</h2>
 <p align="center">
-  Este projeto foi hospedado no serviço Vercel. Você pode acessá-lo em <a href="COLOCAR">Buscar Médicos Brasil no Vercel</a>. Certifique-se de que está acessando a versão mais recente da aplicação.
+  Este projeto foi hospedado no serviço Vercel. Você pode acessá-lo em <a href="https://buscar-medicos-brasil.vercel.app/">Buscar Médicos Brasil no Vercel</a>. Certifique-se de que está acessando a versão mais recente da aplicação.
 </p>
 <h2 align="center">Contato</h2>
 <p align="center">
   Para entrar em contato com a equipe de desenvolvimento da Arnia, visite <a href="https://arnia.com.br/">arnia.com</a>.
 </p>
 <p align="center">
-  Esperamos que este projeto seja útil e que você possa aprender com ele. Fique à vontade para explorar o código-fonte e contribuir para o seu desenvolvimento!
+  Espero que este projeto seja útil e que você possa aprender com ele. Fique à vontade para explorar o código-fonte e contribuir para o seu desenvolvimento!
+</p>
+<p align="center">
+  Busquei entregar o melhor, mesmo em meio a mudanças em toda rotina!
 </p>
 <p align="center">
   Obrigado por sua visita!

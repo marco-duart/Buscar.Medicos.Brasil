@@ -117,7 +117,7 @@ const SpecialtyDetail = () => {
       <S.ContentRefil>
         <S.TableDFlexTab>
           <S.TableButtonsTab>
-            <S.TableLink to="/home/notifications">
+            <S.TableLink to="/home/specialties">
               <img src={icons.leftArrow} alt="" />
             </S.TableLink>
             {action === "NEW" && (

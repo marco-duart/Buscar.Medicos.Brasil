@@ -38,7 +38,7 @@ const UserDetail = () => {
     <S.ContentRefil>
       <S.TableDFlexTab>
         <S.TableButtonsTab>
-          <S.TableLink to="/home/notifications">
+          <S.TableLink to="/home/users">
             <img src={icons.leftArrow} alt="" />
           </S.TableLink>
           <S.NewEditTitle>Usuário</S.NewEditTitle>

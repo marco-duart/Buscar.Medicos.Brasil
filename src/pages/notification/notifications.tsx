@@ -1,11 +1,12 @@
 import { useState, useEffect, ReactNode } from "react";
-import { GetNotifications } from "../../data/services/notifications";
+import { GetNotifications, DeleteNotification } from "../../data/services/notifications";
 import { Table } from "../../components/shared/table";
 import icons from "../../assets/styles/icons";
 import { useNavigate } from "react-router-dom";
 import * as S from "../../assets/styles/shared";
 import { format, parseISO } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import Modal from "react-modal";
 
 type NotificationsDataProcessedType = {
   name: string;
@@ -33,6 +34,10 @@ const Notifications = () => {
   );
   //DEFININDO O NAVIGATE
   const navigate = useNavigate();
+  //MODAL
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  //ID DO ITEM PARA DELETAR
+  const [deleteItemId, setDeleteItemId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,6 +87,9 @@ const Notifications = () => {
               >
                 <img src={icons.edit} />
               </S.TableIco>
+              <S.TableIco onClick={() => openModal(currentValue.id)}>
+                <img src={icons.delet} />
+              </S.TableIco>
             </div>
           ),
         };
@@ -92,6 +100,22 @@ const Notifications = () => {
     };
     fetchData();
   }, [searchValue, page, currentTab, setPlansDataProcessed]);
+
+  const handleDelete = async (id: number) => {
+    await DeleteNotification(id);
+    closeModal();
+    setPage(0);
+  };
+
+  //FUNÇÕES OPEN/CLOSE MODAL
+  const openModal = (id: number) => {
+    setDeleteItemId(id);
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setDeleteItemId(null);
+    setIsOpen(false);
+  };
 
   //SETANDO A PAGE COMO 0 AO MUDAR DE ABA
   const changeTab = (value: "CONTRATANTE" | "MEDICO") => {
@@ -176,6 +200,23 @@ const Notifications = () => {
           </S.TableDFlexTab>
         </S.TableContainer>
       </S.ContentRefil>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Modal"
+      >
+        <button onClick={() => closeModal()}>close</button>
+        <div>Tem certeza que deseja *excluir* este item?</div>
+        <button
+          onClick={() => {
+            deleteItemId && handleDelete(deleteItemId);
+          }}
+        >
+          Sim, excluir item
+        </button>
+        <button onClick={() => closeModal()}>Voltar</button>
+      </Modal>
     </>
   );
 };
