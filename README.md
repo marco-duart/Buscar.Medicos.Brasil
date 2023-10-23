@@ -42,7 +42,7 @@ npm start
 </p>
 <h2 align="center">Como Contribuir</h2>
 <p align="center">
-  Se você deseja contribuir para este projeto, sinta-se à vontade para criar pull requests. No entanto, é importante notar que devido a problemas pessoais e uma mudança brusca na rotina, alguns itens não foram desenvolvidos, e a equipe de desenvolvimento da Arnia ainda está trabalhando na conclusão do projeto.
+  Se você deseja contribuir para este projeto, sinta-se à vontade para criar pull requests. No entanto, é importante notar que devido a problemas pessoais e uma mudança brusca na rotina, alguns itens não foram desenvolvidos.
 </p>
 <h2 align="center">Estilo</h2>
 <p align="center">
