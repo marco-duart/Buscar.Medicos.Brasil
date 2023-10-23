@@ -32,7 +32,7 @@ export const SideBarDivStyled = styled.div`
   margin-top: 30px;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 2rem;
 `;
 
 export const LogoSidebarDivStyled = styled.div`
@@ -49,7 +49,13 @@ export const IcoSidebarDivStyled = styled.img`
   margin-right: 10px;
 `;
 
-export const SidebarMenuStyled = styled(NavLink)`
+export const SidebarMenuStyled = styled(NavLink)<{ expanded: boolean }>`
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  width: ${(props) => (props.expanded ? "255px" : "")};
+  height: 56px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -57,8 +63,12 @@ export const SidebarMenuStyled = styled(NavLink)`
   font-family: ${(props) => props.theme.fontFamily.Poppins};
   font-size: ${(props) => props.theme.fontSizes.sm};
   color: ${(props) => props.theme.colors.white};
-  .active-link {
-    color: yellow;
-    font-size: 42px;
+  &:hover {
+    font-weight: bold;
+  }
+  &.active {
+    font-weight: bold;
+    color: ${(props) => props.theme.colors.darkGreen};
+    background-color: ${(props) => props.theme.colors.yellowGreen};
   }
 `;

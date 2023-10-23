@@ -17,37 +17,37 @@ const Sidebar = () => {
       </S.LogoSidebarDivStyled>
       <S.SideBarDivStyled>
         <div>
-          <S.SidebarMenuStyled to="/home/">
+          <S.SidebarMenuStyled expanded={expanded} to="/home/">
             <S.IcoSidebarDivStyled src={icons.dash} alt="" />
             {expanded && "Dashboard"}
           </S.SidebarMenuStyled>
         </div>
         <div>
-          <S.SidebarMenuStyled to="/home/users">
+          <S.SidebarMenuStyled expanded={expanded} to="/home/users">
             <S.IcoSidebarDivStyled src={icons.users} alt="" />
             {expanded && "Usuarios Cadastrados"}
           </S.SidebarMenuStyled>
         </div>
         <div>
-          <S.SidebarMenuStyled to="/home/plans">
+          <S.SidebarMenuStyled expanded={expanded} to="/home/plans">
             <S.IcoSidebarDivStyled src={icons.plans} alt="" />
             {expanded && "Planos"}
           </S.SidebarMenuStyled>
         </div>
         <div>
-          <S.SidebarMenuStyled to="/home/specialties">
+          <S.SidebarMenuStyled expanded={expanded} to="/home/specialties">
             <S.IcoSidebarDivStyled src={icons.spec} alt="" />
             {expanded && "Especialidades"}
           </S.SidebarMenuStyled>
         </div>
         <div>
-          <S.SidebarMenuStyled to="/home/notifications">
+          <S.SidebarMenuStyled expanded={expanded} to="/home/notifications">
             <S.IcoSidebarDivStyled src={icons.notif} alt="" />
             {expanded && "Notificações"}
           </S.SidebarMenuStyled>
         </div>
         <div>
-          <S.SidebarMenuStyled to="/home/faq">
+          <S.SidebarMenuStyled expanded={expanded} to="/home/faq">
             <S.IcoSidebarDivStyled src={icons.faq} alt="" />
             {expanded && "FAQ"}
           </S.SidebarMenuStyled>
