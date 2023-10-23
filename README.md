@@ -56,11 +56,29 @@ npm start
 <p align="center">
   Para entrar em contato com a equipe de desenvolvimento da Arnia, visite <a href="https://arnia.com.br/">arnia.com</a>.
 </p>
+<h2 align="center">Erros identificados</h2>
+<ol>
+  <li>Não foi implementado a mudança de cor dos inputs do login. Verificar passagem de props condicionada.</li>
+  <li>Não foi implementado o tratamento de erro da API, nem o callback com mensagem. Definir principais códigos e criar uma listagem de mensagens.</li>
+  <li>Não foi implementado a mudança de cor dos icones. Estudar componentizar icones svg.</li>
+  <li>O input de data foi com tipo errado em NotificationDetails. Mudar o tipo para date. A conversão para o valor recebido foi feita usando date-fns.</li>
+  <li>Nas listagens, ao deletar um item, não é renderizado novamente a tela. Achar uma forma que não seja gambiarra.</li>
+  <li>Ao criar/editar um novo item, não é renderizado novamente a tela. Verificar função closeModal.</li>
+  <li>Não foi mapeado ações ao fechar modal clidando fora do mesmo. Alternativa seria criar um modal em vez de usar da biblioteca.</li>
+  <li>Ao entrar na página inicial, o background para a pagina ativa não inicializa automaticamente.</li>
+  <li>As tabs não ficaram na cor correta. Visível pelo monitor do trabalho.</li>
+  <li>Mesmo com o disabled, os conteúdos dos inputs ficaram com cor forte. Condicionar a cor á existência do disabled passando por props.</li>
+  <li>Ao mudar de página, o menu suspenso permanece aberto. Verificar a possibilidade de condicionar ao hover e focus também.</li>
+  <li>Apesar de não ser obrigatório, não fiz a busca por cidade, especialidade e estado. Verificar a possibilidade de mandar alguns dados simulados para o Lucas e testar essa funcionalidade.</li>
+  <li>Ao clicar em visualizar e depois clicar em delete, posteriomente fechando o modal sem deletar, a página de detalhes buga.</li>
+  <li>O valor em Plans não foi formatado.</li>
+  <li>Nenhuma responsividade foi implementada.</li>
+  <li>O arrows unicode usados para paginação não é compatível com Firefox/Linux.</li>
+  <li>A solução encontrada para atualizar a renderização ao clicar no checkbox nas listagens (Specialties e Plans) só pode ser definido como gambiarra. Estudar uma alternativa.</li>
+  <li>Não foi implementada uma solução para token expirado enquanto navega. Verificar a inclusão de uma função para validar isso, possivelmente usando o /me. Caso o token esteja expirado, redirecionar para login.</li>
+</ol>
 <p align="center">
   Espero que este projeto seja útil e que você possa aprender com ele. Fique à vontade para explorar o código-fonte e contribuir para o seu desenvolvimento!
-</p>
-<p align="center">
-  Busquei entregar o melhor, mesmo em meio a mudanças em toda rotina!
 </p>
 <p align="center">
   Obrigado por sua visita!
