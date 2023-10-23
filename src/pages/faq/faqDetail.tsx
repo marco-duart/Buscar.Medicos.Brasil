@@ -133,7 +133,10 @@ const FAQDetail = () => {
                 <S.TableIco onClick={() => setAction("EDIT")}>
                   <img src={icons.edit} alt="" />
                 </S.TableIco>
-                <S.TableIco onClick={() => openModal()}>
+                <S.TableIco onClick={() => {
+                    setAction("DELETE");
+                    openModal();
+                  }}>
                   <img src={icons.delet} alt="" />
                 </S.TableIco>
               </div>

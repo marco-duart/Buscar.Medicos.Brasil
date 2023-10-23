@@ -149,7 +149,10 @@ const NotificationDetail = () => {
                 <S.TableIco onClick={() => setAction("EDIT")}>
                   <img src={icons.edit} alt="" />
                 </S.TableIco>
-                <S.TableIco onClick={() => openModal()}>
+                <S.TableIco onClick={() => {
+                    openModal();
+                    setAction("DELETE");
+                  }}>
                   <img src={icons.delet} alt="" />
                 </S.TableIco>
               </div>
