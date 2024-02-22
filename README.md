@@ -46,7 +46,7 @@ npm start
 </p>
 <h2 align="center">Estilo</h2>
 <p align="center">
-  Adicionamos um toque de estilo personalizado para tornar a aplicação mais atraente. Usamos o CSS no arquivo Usamos o CSS no arquivo `styles.ts` de cada componente e na pasta `src/assets/styles` para personalizar elementos visuais. Fique à vontade para personalizar ainda mais o estilo de acordo com suas preferências.
+  Adicionamos um toque de estilo personalizado para tornar a aplicação mais atraente. Usamos o CSS no arquivo `styles.ts` de cada componente e na pasta `src/assets/styles` para personalizar elementos visuais. Fique à vontade para personalizar ainda mais o estilo de acordo com suas preferências.
 </p>
 <h2 align="center">Deploy</h2>
 <p align="center">
